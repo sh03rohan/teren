@@ -745,7 +745,7 @@ else if(mode===0){const sh=Math.sin(time*23)*.01*Math.min(1,v/15);
 cam.position.copy(loco.localToWorld(lv.set(0,4.1+sh,2.2)));cam.lookAt(loco.localToWorld(lv.set(0,-1.5,60)));
 levT.rotation.x=-.5+thr;levB.rotation.x=.5-Math.max(brk,eb?1:0);ebM.color.setHex(eb?0xff3b30:0x6b1511);if((frameN&1)===0)drawDash(lim);}
 else{const tp=V1,lk=V2;
-if(mode===1){loco.localToWorld(tp.set(-5,11.5,-24));loco.localToWorld(lk.set(0,2,22));}
+if(mode===1){loco.localToWorld(tp.set(-7,16,-58));loco.localToWorld(lk.set(0,2,18));}
 else if(mode===2||mode===3){loco.localToWorld(tp.set(mode===2?-30:30,6.5,-22));loco.localToWorld(lk.set(0,3,-22));}
 else if(mode===4){loco.localToWorld(tp.set(0,2.4,6.4));loco.localToWorld(lk.set(0,2,60));}
 else if(mode===5){tp.set(loco.position.x+70,loco.position.y+90,loco.position.z+70);lk.copy(loco.position);}
