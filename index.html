@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Rail Rohan: Bangladesh</title>
+<title>Tuk Tuk Teren: Bangladesh</title>
 <style>
 :root{--g:rgba(10,16,28,.58);--b:rgba(255,255,255,.13);--a:#5eead4;--w:#fbbf24;--r:#f87171;--t:#eaf0f8;--m:#9db0c9;--L:calc(env(safe-area-inset-left,0px) + 12px);--R:calc(env(safe-area-inset-right,0px) + 12px);--T:calc(env(safe-area-inset-top,0px) + 12px)}
 html,body{margin:0;height:100%;overflow:hidden;background:#0b1220;font-family:"Segoe UI",system-ui,-apple-system,sans-serif;color:var(--t)}
@@ -44,7 +44,7 @@ button svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8
 #camMenu small{margin-left:auto;opacity:.5;display:inline}
 </style></head><body>
 <div id="bigmap"><canvas id="bm" width="640" height="880"></canvas><span>Map of Bangladesh. Click or press M to close</span></div>
-<div id="brand" class="p"><b>RAIL ROHAN</b><div class="s" id="vw">Chase view</div><div class="s" id="rg" style="color:#5eead4;margin-top:2px">Dhaka</div><div class="s" id="wxl" style="margin-top:2px">Clear · auto</div></div>
+<div id="brand" class="p"><b>TUK TUK TEREN</b><div class="s" id="vw">Chase view</div><div class="s" id="rg" style="color:#5eead4;margin-top:2px">Dhaka</div><div class="s" id="wxl" style="margin-top:2px">Clear · auto</div></div>
 <div id="route" class="p"><div id="nx">Next stop</div><div class="rl" id="rl"><i id="rm"></i></div></div>
 <div id="info" class="p"><div class="row"><div><div class="s">Score</div><div class="big" id="sc">0</div></div><div><div class="s">Stops</div><div class="big" id="dn">0</div></div></div><canvas id="mm" width="300" height="412"></canvas></div>
 <div id="sp" class="p"><svg viewBox="0 0 160 160" width="168" height="168">
@@ -57,7 +57,7 @@ button svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8
 <div id="ctl" class="p"><div class="cols"><div><div class="vb"><b id="th"></b></div><div class="s">Thr</div></div><div><div class="vb"><b id="bk" class="r"></b></div><div class="s">Brk</div></div></div><div id="chips"><span id="c1" class="chip">Doors</span><span id="c2" class="chip">Lights</span><span id="c3" class="chip">Reverse</span></div></div>
 <div id="msg"></div>
 <div id="bt"></div><div id="camMenu"></div>
-<div id="start"><div class="card"><div class="s">3D train simulator</div><h1>Tuk Tuk teren</h1><p>Drive the Padma Express across Bangladesh: Dhaka, Chattogram and Cox&rsquo;s Bazar, the Sylhet hills, the north and the great river bridges. Stop at every station, obey signals and speed limits, and watch the weather.</p>
+<div id="start"><div class="card"><div class="s">3D train simulator</div><h1>Tuk Tuk Teren</h1><p>Drive the Padma Express across Bangladesh: Dhaka, Chattogram and Cox&rsquo;s Bazar, the Sylhet hills, the north and the great river bridges. Stop at every station, obey signals and speed limits, and watch the weather.</p>
 <div class="keys"><span><kbd>W</kbd><kbd>S</kbd>Throttle</span><span><kbd>Space</kbd>Brake</span><span><kbd>B</kbd>Emergency</span><span><kbd>H</kbd>Horn</span><span><kbd>O</kbd>Doors</span><span><kbd>R</kbd>Reverse</span><span><kbd>1</kbd>&ndash;<kbd>7</kbd>Views</span><span><kbd>L</kbd>Lights</span><span><kbd>N</kbd>Night</span><span><kbd>E</kbd>Weather</span><span><kbd>M</kbd>Map</span><span><kbd>U</kbd>Sound</span></div>
 <div class="s" id="ld">Building Bangladesh...</div><button id="go" class="go" style="display:none">Start driving</button></div></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" onerror="document.getElementById('ld').textContent='Could not load the 3D engine (three.js). Check your internet connection and reload.'"></script>
