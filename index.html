@@ -692,7 +692,7 @@ const dn=()=>{audio();if(a==='cam')toggleCam();else if(a==='brake')K.Space=true;
 addEventListener('pointerdown',e=>{if(e.target&&e.target.closest&&!e.target.closest('#camMenu')&&!e.target.closest('.ib'))$('camMenu').style.display='none';});
 addEventListener('resize',()=>{R.setSize(innerWidth,innerHeight);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();});
 ST.forEach(st=>{const i=document.createElement('i');i.className='sd';i.style.left=st.s/L*100+'%';i.title=st.name;$('rl').appendChild(i);});
-$('go').onclick=()=>{started=true;$('start').style.display='none';audio();setMode(0);msg('Welcome aboard. Throttle up with W, then stop at '+ST[nextI%ST.length].name,5000);};
+$('go').onclick=()=>{started=true;$('start').style.display='none';audio();setMode(1);msg('Welcome aboard. Throttle up with W, then stop at '+ST[nextI%ST.length].name,5000);};
 /* passenger flow: alighting passengers step down and walk to the concourse, then the waiting crowd walks to the nearest door and boards */
 const _dv=new T.Vector3();
 function startFlow(st){const D=[];for(let c=1;c<cars.length;c++)[-6.2,6.2].forEach(zz=>{cars[c].updateMatrixWorld();_dv.set(1.62,0,zz);cars[c].localToWorld(_dv);st.g.worldToLocal(_dv);if(Math.abs(_dv.z)<31)D.push({x:_dv.x,z:_dv.z});});if(!D.length)D.push({x:1.8,z:0});
