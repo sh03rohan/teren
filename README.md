@@ -2,7 +2,7 @@
 
 A 3D train simulator in a single HTML file (three.js r128 from a CDN). Drive the Padma Express around Bangladesh: Dhaka, Comilla, Chattogram, Cox's Bazar, Sylhet, Mymensingh, Rangpur, Dinajpur, Rajshahi, Jashore and Khulna.
 
-Open `train-simulator-bd.html` in a browser to play.
+Open `index.html` in a browser to play, or visit the deployed site.
 
 ## Features
 - River bridges modelled on their real counterparts (Hardinge, Jamuna, Bhairab, Kalurghat, Padma, Surma)
