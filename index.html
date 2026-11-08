@@ -165,7 +165,7 @@ const ku=RW.filter(a=>a[3]).findIndex(a=>a[0]==='Kushtia');if(ku>=0){const i=(st
 
 /* ===== scene ===== */
 const $=id=>document.getElementById(id);
-const R=new T.WebGLRenderer({antialias:true});const DPRMAX=Math.min(devicePixelRatio,1.5);let DPR=Math.min(DPRMAX,1.25);R.setPixelRatio(DPR);R.setSize(innerWidth,innerHeight);document.body.prepend(R.domElement);
+const R=new T.WebGLRenderer({antialias:true});const DPRMAX=Math.min(devicePixelRatio||1,2),DPRMIN=Math.min(devicePixelRatio||1,1);let DPR=Math.min(DPRMAX,1.5);R.setPixelRatio(DPR);R.setSize(innerWidth,innerHeight);document.body.prepend(R.domElement);
 const scene=new T.Scene(),cam=new T.PerspectiveCamera(65,innerWidth/innerHeight,.6,9000);
 const hemi=new T.HemisphereLight(0xffffff,0x4a6b3a,1),sun=new T.DirectionalLight(0xfff2d6,1.1),SUND=new T.Vector3(300,500,200).normalize();sun.position.set(300,500,200);scene.add(hemi,sun);
 const lam=c=>new T.MeshLambertMaterial({color:c}),lam2=c=>new T.MeshLambertMaterial({color:c,side:T.DoubleSide});
@@ -251,7 +251,7 @@ if(ENV.lt>.6&&started&&rnd()<dt*.16)strike();}
 
 /* terrain */
 function fieldTex(){const c=document.createElement('canvas');c.width=c.height=256;const g=c.getContext('2d');for(let i=0;i<8;i++)for(let j=0;j<8;j++){const v=Math.floor(190+rnd()*65);g.fillStyle='rgb('+v+','+v+','+v+')';g.fillRect(i*32,j*32,32,32);}
-for(let k=0;k<900;k++){const v=Math.floor(150+rnd()*100);g.fillStyle='rgba('+v+','+v+','+v+',.35)';g.fillRect(rnd()*256,rnd()*256,3,3);}const t=new T.CanvasTexture(c);t.wrapS=t.wrapT=T.RepeatWrapping;t.repeat.set(87,136);return t;}
+for(let k=0;k<900;k++){const v=Math.floor(150+rnd()*100);g.fillStyle='rgba('+v+','+v+','+v+',.35)';g.fillRect(rnd()*256,rnd()*256,3,3);}const t=new T.CanvasTexture(c);t.wrapS=t.wrapT=T.RepeatWrapping;t.repeat.set(87,136);t.anisotropy=R.capabilities.getMaxAnisotropy();return t;}
 let TERR=null;
 /* height of the rendered terrain mesh (same triangulation as PlaneGeometry), used so roads always sit on top of it */
 function meshH(x,z){if(!TERR)return hgt(x,z);let fx=(x+4800)/48,fz=(z+7600)/(15000/313);if(fx<0||fz<0||fx>=200||fz>=313)return hgt(x,z);const ix=fx|0,iy=fz|0,u=fx-ix,v=fz-iy,W=201,y=k=>TERR[k*3+1],
@@ -978,6 +978,7 @@ function mapDyn(g,m,st,w,h,r){g.clearRect(0,0,w,h);g.drawImage(m.c,0,0);const n=
 function drawMap(st){mapDyn(mx,MM,st,300,412,5);if(bigOpen)mapDyn(bx,BM,st,640,880,8);}
 function toggleBig(){bigOpen=!bigOpen;if(bigOpen&&!BM)BM=mapBG(640,880,.075,0,180,true);$('bigmap').style.display=bigOpen?'flex':'none';}
 IMS.forEach(m=>{m.count=m.userData.n;});finalizeChunks();
+{const an=Math.min(8,R.capabilities.getMaxAnisotropy()),seen=new Set();scene.traverse(o=>{const ms=o.material?(Array.isArray(o.material)?o.material:[o.material]):[];ms.forEach(m=>{['map','emissiveMap'].forEach(k=>{const t=m[k];if(t&&!seen.has(t)){seen.add(t);t.anisotropy=Math.max(t.anisotropy||1,an);t.needsUpdate=true;}});});});}
 {const skip=new Set([...cars,...ST.map(t=>t.g),...DCULL.map(d=>d.o)]);scene.children.forEach(o=>{if(o.isGroup&&!skip.has(o)&&!(o.userData&&o.userData.legs))dcAdd(o);});}
 
 /* recorded sounds from OpenSFX (OpenTTD), CC BY 3.0 / CC0: see README for credits */
@@ -1126,7 +1127,7 @@ const fl=closed||c.ang<1.38,ph=Math.floor(time*2.6)%2;c.lamps.forEach((l,k)=>l.m
 if(fl&&started&&cam.position.distanceTo(c.g.position)<380){c.bell-=dt;if(c.bell<=0){bell();c.bell=.55;}}
 if(dir>=0&&started){if(ah>380&&ah<430&&!c.warn){c.warn=true;msg('সামনে লেভেল ক্রসিং: হর্ন দিন (H)',2600);}if(ah>30&&ah<380&&hornHeld&&!c.hb){c.hb=true;score+=10;msg('লেভেল ক্রসিংয়ে হর্ন দিয়েছেন +১০',1800);}if(ah<-120){c.hb=false;c.warn=false;}}});}
 /* adaptive resolution: drop the render scale when frames are slow, raise it again when there is headroom */
-let pfT=0,pfN=0,pfS=0;function perfTick(dt){pfT+=dt;pfN++;pfS+=dt;if(pfT<2)return;const avg=pfS/pfN;pfT=pfN=pfS=0;let nd=DPR;if(avg>1/30)nd=Math.max(.6,DPR-.15);else if(avg<1/55)nd=Math.min(DPRMAX,DPR+.1);if(Math.abs(nd-DPR)>.01){DPR=nd;R.setPixelRatio(DPR);R.setSize(innerWidth,innerHeight);}}
+let pfT=0,pfN=0,pfS=0;function perfTick(dt){pfT+=dt;pfN++;pfS+=dt;if(pfT<2)return;const avg=pfS/pfN;pfT=pfN=pfS=0;let nd=DPR;if(avg>1/28)nd=Math.max(DPRMIN,DPR-.15);else if(avg<1/50)nd=Math.min(DPRMAX,DPR+.15);if(Math.abs(nd-DPR)>.01){DPR=nd;R.setPixelRatio(DPR);R.setSize(innerWidth,innerHeight);}}
 const lv=new T.Vector3();let last=performance.now();
 function frame(now){requestAnimationFrame(frame);const rdt=Math.min(.05,(now-last)/1000),dt=started?rdt:0;last=now;time+=dt;
 if(K.KeyW||K.ArrowUp)thr=Math.min(1,thr+dt*.45);if(K.KeyS||K.ArrowDown)thr=Math.max(0,thr-dt*.6);if(K.KeyX)thr=0;
