@@ -234,7 +234,7 @@ stU.t.value=t;stU.op.value=n*(1-ENV.cov*.9);stars.visible=stU.op.value>.02;
 sunS.material.opacity=(1-n)*Math.max(0,1-dw*1.6)*(1-fg*.6);sunS.visible=sunS.material.opacity>.01;moonS.material.opacity=n*Math.max(.15,1-ENV.cov*.8);moonS.visible=n>.02;
 cl.count=Math.round(CLN*(.18+.82*ENV.cov)*(1-fg))*5;cloudM.opacity=.93*(1-fg*.6);cloudM.color.setHex(0xffffff).lerp(C3.setHex(0x5c636b),dw).lerp(C3.setHex(0x1b212a),n);cloudM.emissive.setHex(0x8d939a).lerp(C3.setHex(0x30363d),dw).lerp(C3.setHex(0x080a0e),n);
 const lit=n>.5||dw>.65||fg>.7;lights.forEach(l=>l.intensity=n*1.4+(dw>.6?.5:0));winM.emissive.setRGB(.71*n,.54*n,.23*n);if(bldM)bldM.emissive.setScalar(Math.max(n,dw>.6?.35:0));glassM.emissive.setRGB(.35*n,.3*n,.15*n);
-lampM.color.setHex(lit?0xffe9a8:0x8a8a8a);vHL.visible=vTL.visible=n>.35||dw>.5||fg>.45;
+lampM.color.setHex(lit?0xffe9a8:0x8a8a8a);VLM.color.setScalar(n>.35||dw>.5||fg>.45?1:.6);
 rainM.visible=ENV.rain>.02;rainU.op.value=ENV.rain;rainU.t.value=t;rainU.cp.value.copy(cam.position);rainU.wd.value.set(.05+.25*ENV.wind,.03+.08*ENV.wind);
 if(ENV.lt>.6&&started&&rnd()<dt*.16)strike();}
 
@@ -315,7 +315,11 @@ bnd.forEach(i=>{const p=SP[i],ry=Math.atan2(p.tx,p.tz),gy=hgt(p.x,p.z),bot=Math.
 if(c.pier==='well'){add(PCY,p.x,bot,p.z,ry,4.4,Math.max(1,.8-bot),4.4);add(PBX,p.x,(top+.8)/2,p.z,ry,c.W*2+1.5,Math.max(.5,top-.8),3.2);add(PBX,p.x,top-.4,p.z,ry,c.W*2+3,.8,4.2);}
 else if(c.pier==='twin'){[-1,1].forEach(s=>add(PCY,p.x+p.nx*s*c.W,bot,p.z+p.nz*s*c.W,0,1.5,top-bot,1.5));add(PBX,p.x,top-.5,p.z,ry,c.W*2+3,1,3);}
 else{add(PCY,p.x,bot,p.z,0,6,Math.max(1,2.2-bot),6);add(PBX,p.x,(top+2.2)/2,p.z,ry,c.W*2+2,Math.max(.5,top-2.2),4);add(PBX,p.x,top-.5,p.z,ry,c.W*2+4,1,4.6);}});});}
-BG.forEach(g=>{const p0=SP[g.s],sg=spr(RIV[g.id-1].br.toUpperCase(),12,1.4,'#0b5d42','#ffffff');sg.position.set(p0.x,p0.y+(g.id===2?9.4:(BCF[g.id]?Math.min(BCF[g.id].H*.6,6.6):8)),p0.z);sg.rotation.y=Math.atan2(p0.tx,p0.tz)+Math.PI;scene.add(sg);});
+/* bridge name boards stand on top of the bridge (above the truss, or above the road deck on Padma), readable from both directions */
+BG.forEach(g=>{const c=BCF[g.id],n=g.e-g.s,ns=c?Math.max(1,Math.round(n/c.n)):1,mid=g.s+Math.round(n/ns/2),p=SP[Math.min(g.e,mid)],top=g.id===2?12.72+7.2:(c?c.H:10)+1.9,G_=new T.Group();
+G_.position.set(p.x,p.y+top,p.z);G_.rotation.y=Math.atan2(p.tx,p.tz);scene.add(G_);const W_=g.id===2?16:13;
+[-1,1].forEach(f=>{const sg=spr(RIV[g.id-1].br.toUpperCase(),W_,1.8,'#0b5d42','#ffffff');sg.material.side=T.FrontSide;sg.position.z=f*.06;sg.rotation.y=f>0?0:Math.PI;G_.add(sg);});
+mk(G_,W_+.4,.25,.3,0x2b2f33,0,-1.02,0);[-1,1].forEach(s_=>{const h=g.id===2?7.2:1.9;mk(G_,.22,h,.22,0x4a4f55,s_*(W_*.4),-.9-h/2,0);});});
 {const nA=AI.length,pr=IM(new T.BoxGeometry(1,1,1),lam(0xc9c6be),nA),pcp=IM(new T.BoxGeometry(1,1,1),lam(0xbdbab2),nA),gi=IM(new T.BoxGeometry(7.2,2.2,12.1),lam(0xbdbab2),nA),pw=IM(new T.BoxGeometry(.5,1.1,12.1),lam(0xd8d6d0),nA*2);
 AI.forEach(i=>{const p=SP[i],ry=Math.atan2(p.tx,p.tz);add(gi,p.x+p.tx*6,p.y-1.2,p.z+p.tz*6,ry,1,1,1);[-3.4,3.4].forEach(l=>add(pw,p.x+p.nx*l+p.tx*6,p.y+.55,p.z+p.nz*l+p.tz*6,ry,1,1,1));
 if(i%3===0){const gy=hgt(p.x,p.z),h=p.y-2.4-gy;if(h>.8){add(pr,p.x,gy+h/2,p.z,ry,3.6,h,2.4);add(pcp,p.x,p.y-2.9,p.z,ry,6.4,1.2,2.8);}}});}
@@ -449,13 +453,13 @@ const c0=KU.W(190,90);NOGO.push([c0[0],c0[1],440]);const GO=RIV[8];
 const kpath=(pts,bridge)=>{const Q=[];for(let k=0;k<pts.length-1;k++){const a=pts[k],b=pts[k+1],n=Math.max(1,Math.round(Math.hypot(b[0]-a[0],b[1]-a[1])/8));for(let j=0;j<n;j++){const f=j/n;Q.push([a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f]);}}Q.push(pts[pts.length-1]);
 return Q.map(q=>{const w=KU.W(q[0],q[1]),g=hgt(w[0],w[1]),td=G.d;let y=Math.max(g,1)+.6;if(bridge){const rd=rdistF(GO,w[0],w[1]);y=Math.max(y,1.6+6.4*(1-ss(GO.w*.95,GO.w*2.5,rd)));}return{x:w[0],y,z:w[1],g,td,deck:false};});};
 const TL=[[2.2,1,0],[-2.2,-1,1]];
-KU.roads=[{n:'N.S. ROAD',p:[[120,-250],[120,330],[158,402]],hw:5.4,ln:[[2.5,1,0],[-2.5,-1,1]]},{n:'COURT STATION ROAD',p:[[26,8],[120,8]],hw:4.4},
+KU.roads=[{n:'N.S. ROAD',p:[[120,-250],[120,330],[158,402]],hw:5.4,ln:[[2.5,1,0],[-2.5,-1,1]],jam:1},{n:'COURT STATION ROAD',p:[[26,8],[120,8]],hw:4.4,jam:1},
 {n:'HARIPUR ROAD',p:[[120,-250],[180,-330],[240,-380],[320,-420],[400,-330],[430,-218]],hw:4.6,bridge:1},
 {n:'R710',p:[[190,438],[300,560],[420,700],[520,820]],hw:4.8},{n:'MOJIBOR RAHMAN ROAD',p:[[199,421],[330,400],[380,380]],hw:4.2},
 {p:[[120,150],[190,150]]},{p:[[190,150],[190,-20],[132,-92]]},{p:[[190,150],[270,60]]},{p:[[190,150],[292,172]]},{p:[[190,150],[262,290],[302,322]]},{p:[[190,150],[190,328],[175,397]]},
 {p:[[52,-150],[120,-150]]},{p:[[46,-30],[120,-30]]},{p:[[52,262],[120,262]]},{p:[[120,40],[60,90],[52,180]]}];
-KU.roads.forEach(r=>{const P=kpath(r.p,r.bridge);addRoad(P,r.hw||4,r.ln||TL);RP[RP.length-1].town=1;r.P=P;});
-{const ring=[];for(let k=0;k<=36;k++){const a=-k/36*6.2832;ring.push([175+Math.cos(a)*23,420+Math.sin(a)*23]);}const P=kpath(ring);addRoad(P,4.2,[[0,1,0]]);RP[RP.length-1].town=1;KU.ring=P;}}
+KU.roads.forEach(r=>{const P=kpath(r.p,r.bridge);addRoad(P,r.hw||4,r.ln||TL);RP[RP.length-1].town=1;RP[RP.length-1].jam=r.jam?1:0;r.P=P;});
+{const ring=[];for(let k=0;k<=36;k++){const a=-k/36*6.2832;ring.push([175+Math.cos(a)*23,420+Math.sin(a)*23]);}const P=kpath(ring);addRoad(P,4.2,[[0,1,0]]);RP[RP.length-1].town=1;RP[RP.length-1].jam=1;KU.ring=P;}}
 
 /* scenery */
 {const cyl=(a,b,h)=>new T.CylinderGeometry(a,b,h,6).translate(0,h/2,0),W=lam(0xffffff),inZ=(x,z)=>pip(x,z)&&z<coastZ(x)-250;
@@ -595,32 +599,74 @@ bH.userData.n=bC.userData.n=bS.userData.n=NBt;
 function boatsTick(t){BT.forEach((b,k)=>{o2.position.set(b.x,.3+.1*Math.sin(t*1.3+b.ph),b.z);o2.rotation.set(Math.sin(t*.9+b.ph)*.03,b.ry,0);o2.scale.set(1,1,1);o2.updateMatrix();bH.setMatrixAt(k,o2.matrix);bC.setMatrixAt(k,o2.matrix);bS.setMatrixAt(k,o2.matrix);});[bH,bC,bS].forEach(m=>m.instanceMatrix.needsUpdate=true);}
 for(let k=0,t=0;k<9&&t<200;t++){const x=X(91.3+rnd()*.5),z=Z(21.7+rnd()*.5);if(z<coastZ(x)+500)continue;const g=new T.Group();g.position.set(x,.3,z);g.rotation.y=rnd()*6;mk(g,7,5,28,0x7a2b24,0,2.2,0);mk(g,6,7,6,0xf1efe8,0,6.5,-10);for(let c=0;c<4;c++)mk(g,5,3.2,4.2,[0x2f5d8a,0xd62839,0x0f7a54,0xf2c230][(rnd()*4)|0],0,6.4,-4+c*4.4);scene.add(g);k++;}
 
-/* ===== road traffic: cars, CNG auto-rickshaws, buses and hand-painted trucks; Bangladesh drives on the left ===== */
-const VK=[{w:1.8,h:.8,l:4.2,y:.55,cw:1.6,ch:.62,cl:2.2,cy:1.25,cz:-.2,sp:16,cols:[0xe8e8e8,0x2b2b2b,0xb0b6bc,0xc0392b,0x1f5fae,0x0f7a54]},
-{w:1.4,h:1.25,l:2.7,y:.95,cw:1.45,ch:.12,cl:2.4,cy:1.62,cz:0,sp:10,cols:[0x1f8a3c,0x239447,0x1b7d36]},
-{w:2.5,h:2.5,l:11,y:1.65,cw:2.56,ch:.85,cl:9.6,cy:2.1,cz:.2,sp:13,cols:[0xd62839,0x1f5fae,0x0f7a54,0xf0f0f0,0xe67e22]},
-{w:2.5,h:2.6,l:6.2,y:1.75,cw:2.4,ch:2.1,cl:2.3,cy:1.45,cz:3.9,sp:11,cols:[0xf2c230,0xe67e22,0xd62839,0x2f7d5a,0x8e44ad]},
-{w:1.05,h:.55,l:1.25,y:1,cw:1.15,ch:.8,cl:.95,cy:1.62,cz:-.35,sp:5,cols:[0xd62839,0x1f5fae,0xf2c230,0x0f7a54,0xdb2777,0xe67e22]}];
-const NV=2400,vA=IM(BOX1,lam(0xffffff),NV),vB=IM(BOX1,new T.MeshLambertMaterial({color:0x1d2a36}),NV),vC=IM(BOX1,lam(0x1a1a1a),NV),
-vHL=IM(new T.BoxGeometry(1,1,1),new T.MeshBasicMaterial({color:0xfff3c4}),NV),vTL=IM(BOX1,new T.MeshBasicMaterial({color:0xff2a1a}),NV),VH=[];
-{let k=0;RP.forEach((r,ri)=>{r.lanes.forEach(ln=>{const gap=r.town?18+rnd()*14:55+rnd()*40,cnt=Math.floor(r.len/gap),sp=r.town?4.6+rnd()*1.4:(ln[2]%2?12:15)+rnd()*3;for(let c=0;c<cnt&&k<NV;c++,k++){const r2=rnd(),kd=r.town?(r2<.5?4:r2<.78?1:r2<.9?0:r2<.96?3:2):(r2<.45?0:r2<.7?1:r2<.86?2:3),K_=VK[kd];
-VH.push({r:ri,off:ln[0],dir:ln[1],s:(c+rnd()*.4)*gap,sp:Math.min(sp,K_.sp+6),k:kd});vA.setColorAt(k,tcol.setHex(K_.cols[(rnd()*K_.cols.length)|0]));}});});
-[vA,vB,vC,vHL,vTL].forEach(m=>m.userData.n=VH.length);}
-const vO=new T.Object3D(),vL=new T.Object3D(),vM=new T.Matrix4();vO.rotation.order='YXZ';
-const vPut=(m,k,x,y,z,sx,sy,sz)=>{vL.position.set(x,y,z);vL.scale.set(sx,sy,sz);vL.updateMatrix();vM.multiplyMatrices(vO.matrix,vL.matrix);m.setMatrixAt(k,vM);};
-function vehiclesTick(dt){
-/* queue traffic at closed level crossings: each lane forms a line behind the stop bar */
-for(const c of XC){const r=c.r;r.lc.q=null;if(!r.lc.closed)continue;const q=new Map(),lanes={};VH.forEach(v=>{if(RP[v.r]!==r)return;const d=(r.lc.s-v.s)*v.dir;if(d>3&&d<220){(lanes[v.off]=lanes[v.off]||[]).push([d,v]);}});
-for(const k in lanes)lanes[k].sort((a,b)=>a[0]-b[0]).forEach((e,n)=>q.set(e[1],13+n*7.5));r.lc.q=q;}
-VH.forEach((v,k)=>{const r=RP[v.r];let step=v.sp*dt;if(r.lc&&r.lc.q&&r.lc.q.has(v)){const d=(r.lc.s-v.s)*v.dir,lim=r.lc.q.get(v);step=Math.max(0,Math.min(step,d-lim));}v.s+=step*v.dir;if(v.s>r.len)v.s-=r.len;if(v.s<0)v.s+=r.len;
-const cl=r.cl;let a=0,b=cl.length-1;while(b-a>1){const m=(a+b)>>1;if(cl[m]<=v.s)a=m;else b=m;}const p=r.P[a],q=r.P[b],f=(v.s-cl[a])/Math.max(.01,cl[b]-cl[a]),nx=p.nx,nz=p.nz;
-vO.position.set(p.x+(q.x-p.x)*f+nx*v.off,p.y+(q.y-p.y)*f,p.z+(q.z-p.z)*f+nz*v.off);const dx=(q.x-p.x)*v.dir,dz=(q.z-p.z)*v.dir,dy=(q.y-p.y)*v.dir;
-vO.rotation.set(-Math.atan2(dy,Math.hypot(dx,dz)),Math.atan2(dx,dz),0);vO.updateMatrix();const K_=VK[v.k];
-const tk=v.k===3;vPut(vA,k,0,K_.y,tk?-1:0,K_.w,K_.h,K_.l);
-vPut(vB,k,0,K_.cy,K_.cz,K_.cw,K_.ch,K_.cl);v.px=vO.position.x;v.py=vO.position.y;v.pz=vO.position.z;v.yaw=vO.rotation.y;
-vPut(vC,k,0,.32,tk?.5:0,K_.w*.9,.45,tk?9.4:v.k===4?2.3:K_.l*.92);
-vPut(vHL,k,0,v.k===2?.9:.65,(tk?5.07:K_.l/2)+.02,K_.w*.8,.18,.05);vPut(vTL,k,0,v.k===2?.9:.65,-(tk?4.1:K_.l/2)-.02,K_.w*.8,.16,.05);});
-[vA,vB,vC,vHL,vTL].forEach(m=>m.instanceMatrix.needsUpdate=true);}
+/* ===== road traffic: low-poly models of vehicles seen on Bangladeshi roads (sedan, microbus, green CNG auto-rickshaw, decorated cycle rickshaw,
+   yellow truck with a crown over the cab, intercity coach, red BRTC double-decker, motorbike). Left-hand traffic, car-following, signals and jams. ===== */
+const VT=(()=>{const nI=g=>g.index?g.toNonIndexed():g,GL=0x1c2a36,TI=0x161616,HB=0xb4b8bc,DK=0x2b2d30,WT=0xf2f2f2;
+const A=(arr,g,col)=>{g=nI(g);g.computeVertexNormals();if(col!==undefined){const c=new T.Color(col),n=g.attributes.position.count,a=new Float32Array(n*3);for(let i=0;i<n;i++){a[i*3]=c.r;a[i*3+1]=c.g;a[i*3+2]=c.b;}g.setAttribute('color',new T.BufferAttribute(a,3));}arr.push(g);};
+const bx=(w,h,l,x,y,z)=>new T.BoxGeometry(w,h,l).translate(x,y,z),wh=(r,w,x,y,z,sg)=>new T.CylinderGeometry(r,r,w,sg||12).rotateZ(Math.PI/2).translate(x,y,z),
+pr=(pts,w,x)=>{const s=new T.Shape();pts.forEach((p,i)=>i?s.lineTo(p[0],p[1]):s.moveTo(p[0],p[1]));const g=new T.ExtrudeGeometry(s,{depth:w,bevelEnabled:false});g.rotateY(-Math.PI/2);g.translate((x||0)+w/2,0,0);return g;},
+mg=gs=>{if(!gs.length)return null;let n=0;gs.forEach(g=>n+=g.attributes.position.count);const P=new Float32Array(n*3),N=new Float32Array(n*3),C=gs[0].attributes.color?new Float32Array(n*3):null;let k=0;gs.forEach(g=>{P.set(g.attributes.position.array,k*3);N.set(g.attributes.normal.array,k*3);if(C)C.set(g.attributes.color.array,k*3);k+=g.attributes.position.count;});
+const r=new T.BufferGeometry();r.setAttribute('position',new T.BufferAttribute(P,3));r.setAttribute('normal',new T.BufferAttribute(N,3));if(C)r.setAttribute('color',new T.BufferAttribute(C,3));return r;};
+const wheels=(f,r,w,xs,zs)=>zs.forEach(z=>xs.forEach(x=>{A(f,wh(r,w,x,r,z,9),TI);A(f,wh(r*.55,w+.02,x,r,z,6),HB);}));
+const M=fn=>{const p=[],f=[],l=[];fn(p,f,l);return{p:mg(p),f:mg(f),l:mg(l)};};
+const sedan=M((p,f,l)=>{A(p,pr([[-2.25,.34],[2.25,.34],[2.28,.62],[2.2,.8],[1.25,.95],[-1.55,.98],[-2.22,.9],[-2.28,.6]],1.74));A(p,bx(1.4,.07,1.95,0,1.42,-.18));
+A(f,pr([[1.22,.94],[.52,1.39],[-1.0,1.39],[-1.56,.97]],1.5),GL);wheels(f,.31,.2,[-.78,.78],[-1.38,1.38]);A(f,bx(1.78,.16,.14,0,.45,2.27),DK);A(f,bx(1.78,.16,.14,0,.45,-2.27),DK);A(f,bx(.9,.12,.03,0,.7,2.27),0x111111);A(f,bx(.5,.12,.02,0,.5,2.35),WT);
+[-1,1].forEach(s=>{A(l,bx(.36,.12,.04,s*.58,.76,2.25),0xfff4c8);A(l,bx(.36,.12,.04,s*.6,.82,-2.26),0xd51c1c);A(f,bx(.08,.1,.18,s*.92,1.0,1.05),DK);});});
+const micro=M((p,f,l)=>{A(p,pr([[-2.35,.34],[2.35,.34],[2.38,.8],[2.2,1.15],[1.7,1.92],[-2.3,1.95],[-2.38,1.75],[-2.38,.6]],1.68));
+A(f,pr([[2.15,1.17],[1.68,1.84],[-2.28,1.86],[-2.3,1.25]],1.71),GL);wheels(f,.3,.2,[-.74,.74],[-1.55,1.55]);A(f,bx(1.72,.18,.14,0,.45,2.38),DK);A(f,bx(1.72,.18,.14,0,.45,-2.38),DK);
+[-1,1].forEach(s=>{A(l,bx(.3,.16,.04,s*.6,.82,2.37),0xfff4c8);A(l,bx(.14,.4,.04,s*.76,1.0,-2.39),0xd51c1c);});});
+const cng=M((p,f,l)=>{A(p,pr([[1.34,.32],[1.36,.92],[1.06,1.2],[.62,1.24],[.62,.32]],.8));A(p,bx(1.28,.5,1.95,0,.62,-.28));A(p,bx(1.28,.86,.08,0,1.0,-1.22));A(p,bx(.34,.1,.5,0,.5,1.0));
+A(f,bx(1.38,.07,2.3,0,1.8,-.16),0x1b1b1b);A(f,bx(1.38,.07,.5,0,1.74,.98),0x1b1b1b);[-1,1].forEach(s=>{[.6,-1.18].forEach(z=>A(f,bx(.05,.98,.05,s*.64,1.32,z),0x1b1b1b));A(f,bx(.03,.7,1.15,s*.645,1.22,-.45),0x3d4146);A(l,bx(.16,.1,.03,s*.5,.8,-1.27),0xd51c1c);});
+A(f,bx(.98,.52,.03,0,1.46,.64),GL);A(f,bx(1.1,.26,.62,0,.98,-.75),0x5a3020);A(f,wh(.22,.14,0,.22,1.02,12),TI);[-1,1].forEach(s=>A(f,wh(.24,.14,s*.6,.24,-.75,12),TI));A(l,bx(.24,.2,.05,0,1.0,1.35),0xfff4c8);});
+const rick=M((p,f,l)=>{A(p,bx(1.0,.4,.7,0,.85,-.45));A(p,bx(.98,.46,.08,0,1.22,-.8));A(p,new T.CylinderGeometry(.6,.6,.98,12,1,true,0,Math.PI).rotateZ(Math.PI/2).scale(1,1,.85).translate(0,1.3,-.52));A(p,bx(.95,.06,.42,0,.62,-.05));
+[-1,1].forEach(s=>{A(f,wh(.36,.04,s*.55,.36,-.5,10),TI);A(f,wh(.33,.02,s*.55,.36,-.5,10),0xcfd3d6);A(f,bx(.02,.13,.13,s*.62,1.5,-.5),0xf2c230);A(f,bx(.02,.11,.11,s*.6,1.32,-.82),0xdb2777);A(f,bx(.02,.11,.11,s*.6,1.32,-.2),0x1f5fae);A(f,bx(.08,.08,.45,s*.2,1.24,.7),0x8d5a3b);A(f,bx(.1,.46,.1,s*.1,.56,.62),0x8d5a3b);});
+A(f,wh(.34,.04,0,.34,.95,10),TI);A(f,wh(.31,.02,0,.34,.95,10),0xcfd3d6);A(f,bx(.06,.06,1.5,0,.52,.25),0x7a1f1f);A(f,bx(.05,.55,.05,0,.64,.9),0x7a1f1f);A(f,bx(.52,.04,.04,0,1.06,.9),0x333333);A(f,bx(.18,.06,.25,0,1.0,.45),0x111111);
+A(f,bx(.86,.11,.02,0,.66,-.85),0xd62839);A(f,bx(.86,.11,.02,0,.55,-.85),0xf2c230);A(f,bx(.86,.11,.02,0,.44,-.85),0x1f5fae);A(f,bx(.16,.18,.16,0,1.9,-.52),0xf2c230);
+A(f,bx(.32,.38,.26,0,.84,.45),0x2e7d32);A(f,bx(.36,.5,.22,0,1.32,.5),0xe8e8e8);A(f,new T.SphereGeometry(.12,8,6).translate(0,1.7,.55),0x8d5a3b);});
+const truck=M((p,f,l)=>{A(p,pr([[3.62,.62],[3.62,1.5],[3.5,2.45],[2.05,2.5],[2.05,.62]],2.3));A(p,bx(2.45,1.55,4.9,0,2.12,-.85));A(p,pr([[3.3,2.5],[3.78,2.76],[3.78,3.05],[2.0,3.15],[2.0,2.5]],2.4));
+A(f,bx(2.0,.7,.04,0,1.95,3.6),GL);A(f,bx(2.32,.5,.9,0,1.95,2.85),GL);A(f,bx(2.47,.15,4.92,0,2.72,-.85),0xc62828);A(f,bx(2.47,.15,4.92,0,1.6,-.85),0x1b7a3a);A(f,bx(2.3,.62,.03,0,2.05,-3.32),0x1f5fae);A(f,bx(2.0,.24,.03,0,2.88,3.79),0x1b7a3a);
+A(f,bx(1.9,.35,7.0,0,.82,0),0x1e1e1e);A(f,bx(2.42,.25,.2,0,.64,3.7),DK);A(f,bx(1.4,.45,.03,0,1.1,3.64),0x111111);wheels(f,.5,.32,[-.98,.98],[2.6]);wheels(f,.5,.55,[-.92,.92],[-1.7,-2.75]);
+[-1,1].forEach(s=>{A(l,bx(.3,.22,.04,s*.82,1.0,3.64),0xfff4c8);A(l,bx(.25,.15,.03,s*1.0,1.2,-3.33),0xd51c1c);A(l,bx(.14,.09,.05,s*1.05,3.08,3.78),0xffb300);A(f,bx(.4,.4,.03,s*.95,.42,-3.3),0x111111);});});
+const bus=M((p,f,l)=>{A(p,pr([[5.5,.45],[5.52,2.95],[5.35,3.25],[-5.42,3.25],[-5.52,3.0],[-5.52,.45]],2.48));
+A(f,bx(2.52,1.0,9.4,0,2.25,-.4),GL);A(f,bx(2.3,1.45,.04,0,2.15,5.52),GL);A(f,bx(2.1,.8,.04,0,2.4,-5.54),GL);A(f,bx(2.51,.12,10.95,0,1.55,0),WT);A(f,bx(2.5,.3,11.02,0,.55,0),0x2a2a2a);A(f,bx(.03,1.9,.9,1.255,1.5,4.6),0x222831);A(f,bx(1.6,.25,2.2,0,3.37,0),0xdcdcdc);
+wheels(f,.52,.34,[-1.0,1.0],[3.9]);wheels(f,.52,.6,[-.92,.92],[-2.6]);[-1,1].forEach(s=>{A(l,bx(.4,.2,.04,s*.85,.85,5.53),0xfff4c8);A(l,bx(.25,.35,.03,s*1.05,1.0,-5.54),0xd51c1c);A(f,bx(.06,.3,.06,s*1.38,2.6,5.3),0x111111);});A(l,bx(1.7,.22,.02,0,3.02,5.54),0xffb300);});
+const dd=M((p,f,l)=>{A(p,pr([[5.5,.45],[5.52,4.05],[5.3,4.4],[-5.4,4.4],[-5.52,4.15],[-5.52,.45]],2.48));
+A(f,bx(2.52,.95,9.6,0,1.95,-.3),GL);A(f,bx(2.52,.95,10.2,0,3.45,-.1),GL);A(f,bx(2.25,1.0,.04,0,1.85,5.52),GL);A(f,bx(2.3,.95,.04,0,3.45,5.52),GL);A(f,bx(2.51,.16,10.95,0,2.68,0),WT);A(f,bx(2.5,.3,11.02,0,.55,0),0x2a2a2a);A(f,bx(.03,1.7,.9,1.255,1.35,4.4),0x222831);
+wheels(f,.52,.34,[-1.0,1.0],[3.9]);wheels(f,.52,.6,[-.92,.92],[-2.6]);[-1,1].forEach(s=>{A(l,bx(.4,.2,.04,s*.85,.85,5.53),0xfff4c8);A(l,bx(.25,.35,.03,s*1.05,1.0,-5.54),0xd51c1c);});A(l,bx(1.7,.24,.02,0,2.86,5.54),0xffb300);});
+const moto=M((p,f,l)=>{A(p,bx(.3,.3,.9,0,.85,.1));A(p,bx(.36,.36,.26,0,1.0,.75));
+A(f,wh(.3,.1,0,.3,.72,12),TI);A(f,wh(.3,.12,0,.3,-.68,12),TI);A(f,bx(.28,.1,.62,0,1.02,-.35),0x111111);A(f,bx(.25,.3,.4,0,.55,0),0x5d6166);A(f,bx(.62,.04,.04,0,1.16,.6),0x222222);
+A(f,bx(.38,.55,.25,0,1.48,-.25),0x3b5a8a);A(f,new T.SphereGeometry(.15,8,6).translate(0,1.92,-.18),0x111111);[-1,1].forEach(s=>{A(f,bx(.12,.45,.12,s*.15,.86,-.05),0x2a2a2a);A(f,bx(.08,.08,.5,s*.22,1.42,.15),0x3b5a8a);});
+A(l,bx(.14,.12,.04,0,1.05,.89),0xfff4c8);A(l,bx(.12,.06,.03,0,.95,-.96),0xd51c1c);});
+return[{g:sedan,L:4.6,sp:17,c:[0xf2f2f2,0xf2f2f2,0xeeeeea,0xb8bcc0,0x1e1e1e,0xa31d1d,0x1f4e8c,0x8a8f94]},{g:cng,L:2.8,sp:11,c:[0x1f8a3c,0x239447,0x2e7d32,0x1b7a36]},
+{g:bus,L:11.1,sp:14,c:[0x0f7a54,0x1f5fae,0xf0f0f0,0xe67e22,0x6a1b9a,0xc0392b,0x2c3e50]},{g:truck,L:7.4,sp:12,c:[0xf2c230,0xf4b400,0xe6a817,0xf2c230,0xe67e22,0xc62828]},
+{g:rick,L:2.4,sp:4.8,c:[0xd62839,0x1f5fae,0xf2c230,0x0f7a54,0xdb2777,0x7e22ce,0x0e7490]},{g:micro,L:4.8,sp:16,c:[0xf2f2f2,0xf2f2f2,0xd0d4d8,0x2c3e50]},
+{g:dd,L:11.1,sp:12,c:[0xc0392b,0xc0392b,0xb03a2e,0x1f5fae]},{g:moto,L:2.1,sp:15,c:[0x1e1e1e,0xa31d1d,0x1f4e8c,0x2e7d32]}];})();
+const VLM=new T.MeshBasicMaterial({vertexColors:true}),VH=[],VLN=[];
+{const pick=(r,x)=>r.town?(x<.42?4:x<.66?1:x<.76?7:x<.86?0:x<.91?5:x<.96?3:2):(x<.3?0:x<.4?5:x<.54?1:x<.68?2:x<.86?3:x<.96?7:6);
+RP.forEach((r,ri)=>{r.lanes.forEach(ln=>{const lane=[];let s=rnd()*20;const cap=r.town?(r.jam?6.5:11):18,dense=r.jam?[3,6]:r.town?[8,18]:[38,75];
+while(s<r.len-6){const kd=pick(r,rnd()),K=VT[kd];s+=K.L/2;if(s>r.len-K.L/2)break;const v={r:ri,off:ln[0],dir:ln[1],s,k:kd,sp:Math.min(cap,K.sp*(.85+rnd()*.3)),cv:0,col:K.c[(rnd()*K.c.length)|0]};VH.push(v);lane.push(v);s+=K.L/2+dense[0]+rnd()*(dense[1]-dense[0]);}
+VLN.push({r,dir:ln[1],v:lane});});});}
+const VIM=VT.map((t,k)=>{const n=VH.filter(v=>v.k===k).length,o={};if(!n)return o;['p','f','l'].forEach(q=>{if(!t.g[q])return;const m=new T.InstancedMesh(t.g[q],q==='p'?new T.MeshLambertMaterial({color:0xffffff}):q==='f'?new T.MeshLambertMaterial({vertexColors:true}):VLM,n);m.frustumCulled=false;scene.add(m);o[q]=m;});return o;});
+{const cnt=VT.map(()=>0);VH.forEach(v=>{v.ti=cnt[v.k]++;const m=VIM[v.k].p;if(m)m.setColorAt(v.ti,tcol.setHex(v.col));});}
+/* traffic signals (Kushtia junctions, the Dhaka approach) that build real queues */
+const TSIG=[];function addSignal(r,s,ph){(r.sig=r.sig||[]).push({s,ph});const k=r.cl.findIndex(c=>c>=s),q=r.P[Math.max(0,k)],g=new T.Group();g.position.set(q.x+q.nx*(q.hw+1.2),q.y,q.z+q.nz*(q.hw+1.2));scene.add(g);
+mk(g,.14,4.2,.14,0x3b3f45,0,2.1,0);mk(g,.5,1.3,.5,0x1b1b1b,0,4.6,0);const rl=new T.Mesh(new T.SphereGeometry(.16,10,8),new T.MeshBasicMaterial({color:0x330000})),gl=new T.Mesh(new T.SphereGeometry(.16,10,8),new T.MeshBasicMaterial({color:0x003311}));rl.position.set(0,4.95,.26);gl.position.set(0,4.3,.26);g.add(rl,gl);g.rotation.y=Math.atan2(-q.nx,-q.nz);TSIG.push({r,s,ph,rl,gl});}
+const sigRed=(sg)=>((time+sg.ph)%38)<17;
+const vO=new T.Object3D();vO.rotation.order='YXZ';
+{const near=(R_,x,z)=>{let bi=0,bd=1e18;R_.P.forEach((q,i)=>{const e=(q.x-x)**2+(q.z-z)**2;if(e<bd){bd=e;bi=i;}});return R_.cl[bi];};
+if(KU.st){const R0=RP.find(q=>q.P===KU.roads[0].P);[[150,0],[-30,19],[262,9]].forEach(a=>{const w=KU.W(120,a[0]);addSignal(R0,near(R0,w[0],w[1]),a[1]);});const RR=RP.find(q=>q.P===KU.ring);if(RR)addSignal(RR,RR.len*.3,6);}
+const dk=ST[0],dp=SP[dk.i],R1=RP[0];if(R1){const s0=near(R1,dp.x,dp.z);addSignal(R1,Math.max(40,Math.min(R1.len-40,s0-120)),4);}}
+function vehiclesTick(dt){TSIG.forEach(t=>{const red=sigRed(t);t.rl.material.color.setHex(red?0xff2a1a:0x330000);t.gl.material.color.setHex(red?0x003311:0x22ff55);});
+VLN.forEach(ln=>{const r=ln.r,d=ln.dir,a=ln.v;for(let i=1;i<a.length;i++){const x=a[i];let j=i-1;while(j>=0&&a[j].s*d<x.s*d){a[j+1]=a[j];j--;}a[j+1]=x;}
+for(let i=0;i<a.length;i++){const v=a[i],K=VT[v.k],x=v.s*d;let lim=1e9;if(i>0){const u=a[i-1];lim=u.s*d-(VT[u.k].L+K.L)/2-2.2;}
+if(r.lc&&r.lc.closed){const sx=r.lc.s*d-9.5-K.L/2;if(x<=sx+.05)lim=Math.min(lim,sx);}
+if(r.sig)for(const sg of r.sig){if(!sigRed(sg))continue;const sx=sg.s*d-5.5-K.L/2;if(x<=sx+.05&&sx-x<160)lim=Math.min(lim,sx);}
+const want=v.sp*(r.jam?.85:1);v.cv=Math.min(want,v.cv+2.4*dt);let st=Math.min(v.cv*dt,Math.max(0,lim-x));if(st<v.cv*dt-1e-6)v.cv=st/Math.max(dt,1e-4);v.s+=st*d;if(v.s>r.len)v.s-=r.len;if(v.s<0)v.s+=r.len;}});
+const vcn=VT.map(()=>0),vr2=Math.min(fogFar+60,900)**2;VH.forEach(v=>{const r=RP[v.r],cl=r.cl;let a=0,b=cl.length-1;while(b-a>1){const m=(a+b)>>1;if(cl[m]<=v.s)a=m;else b=m;}const p=r.P[a],q=r.P[b],f=(v.s-cl[a])/Math.max(.01,cl[b]-cl[a]);
+vO.position.set(p.x+(q.x-p.x)*f+p.nx*v.off,p.y+(q.y-p.y)*f,p.z+(q.z-p.z)*f+p.nz*v.off);const dx=(q.x-p.x)*v.dir,dz=(q.z-p.z)*v.dir,dy=(q.y-p.y)*v.dir;vO.rotation.set(-Math.atan2(dy,Math.hypot(dx,dz)),Math.atan2(dx,dz),0);vO.updateMatrix();
+v.px=vO.position.x;v.py=vO.position.y;v.pz=vO.position.z;v.yaw=vO.rotation.y;const ex=v.px-cam.position.x,ez=v.pz-cam.position.z;if(ex*ex+ez*ez>vr2)return;const o=VIM[v.k],k=vcn[v.k]++;if(o.p){o.p.setMatrixAt(k,vO.matrix);o.p.setColorAt(k,tcol.setHex(v.col));}if(o.f)o.f.setMatrixAt(k,vO.matrix);if(o.l)o.l.setMatrixAt(k,vO.matrix);});
+/* only vehicles within the fog distance are drawn: pack them into the first instances */
+VIM.forEach((o,k)=>{for(const q in o){o[q].count=vcn[k];o[q].instanceMatrix.needsUpdate=true;if(q==='p'&&o.p.instanceColor)o.p.instanceColor.needsUpdate=true;}});}
 
 /* station buildings */
 /* passengers: little people with swinging arms and legs */
