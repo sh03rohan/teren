@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8">
+<html lang="bn"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Tuk Tuk Teren: Bangladesh</title>
+<title>টুক টুক টেরেন: বাংলাদেশ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--g:rgba(10,16,28,.58);--b:rgba(255,255,255,.13);--a:#5eead4;--w:#fbbf24;--r:#f87171;--t:#eaf0f8;--m:#9db0c9;--L:calc(env(safe-area-inset-left,0px) + 12px);--R:calc(env(safe-area-inset-right,0px) + 12px);--T:calc(env(safe-area-inset-top,0px) + 12px)}
-html,body{margin:0;height:100%;overflow:hidden;background:#0b1220;font-family:"Segoe UI",system-ui,-apple-system,sans-serif;color:var(--t)}
+html,body{margin:0;height:100%;overflow:hidden;background:#0b1220;font-family:"Hind Siliguri","Noto Sans Bengali","Segoe UI",system-ui,sans-serif;color:var(--t)}
 canvas{display:block}
 .p{position:absolute;background:var(--g);border:1px solid var(--b);border-radius:16px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:10px 14px;box-sizing:border-box}
 .s{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--m)}
@@ -43,25 +44,27 @@ button svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8
 #camMenu button{display:flex;align-items:center;gap:10px;text-align:left;width:100%;padding:9px 10px;font-size:13px}
 #camMenu small{margin-left:auto;opacity:.5;display:inline}
 </style></head><body>
-<div id="bigmap"><canvas id="bm" width="640" height="880"></canvas><span>Map of Bangladesh. Click or press M to close</span></div>
-<div id="brand" class="p"><b>TUK TUK TEREN</b><div class="s" id="vw">Chase view</div><div class="s" id="rg" style="color:#5eead4;margin-top:2px">Dhaka</div><div class="s" id="wxl" style="margin-top:2px">Clear · auto</div></div>
-<div id="route" class="p"><div id="nx">Next stop</div><div class="rl" id="rl"><i id="rm"></i></div></div>
-<div id="info" class="p"><div class="row"><div><div class="s">Score</div><div class="big" id="sc">0</div></div><div><div class="s">Stops</div><div class="big" id="dn">0</div></div></div><canvas id="mm" width="300" height="412"></canvas></div>
+<div id="bigmap"><canvas id="bm" width="640" height="880"></canvas><span>বাংলাদেশের ম্যাপ। বন্ধ করতে ক্লিক করুন বা M চাপুন</span></div>
+<div id="brand" class="p"><b>টুক টুক টেরেন</b><div class="s" id="vw">চেজ ভিউ</div><div class="s" id="rg" style="color:#5eead4;margin-top:2px">ঢাকা</div><div class="s" id="wxl" style="margin-top:2px">পরিষ্কার আকাশ · স্বয়ংক্রিয়</div></div>
+<div id="route" class="p"><div id="nx">পরের স্টেশন</div><div class="rl" id="rl"><i id="rm"></i></div></div>
+<div id="info" class="p"><div class="row"><div><div class="s">স্কোর</div><div class="big" id="sc">0</div></div><div><div class="s">স্টেশন</div><div class="big" id="dn">0</div></div></div><canvas id="mm" width="300" height="412"></canvas></div>
 <div id="sp" class="p"><svg viewBox="0 0 160 160" width="168" height="168">
 <circle cx="80" cy="80" r="64" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="12" stroke-linecap="round" stroke-dasharray="301.6 402" transform="rotate(135 80 80)"/>
 <circle id="gv" cx="80" cy="80" r="64" fill="none" stroke="#5eead4" stroke-width="12" stroke-linecap="round" stroke-dasharray="0 402" transform="rotate(135 80 80)"/>
 <circle id="gl" cx="80" cy="80" r="64" fill="none" stroke="#fbbf24" stroke-width="18" stroke-dasharray="0 1 3 402" transform="rotate(135 80 80)"/>
 <text id="kmh" x="80" y="90" text-anchor="middle" fill="#fff" font-size="40" font-weight="700">0</text>
-<text x="80" y="106" text-anchor="middle" fill="#9db0c9" font-size="10" letter-spacing="1.5">KM/H</text>
-<text id="lim" x="80" y="128" text-anchor="middle" fill="#9db0c9" font-size="10" letter-spacing="1.2">LIMIT 60</text></svg></div>
-<div id="ctl" class="p"><div class="cols"><div><div class="vb"><b id="th"></b></div><div class="s">Thr</div></div><div><div class="vb"><b id="bk" class="r"></b></div><div class="s">Brk</div></div></div><div id="chips"><span id="c1" class="chip">Doors</span><span id="c2" class="chip">Lights</span><span id="c3" class="chip">Reverse</span></div></div>
+<text x="80" y="106" text-anchor="middle" fill="#9db0c9" font-size="10" letter-spacing="1.5">কিমি/ঘণ্টা</text>
+<text id="lim" x="80" y="128" text-anchor="middle" fill="#9db0c9" font-size="10" letter-spacing="1.2">সীমা ৬০</text></svg></div>
+<div id="ctl" class="p"><div class="cols"><div><div class="vb"><b id="th"></b></div><div class="s">থ্রটল</div></div><div><div class="vb"><b id="bk" class="r"></b></div><div class="s">ব্রেক</div></div></div><div id="chips"><span id="c1" class="chip">দরজা</span><span id="c2" class="chip">লাইট</span><span id="c3" class="chip">পেছনে</span></div></div>
 <div id="msg"></div>
 <div id="bt"></div><div id="camMenu"></div>
-<div id="start"><div class="card"><div class="s">3D train simulator</div><h1>Tuk Tuk Teren</h1><p>Drive the Padma Express across Bangladesh: Dhaka, Chattogram and Cox&rsquo;s Bazar, the Sylhet hills, the north and the great river bridges. Stop at every station, obey signals and speed limits, and watch the weather.</p>
-<div class="keys"><span><kbd>W</kbd><kbd>S</kbd>Throttle</span><span><kbd>Space</kbd>Brake</span><span><kbd>B</kbd>Emergency</span><span><kbd>H</kbd>Horn</span><span><kbd>O</kbd>Doors</span><span><kbd>R</kbd>Reverse</span><span><kbd>1</kbd>&ndash;<kbd>9</kbd>Views</span><span><kbd>L</kbd>Lights</span><span><kbd>N</kbd>Night</span><span><kbd>E</kbd>Weather</span><span><kbd>M</kbd>Map</span><span><kbd>U</kbd>Sound</span></div>
-<div class="s" id="ld">Building Bangladesh...</div><button id="go" class="go" style="display:none">Start driving</button></div></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" onerror="document.getElementById('ld').textContent='Could not load the 3D engine (three.js). Check your internet connection and reload.'"></script>
+<div id="start"><div class="card"><div class="s">থ্রিডি ট্রেন সিমুলেটর</div><h1>টুক টুক টেরেন</h1><p>পদ্মা এক্সপ্রেস চালিয়ে ঘুরে আসুন সারা বাংলাদেশ: ঢাকা, চট্টগ্রাম, কক্সবাজার, সিলেটের পাহাড়, উত্তরবঙ্গ, কুষ্টিয়া আর বড় বড় নদীর সেতু। প্রতিটি স্টেশনে থামুন, সিগন্যাল আর গতিসীমা মেনে চলুন, আবহাওয়ার দিকে খেয়াল রাখুন।</p>
+<div class="keys"><span><kbd>W</kbd><kbd>S</kbd>থ্রটল</span><span><kbd>Space</kbd>ব্রেক</span><span><kbd>B</kbd>জরুরি ব্রেক</span><span><kbd>H</kbd>হর্ন</span><span><kbd>O</kbd>দরজা</span><span><kbd>R</kbd>পেছনে</span><span><kbd>1</kbd>&ndash;<kbd>9</kbd>ক্যামেরা</span><span><kbd>L</kbd>লাইট</span><span><kbd>N</kbd>রাত</span><span><kbd>E</kbd>আবহাওয়া</span><span><kbd>M</kbd>ম্যাপ</span><span><kbd>U</kbd>শব্দ</span></div>
+<div class="s" id="ld">বাংলাদেশ তৈরি হচ্ছে...</div><button id="go" class="go" style="display:none">চালানো শুরু করুন</button></div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" onerror="document.getElementById('ld').textContent='থ্রিডি ইঞ্জিন (three.js) লোড হয়নি। ইন্টারনেট সংযোগ দেখে পেজটি আবার খুলুন।'"></script>
 <script>function boot(){
+const BND='০১২৩৪৫৬৭৮৯',bnum=v=>String(v).replace(/[0-9]/g,d=>BND[d]);
+const BNN={'Dhaka':'ঢাকা','Comilla':'কুমিল্লা','Chattogram':'চট্টগ্রাম',"Cox's Bazar":'কক্সবাজার','Cox\u2019s Bazar':'কক্সবাজার','Sylhet':'সিলেট','Mymensingh':'ময়মনসিংহ','Rangpur':'রংপুর','Dinajpur':'দিনাজপুর','Rajshahi':'রাজশাহী','Kushtia':'কুষ্টিয়া','Jashore':'যশোর','Khulna':'খুলনা'},bnn=n=>BNN[n]||n;
 /* ===== Bangladesh world (pure maths) ===== */
 const T=THREE;
 const ss=(a,b,x)=>{x=Math.min(1,Math.max(0,(x-a)/(b-a)));return x*x*(3-2*x);};
@@ -73,15 +76,15 @@ const COAST=[[86.5,21.4],[87.8,21.55],[88.7,21.65],[89.2,21.7],[89.8,21.8],[90.3
 function coastZ(x){const lo=Math.min(93.19,Math.max(86.51,LON(x)));for(let i=0;i<COAST.length-1;i++){const a=COAST[i],b=COAST[i+1];if(lo<=b[0])return Z(a[1]+(b[1]-a[1])*(lo-a[0])/(b[0]-a[0]));}return Z(19.2);}
 /* rivers (widths exaggerated for the game) */
 const RIV=[
-{n:'Ganges',w:220,d:15.5,by:20,br:'Hardinge Bridge',p:[[88.1,24.55],[88.6,24.33],[89.0,24.05],[89.4,23.85],[89.78,23.78]]},
-{n:'Padma',w:220,d:15.5,by:20,br:'Padma Bridge',p:[[89.78,23.78],[90.0,23.55],[90.25,23.4],[90.5,23.25],[90.65,23.15]]},
-{n:'Jamuna',w:230,d:15,by:20,br:'Jamuna Railway Bridge',p:[[89.85,26.05],[89.82,25.6],[89.75,25.15],[89.7,24.8],[89.77,24.4],[89.8,24.0],[89.78,23.78]]},
-{n:'Meghna',w:200,d:14,by:19,br:'Bhairab Railway Bridge',p:[[90.98,24.05],[90.88,23.7],[90.75,23.4],[90.65,23.15]]},
-{n:'Meghna estuary',x:1,w:380,d:16,by:20,br:'Estuary',p:[[90.65,23.15],[90.75,22.8],[90.9,22.5],[91.0,22.2],[91.05,21.9]]},
-{n:'Surma',w:60,d:8,by:9,br:'Surma Bridge',p:[[92.25,25.1],[92.0,25.02],[91.8,25.03],[91.5,24.9],[91.2,24.45],[91.0,24.15],[90.98,24.05]]},
-{n:'Teesta',x:1,w:55,d:8,by:9,br:'Teesta Bridge',p:[[88.95,26.5],[89.25,26.1],[89.4,25.7],[89.6,25.45],[89.73,25.2]]},
-{n:'Karnaphuli',w:90,d:9,by:10,br:'Kalurghat Bridge',p:[[92.3,22.7],[92.15,22.5],[91.95,22.33],[91.82,22.26]]},
-{n:'Gorai',w:46,d:7,by:9,br:'Gorai Railway Bridge',p:[[89.13,23.975],[89.135,23.86],[89.12,23.73],[89.15,23.63],[89.24,23.52],[89.36,23.4],[89.48,23.28]]}];
+{n:'Ganges',w:220,d:15.5,by:20,br:'Hardinge Bridge',bn:'হার্ডিঞ্জ ব্রিজ',p:[[88.1,24.55],[88.6,24.33],[89.0,24.05],[89.4,23.85],[89.78,23.78]]},
+{n:'Padma',w:220,d:15.5,by:20,br:'Padma Bridge',bn:'পদ্মা সেতু',p:[[89.78,23.78],[90.0,23.55],[90.25,23.4],[90.5,23.25],[90.65,23.15]]},
+{n:'Jamuna',w:230,d:15,by:20,br:'Jamuna Railway Bridge',bn:'যমুনা রেলসেতু',p:[[89.85,26.05],[89.82,25.6],[89.75,25.15],[89.7,24.8],[89.77,24.4],[89.8,24.0],[89.78,23.78]]},
+{n:'Meghna',w:200,d:14,by:19,br:'Bhairab Railway Bridge',bn:'ভৈরব রেলসেতু',p:[[90.98,24.05],[90.88,23.7],[90.75,23.4],[90.65,23.15]]},
+{n:'Meghna estuary',x:1,w:380,d:16,by:20,br:'Estuary',bn:'মোহনা',p:[[90.65,23.15],[90.75,22.8],[90.9,22.5],[91.0,22.2],[91.05,21.9]]},
+{n:'Surma',w:60,d:8,by:9,br:'Surma Bridge',bn:'সুরমা সেতু',p:[[92.25,25.1],[92.0,25.02],[91.8,25.03],[91.5,24.9],[91.2,24.45],[91.0,24.15],[90.98,24.05]]},
+{n:'Teesta',x:1,w:55,d:8,by:9,br:'Teesta Bridge',bn:'তিস্তা সেতু',p:[[88.95,26.5],[89.25,26.1],[89.4,25.7],[89.6,25.45],[89.73,25.2]]},
+{n:'Karnaphuli',w:90,d:9,by:10,br:'Kalurghat Bridge',bn:'কালুরঘাট সেতু',p:[[92.3,22.7],[92.15,22.5],[91.95,22.33],[91.82,22.26]]},
+{n:'Gorai',w:46,d:7,by:9,br:'Gorai Railway Bridge',bn:'গড়াই রেলসেতু',p:[[89.13,23.975],[89.135,23.86],[89.12,23.73],[89.15,23.63],[89.24,23.52],[89.36,23.4],[89.48,23.28]]}];
 RIV.forEach(r=>{const c=new T.CatmullRomCurve3(r.p.map(a=>new T.Vector3(X(a[0]),0,Z(a[1])))),n=Math.ceil(c.getLength()/50),pts=c.getSpacedPoints(n);r.pts=pts;r.xs=Float32Array.from(pts,p=>p.x);r.zs=Float32Array.from(pts,p=>p.z);
 let a=1e9,b=-1e9,c1=1e9,d=-1e9;pts.forEach(p=>{a=Math.min(a,p.x);b=Math.max(b,p.x);c1=Math.min(c1,p.z);d=Math.max(d,p.z);});const m=r.w*3.3+60;r.bb=[a-m,b+m,c1-m,d+m];});
 function rdist(r,x,z){if(x<r.bb[0]||x>r.bb[1]||z<r.bb[2]||z>r.bb[3])return 9999;let m=1e18;const xs=r.xs,zs=r.zs;for(let i=0;i<xs.length;i++){const dx=xs[i]-x,dz=zs[i]-z,e=dx*dx+dz*dz;if(e<m)m=e;}return Math.sqrt(m);}
@@ -128,8 +131,9 @@ function hdist(x,z){if(Math.abs(x-TCx)>450||Math.abs(z-TCz)>450)return 999;let m
 const LAKES=[[X(92.42),Z(22.45),260,520,-.5],[X(91.25),Z(24.7),380,760,-.4],[X(91.55),Z(24.58),330,680,-.4],[X(90.95),Z(24.52),360,720,-.4]];
 /* Karnaphuli Tunnel (opened 2023, renamed 2025): twin road tubes under the Karnaphuli mouth from Patenga (north bank) to Anwara (south bank).
    KT.C is the crossing point, KT.n points across the river towards Patenga; kty(u) is the road level along that axis (cut-and-cover ramps, bored section). */
-const KT=(()=>{const A=[X(91.95),Z(22.33)],B=[X(91.82),Z(22.26)];let dx=B[0]-A[0],dz=B[1]-A[1],l=Math.hypot(dx,dz);dx/=l;dz/=l;return{C:[X(91.825),Z(22.263)],n:[-dz,dx],P:105,E:235};})();
-const kty=au=>au<KT.P?-8-16*(1-ss(58,KT.P,au)):-8+(Math.min(au,KT.E)-KT.P)/(KT.E-KT.P)*9.8;
+const KT=(()=>{const A=[X(91.95),Z(22.33)],B=[X(91.82),Z(22.26)];let dx=B[0]-A[0],dz=B[1]-A[1],l=Math.hypot(dx,dz);dx/=l;dz/=l;return{C:[X(91.825),Z(22.263)],n:[-dz,dx],B0:-110,B1:300,PA:-200,PB:380};})();
+/* road level along the tunnel axis u (u>0 towards Patenga): deep bored section under the mouth, covered cut-and-cover boxes rising to the portals */
+const kty=u=>{if(u>=KT.B0&&u<=KT.B1){const e=Math.min(u-KT.B0,KT.B1-u);return -8-16*ss(0,60,e);}if(u<KT.B0)return u<=KT.PA?1.7:-8+(KT.B0-u)/(KT.B0-KT.PA)*9.7;return u>=KT.PB?1.7:-8+(u-KT.B1)/(KT.PB-KT.B1)*9.7;};
 const PD=[];for(let t=0;t<2500&&PD.length<160;t++){const p=SP[(rnd()*NS)|0];if(p.la>24.3&&p.lo>91.3)continue;const o=70+rnd()*700,s=rnd()<.5?-1:1,x=p.x+p.nx*o*s,z=p.z+p.nz*o*s;if(hillH(x,z)>5||z>coastZ(x)-400)continue;PD.push([x,z]);}
 const PH=new Map();PD.forEach((q,i)=>{const k=Math.floor(q[0]/200)*10000+Math.floor(q[1]/200);let a=PH.get(k);if(!a){a=[];PH.set(k,a);}a.push(i);});const G={d:999,A:0,r:999};
 function hgt(x,z){let bd=1e18,bi=-1;const ci=Math.floor(x/100),cj=Math.floor(z/100);
@@ -143,7 +147,7 @@ for(let i=0;i<LAKES.length;i++){const l=LAKES[i],r=Math.hypot(x-l[0],z-l[1]);if(
 {const cx=Math.floor(x/200),cz=Math.floor(z/200);for(let a=cx-1;a<=cx+1;a++)for(let b=cz-1;b<=cz+1;b++){const l=PH.get(a*10000+b);if(l)for(let k=0;k<l.length;k++){const q=PD[l[k]],dx=x-q[0],dz=z-q[1],e=dx*dx+dz*dz;if(e<3000)h-=3.4*Math.exp(-e/392);}}}
 const mg=mang(x,z);if(mg>0){const f=Math.sin(x*.012+Math.sin(z*.008)*2.2)*Math.cos(z*.009+Math.sin(x*.006)*2);h-=2.6*mg*(1-ss(0,.09,Math.abs(f)));}
 const t=ss(-260,60,sea);h=h*(1-t)+(-(2+38*ss(0,2400,Math.max(0,sea))))*t;
-{const ex=x-KT.C[0],ez=z-KT.C[1],u=ex*KT.n[0]+ez*KT.n[1],v=ex*KT.n[1]-ez*KT.n[0],au=Math.abs(u);if(au>92&&au<252&&Math.abs(v)<48){const m=(1-ss(13,40,Math.abs(v)))*ss(92,110,au)*(1-ss(238,252,au));if(m>0)h=Math.min(h,h*(1-m)+(kty(au)-.7)*m);}}
+{const ex=x-KT.C[0],ez=z-KT.C[1],u=ex*KT.n[0]+ez*KT.n[1],v=Math.abs(ex*KT.n[1]-ez*KT.n[0]);if(v<110&&((u<KT.B0+15&&u>-330)||(u>KT.B1-15&&u<760))){const m=(1-ss(48,105,v))*(u<0?ss(-330,-290,u)*(1-ss(KT.B0-5,KT.B0+15,u)):ss(KT.B1-15,KT.B1+5,u)*(1-ss(720,760,u)));if(m>0)h=Math.max(h,h*(1-m)+1.5*m);}}
 const fl=ty+(h-ty)*ss(55,150,d),r=fl*(1-nf)+h*nf;G.d=d;return r;}
 /* flags */
 SP.forEach((p,i)=>{let b=0,a=0;RIV.forEach((r,k)=>{if(r.x)return;const d=rdist(r,p.x,p.z);if(d<r.w*1.7&&p.y>r.by*.6)b=k+1;else if(d<r.w*3.05&&p.y-flood(p.x,p.z)>2&&!a)a=k+1;});p.br=b;p.ap=b?0:a;p.vi=Math.abs(i-gI)<=11;p.tn=i>=TA&&i<=TB;});
@@ -162,7 +166,7 @@ const scene=new T.Scene(),cam=new T.PerspectiveCamera(65,innerWidth/innerHeight,
 const hemi=new T.HemisphereLight(0xffffff,0x4a6b3a,1),sun=new T.DirectionalLight(0xfff2d6,1.1),SUND=new T.Vector3(300,500,200).normalize();sun.position.set(300,500,200);scene.add(hemi,sun);
 const lam=c=>new T.MeshLambertMaterial({color:c}),lam2=c=>new T.MeshLambertMaterial({color:c,side:T.DoubleSide});
 const mk=(p,w,h,l,c,x,y,z)=>{const m=new T.Mesh(new T.BoxGeometry(w,h,l),lam(c));m.position.set(x||0,y||0,z||0);p.add(m);return m;};
-function spr(t,w,h,bg,fg){const c=document.createElement('canvas');c.width=512;c.height=Math.round(512*h/w);const x=c.getContext('2d');x.fillStyle=bg;x.fillRect(0,0,512,c.height);x.strokeStyle=fg;x.lineWidth=10;x.strokeRect(5,5,502,c.height-10);x.fillStyle=fg;x.font='bold '+Math.round(c.height*.46)+'px sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillText(t,256,c.height/2+4);return new T.Mesh(new T.PlaneGeometry(w,h),new T.MeshBasicMaterial({map:new T.CanvasTexture(c),side:T.DoubleSide}));}
+function spr(t,w,h,bg,fg){const c=document.createElement('canvas');c.width=512;c.height=Math.round(512*h/w);const x=c.getContext('2d');x.fillStyle=bg;x.fillRect(0,0,512,c.height);x.strokeStyle=fg;x.lineWidth=10;x.strokeRect(5,5,502,c.height-10);x.fillStyle=fg;let fs=Math.round(c.height*.5);x.font='bold '+fs+'px "Hind Siliguri","Noto Sans Bengali",sans-serif';const tw_=x.measureText(t).width;if(tw_>470){fs=Math.floor(fs*470/tw_);x.font='bold '+fs+'px "Hind Siliguri","Noto Sans Bengali",sans-serif';}x.textAlign='center';x.textBaseline='middle';x.fillText(t,256,c.height/2+fs*.08);return new T.Mesh(new T.PlaneGeometry(w,h),new T.MeshBasicMaterial({map:new T.CanvasTexture(c),side:T.DoubleSide}));}
 function prism(w,h,l){const s=new T.Shape();s.moveTo(-w,0);s.lineTo(w,0);s.lineTo(0,h);s.closePath();return new T.ExtrudeGeometry(s,{depth:l,bevelEnabled:false}).translate(0,0,-l/2);}
 let bldM;const o=new T.Object3D(),o2=new T.Object3D(),tcol=new T.Color(),IMS=[];
 function IM(geo,mat,max){const m=new T.InstancedMesh(geo,mat,max);m.frustumCulled=false;m.userData.n=0;IMS.push(m);scene.add(m);return m;}
@@ -213,12 +217,12 @@ const bolt=new T.Line(new T.BufferGeometry().setAttribute('position',new T.Buffe
 /* environment: smooth day/night and weather blending */
 const lights=[];let night=false,flash=0,envHemi=.95,envSun=1.1,WXI=0,wxAuto=true,wxT=70;
 const ENV={n:0,cov:.12,dark:0,rain:0,fog:0,wind:.15,lt:0};
-const WX=[{n:'Clear',cov:.12,dark:0,rain:0,fog:0,wind:.15,lt:0,m:'Clear skies'},{n:'Partly cloudy',cov:.5,dark:.08,rain:0,fog:0,wind:.3,lt:0,m:'Clouds drifting in'},
-{n:'Overcast',cov:.95,dark:.42,rain:0,fog:.12,wind:.5,lt:0,m:'Dark clouds are gathering'},{n:'Rain',cov:1,dark:.55,rain:.6,fog:.28,wind:.45,lt:0,m:'Rain: the rails are slippery, brake earlier'},
-{n:'Thunderstorm',cov:1,dark:.82,rain:1,fog:.32,wind:1,lt:1,m:'Thunderstorm! Heavy rain and lightning'},{n:'Fog',cov:.3,dark:.15,rain:0,fog:1,wind:.05,lt:0,m:'Thick fog: visibility is low'}];
+const WX=[{n:'পরিষ্কার আকাশ',cov:.12,dark:0,rain:0,fog:0,wind:.15,lt:0,m:'আকাশ পরিষ্কার'},{n:'হালকা মেঘ',cov:.5,dark:.08,rain:0,fog:0,wind:.3,lt:0,m:'মেঘ জমছে'},
+{n:'মেঘলা',cov:.95,dark:.42,rain:0,fog:.12,wind:.5,lt:0,m:'কালো মেঘ ঘনিয়ে আসছে'},{n:'বৃষ্টি',cov:1,dark:.55,rain:.6,fog:.28,wind:.45,lt:0,m:'বৃষ্টি! লাইন পিচ্ছিল, আগে থেকে ব্রেক করুন'},
+{n:'ঝড়',cov:1,dark:.82,rain:1,fog:.32,wind:1,lt:1,m:'ঝড় উঠেছে! ভারী বৃষ্টি আর বজ্রপাত'},{n:'কুয়াশা',cov:.3,dark:.15,rain:0,fog:1,wind:.05,lt:0,m:'ঘন কুয়াশা: সামনে দেখা যাচ্ছে কম'}];
 const WXN=[[1,1,5],[0,2,2],[3,4,1],[2,4,2],[3,3,2],[0,1]];
 function setTime(n){night=n;}
-function setWx(i,auto){WXI=i;wxAuto=auto;wxT=55+rnd()*65;if(started)msg(WX[i].m,3000);const e=$('wxl');if(e)e.textContent=WX[i].n+(auto?' · auto':'');}
+function setWx(i,auto){WXI=i;wxAuto=auto;wxT=55+rnd()*65;if(started)msg(WX[i].m,3000);const e=$('wxl');if(e)e.textContent=WX[i].n+(auto?' · স্বয়ংক্রিয়':'');}
 function strike(){const d=new T.Vector3();cam.getWorldDirection(d);d.y=0;d.normalize();const dist=700+rnd()*1100,side=(rnd()-.5)*1400,bx=cam.position.x+d.x*dist-d.z*side,bz=cam.position.z+d.z*dist+d.x*side,p=bolt.geometry.attributes.position;
 let x=bx,z=bz;for(let i=0;i<18;i++){const y=640-i*(640/17);p.setXYZ(i,x,y,z);x+=(rnd()-.5)*55;z+=(rnd()-.5)*55;}p.needsUpdate=true;bolt.visible=true;flash=1;thunder(Math.min(3.2,Math.hypot(dist,side)/340),dist);}
 const C1=new T.Color(),C2=new T.Color(),C3=new T.Color();
@@ -251,9 +255,12 @@ else{if(inb){const f=(n+1)/2;c=[.3+.2*f,.56+.08*f,.2+.06*f];if(lo>91.4&&la>24.1&
 if(mang(x,z)>.35)c=[.1,.3,.16];if(rb<1.55&&h<3)c=[.74,.66,.46];}
 col[i*3]=c[0];col[i*3+1]=c[1];col[i*3+2]=c[2];}
 tg.setAttribute('color',new T.BufferAttribute(col,3));tg.computeVertexNormals();scene.add(new T.Mesh(tg,new T.MeshLambertMaterial({vertexColors:true,map:fieldTex()})));
-const w=new T.Mesh(new T.PlaneGeometry(9600,15000).rotateX(-Math.PI/2).translate(0,0,-100),new T.MeshPhongMaterial({color:0x3a7489,specular:0x8fb3c4,transparent:true,opacity:.9,shininess:70}));w.position.y=.3;scene.add(w);
+const w=new T.Mesh(new T.PlaneGeometry(9600,15000).rotateX(-Math.PI/2).translate(0,0,-100),new T.MeshPhongMaterial({color:0x3a7489,specular:0x8fb3c4,transparent:true,opacity:.9,shininess:70}));w.position.y=.3;
+/* no water surface inside the Karnaphuli Tunnel's covered cut-and-cover boxes (they dip below the global water level) */
+w.material.onBeforeCompile=sh=>{sh.uniforms.kc={value:new T.Vector4(KT.C[0],KT.C[1],KT.n[0],KT.n[1])};sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>\nvarying vec3 vWP;').replace('#include <project_vertex>','#include <project_vertex>\nvWP=(modelMatrix*vec4(transformed,1.)).xyz;');
+sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>\nvarying vec3 vWP;uniform vec4 kc;').replace('void main() {','void main() {\nvec2 e=vWP.xz-kc.xy;float ku=dot(e,kc.zw),kv=abs(e.x*kc.w-e.y*kc.z);if(kv<13.&&((ku>-206.&&ku<-104.)||(ku>294.&&ku<386.)))discard;');};scene.add(w);
 const fp=new T.Mesh(new T.PlaneGeometry(60000,60000).rotateX(-Math.PI/2),lam(0x6f8a4a));scene.add(fp);
-const fs=new T.Mesh(new T.PlaneGeometry(60000,30000).rotateX(-Math.PI/2),new T.MeshPhongMaterial({color:0x3a86a6,shininess:90}));fs.position.set(0,.3,7400+15000);scene.add(fs);}
+const fs=new T.Mesh(new T.PlaneGeometry(60000,30000).rotateX(-Math.PI/2),new T.MeshPhongMaterial({color:0x3a86a6,shininess:90}));fs.position.set(0,.3,7400+15000);scene.add(fs);KT.fs=fs;}
 
 /* track */
 const lampM=new T.MeshBasicMaterial({color:0x8a8a8a}),tnM=new T.MeshBasicMaterial({color:0xfff0c0});
@@ -295,7 +302,7 @@ add(pc,p.x,ct-2.75,p.z,ry,1,1,1);if(h>1)add(shaft,p.x,ct+h/2,p.z,ry,8,h,4.8);add
    Meghna  - Bhairab railway bridges: steel through-truss spans (91-102 m) with polygonal (Parker) top chords; Syed Nazrul Islam road bridge (prestressed concrete box girder) alongside
    Surma   - Sylhet: smaller bowstring (arched) steel truss
    Karnaphuli - Kalurghat Bridge (1930): low, narrow old steel truss with a plank road deck shared by rail and road traffic */
-const BCF={9:{t:'warren',H:8.5,W:3.3,n:5,col:0x7d8a92,pier:'twin'},1:{t:'petit',H:12.5,W:3.4,n:9,col:0x8e989e,pier:'well',road:58,rname:'LALON SHAH BRIDGE'},3:{t:'warren',H:10.5,W:3.5,n:8,col:0x6f8faa,pier:'pile',road:64},4:{t:'parker',H:11.5,W:3.4,n:8,col:0x5d6a70,pier:'twin',road:50},6:{t:'bow',H:9,W:3.3,n:6,col:0xb9c1c6,pier:'twin'},8:{t:'low',H:6.4,W:4.4,n:4,col:0x7a5b48,pier:'well',kal:1}};
+const BCF={9:{t:'warren',H:8.5,W:3.3,n:5,col:0x7d8a92,pier:'twin'},1:{t:'petit',H:12.5,W:3.4,n:9,col:0x8e989e,pier:'well',road:58,rname:'লালন শাহ সেতু'},3:{t:'warren',H:10.5,W:3.5,n:8,col:0x6f8faa,pier:'pile',road:64},4:{t:'parker',H:11.5,W:3.4,n:8,col:0x5d6a70,pier:'twin',road:50},6:{t:'bow',H:9,W:3.3,n:6,col:0xb9c1c6,pier:'twin'},8:{t:'low',H:6.4,W:4.4,n:4,col:0x7a5b48,pier:'well',kal:1}};
 const STL=IMC(BOX1,lam(0xffffff),1e9,30),PCY=IMC(new T.CylinderGeometry(1,1,1,14).translate(0,.5,0),lam(0xb9b5ac),1e9,30),PBX=IMC(BOX1,lam(0xc4c0b6),1e9,30),RBQ=[];
 {const va=new T.Vector3(),vb=new T.Vector3();
 BG.forEach(g=>{const c=BCF[g.id];if(!c)return;if(c.road)RBQ.push({g,off:-c.road,nm:c.rname});const n=g.e-g.s,ns=Math.max(1,Math.round(n/c.n)),bnd=[];for(let j=0;j<=ns;j++)bnd.push(g.s+Math.round(j*n/ns));
@@ -316,10 +323,10 @@ if(c.pier==='well'){add(PCY,p.x,bot,p.z,ry,4.4,Math.max(1,.8-bot),4.4);add(PBX,p
 else if(c.pier==='twin'){[-1,1].forEach(s=>add(PCY,p.x+p.nx*s*c.W,bot,p.z+p.nz*s*c.W,0,1.5,top-bot,1.5));add(PBX,p.x,top-.5,p.z,ry,c.W*2+3,1,3);}
 else{add(PCY,p.x,bot,p.z,0,6,Math.max(1,2.2-bot),6);add(PBX,p.x,(top+2.2)/2,p.z,ry,c.W*2+2,Math.max(.5,top-2.2),4);add(PBX,p.x,top-.5,p.z,ry,c.W*2+4,1,4.6);}});});}
 /* bridge name boards stand on top of the bridge (above the truss, or above the road deck on Padma), readable from both directions */
-BG.forEach(g=>{const c=BCF[g.id],n=g.e-g.s,ns=c?Math.max(1,Math.round(n/c.n)):1,mid=g.s+Math.round(n/ns/2),p=SP[Math.min(g.e,mid)],top=g.id===2?12.72+7.2:(c?c.H:10)+1.9,G_=new T.Group();
-G_.position.set(p.x,p.y+top,p.z);G_.rotation.y=Math.atan2(p.tx,p.tz);scene.add(G_);const W_=g.id===2?16:13;
-[-1,1].forEach(f=>{const sg=spr(RIV[g.id-1].br.toUpperCase(),W_,1.8,'#0b5d42','#ffffff');sg.material.side=T.FrontSide;sg.position.z=f*.06;sg.rotation.y=f>0?0:Math.PI;G_.add(sg);});
-mk(G_,W_+.4,.25,.3,0x2b2f33,0,-1.02,0);[-1,1].forEach(s_=>{const h=g.id===2?7.2:1.9;mk(G_,.22,h,.22,0x4a4f55,s_*(W_*.4),-.9-h/2,0);});});
+BG.forEach(g=>{const c=BCF[g.id],n=g.e-g.s,ns=c?Math.max(1,Math.round(n/c.n)):1,hs=Math.round(n/ns/2);[g.s+hs,g.e-hs].forEach((mid,ei)=>{if(ei&&ns<2)return;const p=SP[Math.max(g.s,Math.min(g.e,mid))],top=g.id===2?12.72+8:(c?c.H:10)+2.5,G_=new T.Group();
+G_.position.set(p.x,p.y+top,p.z);G_.rotation.y=Math.atan2(p.tx,p.tz);scene.add(G_);const W_=g.id===2?24:20;
+[-1,1].forEach(f=>{const sg=spr(RIV[g.id-1].bn,W_,3,'#0b5d42','#ffffff');sg.material.side=T.FrontSide;sg.position.z=f*.06;sg.rotation.y=f>0?0:Math.PI;G_.add(sg);});
+mk(G_,W_+.4,.3,.3,0x2b2f33,0,-1.65,0);[-1,1].forEach(s_=>{const h=g.id===2?6.4:1.9;mk(G_,.26,h,.26,0x4a4f55,s_*(W_*.4),-1.6-h/2,0);});});});
 {const nA=AI.length,pr=IM(new T.BoxGeometry(1,1,1),lam(0xc9c6be),nA),pcp=IM(new T.BoxGeometry(1,1,1),lam(0xbdbab2),nA),gi=IM(new T.BoxGeometry(7.2,2.2,12.1),lam(0xbdbab2),nA),pw=IM(new T.BoxGeometry(.5,1.1,12.1),lam(0xd8d6d0),nA*2);
 AI.forEach(i=>{const p=SP[i],ry=Math.atan2(p.tx,p.tz);add(gi,p.x+p.tx*6,p.y-1.2,p.z+p.tz*6,ry,1,1,1);[-3.4,3.4].forEach(l=>add(pw,p.x+p.nx*l+p.tx*6,p.y+.55,p.z+p.nz*l+p.tz*6,ry,1,1,1));
 if(i%3===0){const gy=hgt(p.x,p.z),h=p.y-2.4-gy;if(h>.8){add(pr,p.x,gy+h/2,p.z,ry,3.6,h,2.4);add(pcp,p.x,p.y-2.9,p.z,ry,6.4,1.2,2.8);}}});}
@@ -369,41 +376,46 @@ if(q.nm){const p=SP[g.s-6],sg=spr(q.nm,10,1.3,'#0b5d42','#ffffff');sg.position.s
 for(let k=0;k<14;k++){const len=110+((rnd()*70)|0);let i0=Math.floor((k+.2+rnd()*.5)*NS/14),ok=false;for(let t=0;t<60&&!ok;t++,i0+=7){ok=true;for(let i=i0;i<=i0+len;i+=2)if(bad(i)){ok=false;break;}}if(!ok)continue;
 addRoad(trackRoad(i0,i0+len,(j,n)=>-26-160*(1-ss(0,22,j))-160*ss(n-22,n,j),(x,z,gy)=>Math.max(gy,1)+.75),4.4,L2);}}
 
-/* ===== Karnaphuli Tunnel road: Patenga approach and toll plaza, cut-and-cover ramps, twin bored tubes under the river, Anwara flyover ===== */
+/* ===== Karnaphuli Tunnel road: Patenga approach and toll plaza, covered cut-and-cover boxes, twin bored tubes under the river mouth, Anwara flyover ===== */
 {const P=[],C=KT.C,n=KT.n,KTL=[[3.6,1,0],[8.2,1,1],[-3.6,-1,2],[-8.2,-1,3]];
-for(let u=480;u>=-KT.E;u-=8){const x=C[0]+n[0]*u,z=C[1]+n[1]*u,g=hgt(x,z),td=G.d,au=Math.abs(u);P.push({x,z,g,td,u,y:au<=KT.E?kty(au):Math.max(g,1)+.7,deck:false});}
-let hx=-n[0],hz=-n[1],x=C[0]-n[0]*KT.E,z=C[1]-n[1]*KT.E;const tx=.11/Math.hypot(.11,.99),tz=.99/Math.hypot(.11,.99);
-for(let a=8;a<=520;a+=8){const f=ss(0,130,a);let ux=hx*(1-f)+tx*f,uz=hz*(1-f)+tz*f;const l=Math.hypot(ux,uz);x+=ux/l*8;z+=uz/l*8;const g=hgt(x,z),td=G.d;P.push({x,z,g,td,u:-KT.E-a,y:Math.max(g,1)+.7+7.6*ss(14,70,a)*(1-ss(300,360,a)),deck:false});}
+for(let u=700;u>=KT.PA-40;u-=8){const x=C[0]+n[0]*u,z=C[1]+n[1]*u,g=hgt(x,z),td=G.d;P.push({x,z,g,td,u,y:u<=KT.PB&&u>=KT.PA?kty(u):Math.max(g,1)+.7,deck:false});}
+let hx=-n[0],hz=-n[1],x=C[0]+n[0]*(KT.PA-40),z=C[1]+n[1]*(KT.PA-40);const tx=.11/Math.hypot(.11,.99),tz=.99/Math.hypot(.11,.99);
+for(let a=8;a<=480;a+=8){const f=ss(0,130,a);let ux=hx*(1-f)+tx*f,uz=hz*(1-f)+tz*f;const l=Math.hypot(ux,uz);x+=ux/l*8;z+=uz/l*8;const g=hgt(x,z),td=G.d;P.push({x,z,g,td,u:KT.PA-40-a,y:Math.max(g,1)+.7+7.6*ss(20,80,a)*(1-ss(300,360,a)),deck:false});}
 addRoad(P,10.6,KTL);const R_=RP[RP.length-1];R_.kt=1;KT.ri=RP.length-1;KT.R=R_;
-/* twin bored tubes (10.8 m diameter), tiled lining and lamp rows */
-const tb=P.filter(q=>Math.abs(q.u)<=KT.P+1);KT.tb=tb;
-const tc=document.createElement('canvas');tc.width=tc.height=128;{const g=tc.getContext('2d');g.fillStyle='#e9ecee';g.fillRect(0,0,128,128);g.strokeStyle='#c9cfd4';for(let k=0;k<=128;k+=16){g.beginPath();g.moveTo(k,0);g.lineTo(k,128);g.stroke();g.beginPath();g.moveTo(0,k);g.lineTo(128,k);g.stroke();}g.fillStyle='#1f5fae';g.fillRect(0,92,128,10);}
-const tt=new T.CanvasTexture(tc);tt.wrapS=tt.wrapT=T.RepeatWrapping;tt.repeat.set(30,6);const tm=new T.MeshLambertMaterial({map:tt,side:T.BackSide}),tl=IM(new T.BoxGeometry(.5,.12,2.4),tnM,tb.length*2+4);
-[-1,1].forEach(s=>{const pts=tb.map(q=>new T.Vector3(q.x+q.nx*s*5.9,q.y+2.6,q.z+q.nz*s*5.9));const cv=new T.CatmullRomCurve3(pts);scene.add(new T.Mesh(new T.TubeGeometry(cv,pts.length*2,5.4,20,false),tm));
-tb.forEach((q,i)=>{if(i%2)return;add(tl,q.x+q.nx*s*5.9,q.y+7.65,q.z+q.nz*s*5.9,Math.atan2(-q.nz,q.nx)+Math.PI/2,1,1,1);});
-const wl=IM(new T.BoxGeometry(.3,.9,8.2),lam(0xd9d4c8),tb.length);tb.forEach(q=>add(wl,q.x+q.nx*s*10.3,q.y+.45,q.z+q.nz*s*10.3,Math.atan2(-q.nz,q.nx)+Math.PI/2,1,1,1));});
-/* portals: concrete headwall with two arched openings, name board; retaining walls along the cuttings */
-const sh=new T.Shape();sh.moveTo(-15,-1);sh.lineTo(15,-1);sh.lineTo(15,10.5);sh.lineTo(-15,10.5);sh.closePath();[-5.9,5.9].forEach(c=>{const h=new T.Path();h.moveTo(c-5.2,-1);h.lineTo(c-5.2,2.6);h.absarc(c,2.6,5.2,Math.PI,0,true);h.lineTo(c+5.2,-1);h.closePath();sh.holes.push(h);});
-const pg=new T.ExtrudeGeometry(sh,{depth:1.6,bevelEnabled:false,curveSegments:18}).translate(0,0,-.8),pm=lam(0xcfcac0);
-[KT.P,-KT.P].forEach(uu=>{const q=P.reduce((b,c)=>Math.abs(c.u-uu)<Math.abs(b.u-uu)?c:b,P[0]),g=new T.Group();g.position.set(q.x,q.y,q.z);g.rotation.y=Math.atan2(n[0]*Math.sign(uu),n[1]*Math.sign(uu));scene.add(g);
-g.add(new T.Mesh(pg,pm));mk(g,31,1.2,2.4,0x9aa3ab,0,11,0);const sg=spr('KARNAPHULI TUNNEL',13,1.6,'#0b5d42','#ffffff');sg.position.set(0,8.6,.9);g.add(sg);
-const sub=spr(uu>0?'TO ANWARA':'TO PATENGA · CHATTOGRAM',8,1,'#1f5fae','#ffffff');sub.position.set(0,6.9,.9);g.add(sub);[-1,1].forEach(s=>{const w=mk(g,1.2,10,10,0xbdb8ac,s*15.5,4.5,4.8);});});
-const RW_=IMC(BOX1,lam(0xc9c4b8),1e9,20),va=new T.Vector3(),vb=new T.Vector3();
-for(let i=0;i<P.length-1;i++){const q=P[i],r=P[i+1],au=Math.abs(q.u);if(au<KT.P||au>KT.E+4)continue;[-1,1].forEach(s=>{const top=Math.max(q.g,r.g,1)+1.1,bot=Math.min(q.y,r.y)-.3,h=top-bot;if(h<.6)return;
-beam(RW_,va.set(q.x+q.nx*s*11.4,bot+h/2,q.z+q.nz*s*11.4),vb.set(r.x+r.nx*s*11.4,bot+h/2,r.z+r.nz*s*11.4),.8,h);});}
-/* Patenga toll plaza and the tunnel's ventilation / control building */
-{const q=P.find(c=>Math.abs(c.u-330)<5),g=new T.Group();g.position.set(q.x,q.y,q.z);g.rotation.y=Math.atan2(n[0],n[1]);scene.add(g);mk(g,30,.9,14,0xf1efe8,0,7.2,0);mk(g,30.4,.6,14.4,0x0f7a54,0,7.9,0);
+const tc=document.createElement('canvas');tc.width=tc.height=128;{const g=tc.getContext('2d');g.fillStyle='#eceff1';g.fillRect(0,0,128,128);g.strokeStyle='#c9cfd4';for(let k=0;k<=128;k+=16){g.beginPath();g.moveTo(k,0);g.lineTo(k,128);g.stroke();g.beginPath();g.moveTo(0,k);g.lineTo(128,k);g.stroke();}g.fillStyle='#1f5fae';g.fillRect(0,92,128,10);g.fillStyle='#f2c230';g.fillRect(0,104,128,4);}
+const tt=new T.CanvasTexture(tc);tt.wrapS=tt.wrapT=T.RepeatWrapping;tt.repeat.set(40,6);const tm=new T.MeshLambertMaterial({map:tt,side:T.BackSide,emissive:0x5c5f62,emissiveMap:tt}),
+tw=new T.MeshLambertMaterial({map:tt,side:T.DoubleSide,emissive:0x5c5f62,emissiveMap:tt}),tl=IM(new T.BoxGeometry(.5,.12,2.4),tnM,P.length*6),qd=(Q,f,mat)=>{const v=[],ix=[];Q.forEach(q=>{const a=f(q);v.push(...a);});for(let i=0;i<Q.length-1;i++){const k=2*i;ix.push(k,k+2,k+1,k+1,k+2,k+3);}const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(v,3));g.setIndex(ix);
+const uv=[];Q.forEach((q,i)=>uv.push(i*.25,0,i*.25,1));g.setAttribute('uv',new T.Float32BufferAttribute(uv,2));g.computeVertexNormals();const m=new T.Mesh(g,mat);scene.add(m);return m;},W=(q,o,dy)=>[q.x+q.nx*o,q.y+dy,q.z+q.nz*o];
+/* twin bored tubes (10.8 m diameter) under the mouth */
+const tb=P.filter(q=>q.u>=KT.B0-2&&q.u<=KT.B1+2);KT.tb=tb;
+[-1,1].forEach(s=>{const pts=tb.map(q=>new T.Vector3(q.x+q.nx*s*5.9,q.y+2.6,q.z+q.nz*s*5.9));scene.add(new T.Mesh(new T.TubeGeometry(new T.CatmullRomCurve3(pts),pts.length*2,5.4,20,false),tm));
+tb.forEach((q,i)=>{if(i%2)return;add(tl,q.x+q.nx*s*5.9,q.y+7.65,q.z+q.nz*s*5.9,Math.atan2(-q.nz,q.nx)+Math.PI/2,1,1,1);});});
+/* covered cut-and-cover boxes: two cells, tiled walls and ceiling, lamps; a concrete-and-grass roof shows where it rises above ground */
+[[KT.PA,KT.B0],[KT.B1,KT.PB]].forEach(rg=>{const Q=P.filter(q=>q.u>=rg[0]-1&&q.u<=rg[1]+1);if(Q.length<2)return;
+[-10.9,0,10.9].forEach(o=>qd(Q,q=>[...W(q,o,-.2),...W(q,o,7.2)],tw));qd(Q,q=>[...W(q,11.1,7.2),...W(q,-11.1,7.2)],new T.MeshLambertMaterial({color:0xd9dde0,emissive:0x3a3c3e,side:T.FrontSide}));
+const gm=new T.MeshLambertMaterial({color:0x6aa84f,side:T.FrontSide}),tp=q=>Math.max(q.y+7.9,q.g+.25);qd(Q,q=>[...W(q,-12.6,tp(q)),...W(q,12.6,tp(q))],gm);
+[-1,1].forEach(s=>qd(Q,q=>{const t=tp(q),g=Math.max(q.g,.6)-.3,o=12.6+(t-g)*1.7;return s<0?[...W(q,-o,g),...W(q,-12.6,t)]:[...W(q,12.6,t),...W(q,o,g)];},gm));
+Q.forEach((q,i)=>{if(i%2)return;[-5.4,5.4].forEach(o=>add(tl,q.x+q.nx*o,q.y+7.05,q.z+q.nz*o,Math.atan2(-q.nz,q.nx)+Math.PI/2,1,1,1));});});
+/* portals on land: concrete headwall with two arched openings, name board and wing walls */
+const sh=new T.Shape();sh.moveTo(-15,-1);sh.lineTo(15,-1);sh.lineTo(15,10.5);sh.lineTo(-15,10.5);sh.closePath();[-5.45,5.45].forEach(c=>{const h=new T.Path();h.moveTo(c-5.2,-1);h.lineTo(c-5.2,3.6);h.absarc(c,3.6,5.2,Math.PI,0,true);h.lineTo(c+5.2,-1);h.closePath();sh.holes.push(h);});
+const pg=new T.ExtrudeGeometry(sh,{depth:1.6,bevelEnabled:false,curveSegments:18}).translate(0,0,-.8),pm=lam(0xd6d1c6);
+[KT.PB,KT.PA].forEach(uu=>{const q=P.reduce((b,c)=>Math.abs(c.u-uu)<Math.abs(b.u-uu)?c:b,P[0]),sg_=Math.sign(uu),g=new T.Group();g.position.set(q.x,q.y,q.z);g.rotation.y=Math.atan2(n[0]*sg_,n[1]*sg_);scene.add(g);
+g.add(new T.Mesh(pg,pm));mk(g,31,1.2,2.4,0x9aa3ab,0,11,0);mk(g,31,.4,2.6,0x0f7a54,0,11.8,0);const sg=spr('কর্ণফুলী টানেল',13,1.6,'#0b5d42','#ffffff');sg.position.set(0,9.4,.9);g.add(sg);
+const sub=spr(uu>0?'আনোয়ারার পথে':'পতেঙ্গা · চট্টগ্রামের পথে',8,1,'#1f5fae','#ffffff');sub.position.set(0,7.9,.9);g.add(sub);[-1,1].forEach(s=>{const w=mk(g,1.4,9,18,0xc9c4b8,s*15.6,3.5,8.6);w.rotation.y=-s*.18;});
+[-1,1].forEach(s=>{const pl=new T.Mesh(new T.CylinderGeometry(.18,.22,9,8),lam(0x6c7178));pl.position.set(s*13,4.5,14);g.add(pl);mk(g,1.4,.5,.3,0x1b1b1b,s*13,7.6,14.2);});});
+/* Patenga toll plaza and the tunnel control building */
+{const q=P.find(c=>Math.abs(c.u-520)<5),g=new T.Group();g.position.set(q.x,q.y,q.z);g.rotation.y=Math.atan2(n[0],n[1]);scene.add(g);mk(g,30,.9,14,0xf1efe8,0,7.2,0);mk(g,30.4,.6,14.4,0x0f7a54,0,7.9,0);
 for(let k=-2;k<=2;k++){mk(g,1.4,2.6,3,0xe8e4dc,k*5.6,1.3,0);const w=new T.Mesh(new T.BoxGeometry(1.42,1,2.4),new T.MeshPhongMaterial({color:0x6fa8bf,transparent:true,opacity:.6}));w.position.set(k*5.6,2,0);g.add(w);mk(g,.5,6.9,.5,0xd8d5cc,k*5.6+.95,3.45,6.2);mk(g,.5,6.9,.5,0xd8d5cc,k*5.6+.95,3.45,-6.2);}
-const ts=spr('TOLL PLAZA · KARNAPHULI TUNNEL',12,1.1,'#0b5d42','#ffffff');ts.position.set(0,6.4,7.3);g.add(ts);}
-{const q=P.find(c=>Math.abs(c.u-150)<5),x=q.x+q.nx*30,z=q.z+q.nz*30,g=new T.Group();g.position.set(x,Math.max(hgt(x,z),1),z);g.rotation.y=Math.atan2(n[0],n[1]);scene.add(g);mk(g,16,10,22,0xd5d8db,0,5,0);
-for(let k=-4;k<=4;k++)mk(g,.12,6,1.6,0x6c7178,8.05,5.4,k*2.3);mk(g,6,6,6,0xb8bec4,0,13,0);const vs=spr('TUNNEL CONTROL',6,.9,'#0b5d42','#ffffff');vs.position.set(8.2,10.8,0);vs.rotation.y=Math.PI/2;g.add(vs);}}
+const ts=spr('টোল প্লাজা · কর্ণফুলী টানেল',12,1.1,'#0b5d42','#ffffff');ts.position.set(0,6.4,7.3);g.add(ts);}
+{const q=P.find(c=>Math.abs(c.u-430)<5),x=q.x+q.nx*34,z=q.z+q.nz*34,g=new T.Group();g.position.set(x,Math.max(hgt(x,z),1),z);g.rotation.y=Math.atan2(n[0],n[1]);scene.add(g);mk(g,16,10,22,0xd5d8db,0,5,0);
+for(let k=-4;k<=4;k++)mk(g,.12,6,1.6,0x6c7178,8.05,5.4,k*2.3);mk(g,6,6,6,0xb8bec4,0,13,0);const vs=spr('টানেল নিয়ন্ত্রণ কক্ষ',6,.9,'#0b5d42','#ffffff');vs.position.set(8.2,10.8,0);vs.rotation.y=Math.PI/2;g.add(vs);}}
 
 /* ===== level crossings: village road over the line, boom barriers, flashing lamps, crossbuck signs and a gatekeeper's hut ===== */
 const XC=[];
 {const stc=document.createElement('canvas');stc.width=128;stc.height=8;{const g=stc.getContext('2d');for(let k=0;k<8;k++){g.fillStyle=k%2?'#ffffff':'#d62828';g.fillRect(k*16,0,16,8);}}
 const armM=new T.MeshLambertMaterial({map:new T.CanvasTexture(stc)}),postM=lam(0x3b3f45),
 xb=(()=>{const c=document.createElement('canvas');c.width=256;c.height=256;const g=c.getContext('2d');g.translate(128,128);[1,-1].forEach(s=>{g.save();g.rotate(s*Math.PI/4);g.fillStyle='#c81e1e';g.fillRect(-124,-22,248,44);g.fillStyle='#ffffff';g.fillRect(-118,-16,236,32);g.restore();});
-g.fillStyle='#c81e1e';g.font='bold 26px sans-serif';g.textAlign='center';g.fillText('RAIL',0,-6);g.fillText('CROSSING',0,22);return new T.MeshBasicMaterial({map:new T.CanvasTexture(c),transparent:true,side:T.DoubleSide});})();
+g.fillStyle='#c81e1e';g.font='bold 26px "Hind Siliguri","Noto Sans Bengali",sans-serif';g.textAlign='center';g.fillText('রেল',0,-6);g.fillText('ক্রসিং',0,24);return new T.MeshBasicMaterial({map:new T.CanvasTexture(c),transparent:true,side:T.DoubleSide});})();
 LCI.forEach(i=>{const p=SP[i],P=[];for(let o=-200;o<=200;o+=8){const x=p.x+p.nx*o,z=p.z+p.nz*o,g=hgt(x,z),td=G.d,ao=Math.abs(o),yr=p.y+.37,yg=Math.max(g,1)+.6;P.push({x,z,g,td,o,y:yg+(yr-yg)*(1-ss(9,36,ao)),deck:false});}
 addRoad(P,4.2,L2);const ri=RP.length-1,r=RP[ri];r.town=1;const k0=P.findIndex(q=>q.o===0);r.lc={s:r.cl[k0],closed:false};
 const g=new T.Group();g.position.set(p.x,p.y+.37,p.z);g.rotation.y=Math.atan2(p.tx,p.tz);scene.add(g);
@@ -414,7 +426,7 @@ const lx=s*9.6,lz=-s*5.6;mk(g,.16,3.6,.16,0x9aa0a6,lx,1.8,lz);const xs=new T.Mes
 mk(g,.14,.5,1.5,0x1b1b1b,lx,2.75,lz);[-.5,.5].forEach(d=>{const l=new T.Mesh(new T.CircleGeometry(.2,14),new T.MeshBasicMaterial({color:0x330000,side:T.DoubleSide}));l.position.set(lx+s*.08,2.75,lz+d);l.rotation.y=s>0?Math.PI/2:-Math.PI/2;g.add(l);c.lamps.push(l);});
 mk(g,.5,.03,8,0xf2f0e8,s*12,0,0);});
 const hut=new T.Group();hut.position.set(11.5,0,9.5);g.add(hut);mk(hut,2.6,2.6,2.4,0xf3e2b3,0,1.3,0);mk(hut,2.9,.25,2.7,0x7d8a96,0,2.75,0);mk(hut,.06,1,1.2,0x35506a,-1.32,1.6,0);mk(hut,.9,1.9,.06,0x6b4a2f,0,.95,1.22);
-const sg=spr('LC GATE',1.6,.45,'#0b5d42','#ffffff');sg.position.set(0,2.35,1.23);hut.add(sg);XC.push(c);});}
+const sg=spr('এলসি গেট',1.6,.45,'#0b5d42','#ffffff');sg.position.set(0,2.35,1.23);hut.add(sg);XC.push(c);});}
 
 /* hill tunnel */
 const TUN={};
@@ -440,7 +452,7 @@ const pgeo=new T.ExtrudeGeometry(sh,{depth:2.2,bevelEnabled:false,curveSegments:
 [0,1].forEach(e=>{const p=tc.getPointAt(e),t=tc.getTangentAt(e).multiplyScalar(e?1:-1),g=new T.Group();g.position.copy(p);g.lookAt(p.clone().add(t));scene.add(g);
 g.add(new T.Mesh(pgeo,pmat));mk(g,27,1,3,0x7f7f77,0,10.5,0);[-1,1].forEach(s=>{const w=mk(g,1.4,7,14,0x8f8f86,s*16,0,4.5);w.rotation.y=s*.55;});
 const band=new T.Mesh(new T.RingGeometry(4.6,5.3,40,1,0,Math.PI),new T.MeshBasicMaterial({map:hzT,side:T.DoubleSide}));band.position.z=1.15;g.add(band);
-const nb=spr('SYLHET HILLS TUNNEL',10,1.3,'#0b5d42','#ffffff');nb.position.set(0,7.6,1.2);g.add(nb);});}
+const nb=spr('সিলেট পাহাড়ি টানেল',10,1.3,'#0b5d42','#ffffff');nb.position.set(0,7.6,1.2);g.add(nb);});}
 
 /* stations */
 const ST=RW.filter(a=>a[3]).map(a=>{const i=nearest(a[1],a[2]);return{name:a[0].replace("'","\u2019"),i,s:SP[i].s,ppl:[]};}).sort((a,b)=>a.i-b.i);
@@ -449,13 +461,13 @@ const nextI0=0;
    Majampur, Haripur Road and Haripur Bridge over the Gorai, Chourhash roundabout, Choy Rastar Mor, Thanapara lanes, R710) ===== */
 const NOGO=[],noGo=(x,z)=>{for(const c of NOGO)if((x-c[0])**2+(z-c[1])**2<c[2]*c[2])return true;return false;},KU={st:ST.find(t=>t.name==='Kushtia')};
 if(KU.st){const p=SP[KU.st.i];KU.p=p;KU.W=(lx,lz)=>[p.x+p.nx*lx+p.tx*lz,p.z+p.nz*lx+p.tz*lz];KU.ry=Math.atan2(p.tx,p.tz);
-const c0=KU.W(190,90);NOGO.push([c0[0],c0[1],440]);const GO=RIV[8];
+const c0=KU.W(190,90);NOGO.push([c0[0],c0[1],440]);{const c1=KU.W(-250,20);NOGO.push([c1[0],c1[1],330]);}const GO=RIV[8];
 const kpath=(pts,bridge)=>{const Q=[];for(let k=0;k<pts.length-1;k++){const a=pts[k],b=pts[k+1],n=Math.max(1,Math.round(Math.hypot(b[0]-a[0],b[1]-a[1])/8));for(let j=0;j<n;j++){const f=j/n;Q.push([a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f]);}}Q.push(pts[pts.length-1]);
 return Q.map(q=>{const w=KU.W(q[0],q[1]),g=hgt(w[0],w[1]),td=G.d;let y=Math.max(g,1)+.6;if(bridge){const rd=rdistF(GO,w[0],w[1]);y=Math.max(y,1.6+6.4*(1-ss(GO.w*.95,GO.w*2.5,rd)));}return{x:w[0],y,z:w[1],g,td,deck:false};});};
 const TL=[[2.2,1,0],[-2.2,-1,1]];
-KU.roads=[{n:'N.S. ROAD',p:[[120,-250],[120,330],[158,402]],hw:5.4,ln:[[2.5,1,0],[-2.5,-1,1]],jam:1},{n:'COURT STATION ROAD',p:[[26,8],[120,8]],hw:4.4,jam:1},
-{n:'HARIPUR ROAD',p:[[120,-250],[180,-330],[240,-380],[320,-420],[400,-330],[430,-218]],hw:4.6,bridge:1},
-{n:'R710',p:[[190,438],[300,560],[420,700],[520,820]],hw:4.8},{n:'MOJIBOR RAHMAN ROAD',p:[[199,421],[330,400],[380,380]],hw:4.2},
+KU.roads=[{n:'এন.এস. রোড',p:[[120,-250],[120,330],[158,402]],hw:5.4,ln:[[2.5,1,0],[-2.5,-1,1]],jam:1},{n:'কোর্ট স্টেশন রোড',p:[[26,8],[120,8]],hw:4.4,jam:1},
+{n:'হরিপুর রোড',p:[[120,-250],[180,-330],[240,-380],[320,-420],[400,-330],[430,-218]],hw:4.6,bridge:1},
+{n:'আর৭১০ মহাসড়ক',p:[[190,438],[300,560],[420,700],[520,820]],hw:4.8},{n:'মজিবর রহমান রোড',p:[[199,421],[330,400],[380,380]],hw:4.2},
 {p:[[120,150],[190,150]]},{p:[[190,150],[190,-20],[132,-92]]},{p:[[190,150],[270,60]]},{p:[[190,150],[292,172]]},{p:[[190,150],[262,290],[302,322]]},{p:[[190,150],[190,328],[175,397]]},
 {p:[[52,-150],[120,-150]]},{p:[[46,-30],[120,-30]]},{p:[[52,262],[120,262]]},{p:[[120,40],[60,90],[52,180]]}];
 KU.roads.forEach(r=>{const P=kpath(r.p,r.bridge);addRoad(P,r.hw||4,r.ln||TL);RP[RP.length-1].town=1;RP[RP.length-1].jam=r.jam?1:0;r.P=P;});
@@ -528,7 +540,7 @@ for(let f=1;f<fl;f++)F(d/2+.45,f*3.3,w*.8,.14,.9,0xdedad0);if(rnd()<.7)add(kc,x+
 function home(x,z,yaw,w,d){const gy=hgt(x,z)-.15,tin=rnd()<.6;add(kp,x,gy,z,yaw,w,2.8,d,PAL[(rnd()*PAL.length)|0]);if(tin)add(kr,x,gy+2.8,z,yaw,w+.8,1.6,d+.6,[0x7d8a96,0x8a3b2c,0x5f7f6d][(rnd()*3)|0]);else{add(kb,x,gy+2.8,z,yaw,w,3,d,PAL[(rnd()*PAL.length)|0]);add(kp,x,gy+5.8,z,yaw,w+.2,.5,d+.2,0xe9e4d8);}}
 function tree(x,z,s){const gy=hgt(x,z)-.15;if(rnd()<.45){add(kc,x,gy,z,0,.22*s,8*s,.22*s,0x8a6f50);add(kt,x,gy+8*s,z,rnd()*6,2.3*s,.9*s,2.3*s,tcol.setHSL(.25,.5,.27+rnd()*.08).getHex());}else{add(kc,x,gy,z,0,.35*s,3.2*s,.35*s,0x5b3a22);add(kt,x,gy+4.6*s,z,rnd()*6,3.4*s,2.8*s,3.4*s,tcol.setHSL(.28+rnd()*.05,.5,.22+rnd()*.1).getHex());}}
 /* buildings lining every town road; N.S. Road is the tallest and busiest */
-KU.roads.forEach(r=>{const P=r.P,main=r.n==='N.S. ROAD';for(let i=1;i<P.length-1;i+=main?1:2){const q=P[i];if(q.y-q.g>1.5)continue;[-1,1].forEach(s=>{if(rnd()<(main?.05:.25))return;const w=6.5+rnd()*5,d=9+rnd()*5,fl=main?3+((rnd()*4)|0):1+((rnd()*3)|0),off=r.hw+1.8+d/2,x=q.x+q.nx*off*s,z=q.z+q.nz*off*s;
+KU.roads.forEach(r=>{const P=r.P,main=r.n==='এন.এস. রোড';for(let i=1;i<P.length-1;i+=main?1:2){const q=P[i];if(q.y-q.g>1.5)continue;[-1,1].forEach(s=>{if(rnd()<(main?.05:.25))return;const w=6.5+rnd()*5,d=9+rnd()*5,fl=main?3+((rnd()*4)|0):1+((rnd()*3)|0),off=r.hw+1.8+d/2,x=q.x+q.nx*off*s,z=q.z+q.nz*off*s;
 const h=hgt(x,z),td=G.d;if(h<.9||td<26||onRoad(x,z,d/2-4.7)||!free(x,z,Math.max(w,d)*.45))return;occ.push([x,z,Math.max(w,d)*.45]);shop(x,z,Math.atan2(-q.nx*s,-q.nz*s),w,d,fl,PAL[(rnd()*PAL.length)|0]);});}});
 /* homes and trees filling the blocks */
 for(let t=0;t<2600;t++){const lx=40+rnd()*300,lz=-250+rnd()*660,w_=KW(lx,lz),x=w_[0],z=w_[1],h=hgt(x,z),td=G.d;if(h<.9||td<24||onRoad(x,z,3))continue;
@@ -550,7 +562,7 @@ const fn=new T.Mesh(new T.ConeGeometry(.35,2.6,10),gold);fn.position.y=20.5;g.ad
 [[-11,-11],[11,-11],[-11,11],[11,11]].forEach(a=>{const c=new T.Mesh(new T.CylinderGeometry(.9,.9,3.6,8),wm);c.position.set(a[0],2.7,a[1]);g.add(c);const d=lath([[0,0],[1.2,0],[1.3,.6],[.8,1.4],[0,1.9]],wm);d.position.set(a[0],4.5,a[1]);g.add(d);});
 for(let r=0;r<3;r++)for(let k=0;k<9;k++){[-1,1].forEach(s=>mk(g,1,.45,2.1,0xf2f0ea,-14+k*3.5,.45,s*(17+r*3)));}
 [-1,1].forEach(s=>mk(g,1.6,7.5,1.6,0xf1efe8,s*4.4,3.75,30));const ga=new T.Mesh(new T.TorusGeometry(4.4,.55,8,20,Math.PI),lam(0xf1efe8));ga.position.set(0,7.4,30);g.add(ga);
-const gs=spr('LALON SHAH MAZAR · CHEURIA',8.4,1.1,'#0b5d42','#ffffff');gs.position.set(0,6.3,30.9);g.add(gs);
+const gs=spr('লালন শাহের মাজার · ছেঁউড়িয়া',8.4,1.1,'#0b5d42','#ffffff');gs.position.set(0,6.3,30.9);g.add(gs);
 [[0,-32,64,1.4,.5],[0,32,64,1.4,.5],[-32,0,.5,1.4,64],[32,0,.5,1.4,64]].forEach(a=>{if(a[1]===32){mk(g,26,1.4,.5,0xe8e2d6,-19,.7,32);mk(g,26,1.4,.5,0xe8e2d6,19,.7,32);}else mk(g,a[2],a[3],a[4],0xe8e2d6,a[0],.7,a[1]);});
 const ac=new T.Group();ac.position.set(-22,0,-6);g.add(ac);mk(ac,14,8,30,0xf3f1ec,0,4,0);mk(ac,14.4,.5,30.4,0xb5603f,0,8.2,0);const agw=new T.Mesh(new T.BoxGeometry(.1,2.4,24),kG);agw.position.set(7.05,2.2,0);ac.add(agw);const agw2=agw.clone();agw2.position.y=5.6;ac.add(agw2);
 [[-24,20],[24,20],[24,-22],[-6,-26]].forEach(a=>{const t=new T.Mesh(new T.IcosahedronGeometry(5,1),lam(0x2f5d2a));t.scale.set(1,.8,1);t.position.set(a[0],7.5,a[1]);g.add(t);mk(g,.8,5,.8,0x5b3a22,a[0],2.5,a[1]);});}
@@ -565,30 +577,30 @@ mk(g,13,4,11,BR,0,7.05,0);for(let k=-2;k<=2;k++)[-1,1].forEach(s=>mk(g,1,1.5,.14
 [-1,1].forEach(s=>{const rf=mk(g,15,.22,3,TL,0,9.2,s*6.6);rf.rotation.x=s*.38;const rf2=mk(g,3,.22,12,TL,s*7.6,9.2,0);rf2.rotation.z=-s*.38;});
 mk(g,6.4,3.4,6.4,BR,0,10.75,0);const py=new T.Mesh(new T.ConeGeometry(5,3.2,4),lam(TL));py.position.y=14.05;py.rotation.y=Math.PI/4;g.add(py);const ft=new T.Mesh(new T.ConeGeometry(.25,1.2,6),lam(0x6b4a2f));ft.position.y=16.2;g.add(ft);
 const pd=new T.Mesh(new T.BoxGeometry(22,.3,11),new T.MeshPhongMaterial({color:0x3a7489,shininess:80}));pd.position.set(0,.18,24);g.add(pd);for(let k=0;k<4;k++)mk(g,6,.25,.8,0xeae4d6,0,.3+k*.12,18.2+k*.6);
-const ks=spr('SHILAIDAHA KUTHIBARI',8,1.1,'#0b5d42','#ffffff');ks.position.set(0,2.6,37.6);g.add(ks);mk(g,.15,2,.15,0x333333,-3,1,37.4);mk(g,.15,2,.15,0x333333,3,1,37.4);
+const ks=spr('শিলাইদহ কুঠিবাড়ি',8,1.1,'#0b5d42','#ffffff');ks.position.set(0,2.6,37.6);g.add(ks);mk(g,.15,2,.15,0x333333,-3,1,37.4);mk(g,.15,2,.15,0x333333,3,1,37.4);
 [[-26,-24],[26,-24],[-26,22],[26,22],[-14,-30],[14,-30]].forEach(a=>{const t=new T.Mesh(new T.IcosahedronGeometry(4.6,1),lam(0x2e5a28));t.scale.set(1,.85,1);t.position.set(a[0],7,a[1]);g.add(t);mk(g,.8,4.6,.8,0x5b3a22,a[0],2.3,a[1]);});}
 /* Chourhash roundabout, Choy Rastar Mor and Majampur Gate */
 {const g=LG(LM.chour,0),is=new T.Mesh(new T.CylinderGeometry(17.5,18,.6,32),lam(0x6aa84f));is.position.y=.5;g.add(is);const kb_=new T.Mesh(new T.CylinderGeometry(18.2,18.2,.45,32,1,true),lam(0xe8e2d6));kb_.position.y=.5;g.add(kb_);
 const pil=new T.Mesh(new T.CylinderGeometry(.7,1.6,13,8),lam(0xf1efe8));pil.position.y=7.3;g.add(pil);const rg=new T.Mesh(new T.TorusGeometry(2.6,.35,8,24),lam(0x0f7a54));rg.position.y=12.5;g.add(rg);const rd=new T.Mesh(new T.CircleGeometry(1.4,24),new T.MeshBasicMaterial({color:0xf42a41,side:T.DoubleSide}));rd.position.y=12.5;g.add(rd);
-const cs=spr('CHOURHASH MOR',6.5,1,'#0b5d42','#ffffff');cs.position.set(0,2.4,17);g.add(cs);}
+const cs=spr('চৌড়হাস মোড়',6.5,1,'#0b5d42','#ffffff');cs.position.set(0,2.4,17);g.add(cs);}
 {const g=LG(LM.choy,0),is=new T.Mesh(new T.CylinderGeometry(5,5,.5,20),lam(0xe8e2d6));is.position.y=.45;g.add(is);mk(g,2.2,10,2.2,0xf3ead8,0,5,0);mk(g,2.8,.5,2.8,0xb5603f,0,10.2,0);
 [0,1,2,3].forEach(k=>{const a=k*1.5708,c=new T.Mesh(new T.CircleGeometry(.75,20),new T.MeshBasicMaterial({color:0xfaf6e8}));c.position.set(Math.sin(a)*1.12,8.6,Math.cos(a)*1.12);c.rotation.y=a;g.add(c);});
-const cs=spr('CHOY RASTAR MOR',6.2,1,'#0b5d42','#ffffff');cs.position.set(0,1.6,6);g.add(cs);}
+const cs=spr('ছয় রাস্তার মোড়',6.2,1,'#0b5d42','#ffffff');cs.position.set(0,1.6,6);g.add(cs);}
 {const g=LG(LM.gate,Math.atan2(60,-80));[-1,1].forEach(s=>{mk(g,2.4,9.5,2.4,0xf3e2b3,s*7,4.75,0);mk(g,2.9,.5,2.9,0xb5603f,s*7,9.7,0);});mk(g,16.4,1.8,2.2,0xf3e2b3,0,8.4,0);
-const ar=new T.Mesh(new T.TorusGeometry(5.6,.5,8,20,Math.PI),lam(0xf3e2b3));ar.position.y=1.8;g.add(ar);[1,-1].forEach(s=>{const gs=spr('MAJAMPUR GATE',9,1.2,'#7a1f1f','#ffffff');gs.position.set(0,8.4,s*1.15);if(s<0)gs.rotation.y=Math.PI;g.add(gs);});}
+const ar=new T.Mesh(new T.TorusGeometry(5.6,.5,8,20,Math.PI),lam(0xf3e2b3));ar.position.y=1.8;g.add(ar);[1,-1].forEach(s=>{const gs=spr('মজমপুর গেট',9,1.2,'#7a1f1f','#ffffff');gs.position.set(0,8.4,s*1.15);if(s<0)gs.rotation.y=Math.PI;g.add(gs);});}
 /* Boro Bazar: rows of tin-roofed stalls */
 {const g=LG(LM.bazar,0);for(let i=0;i<5;i++)for(let j=0;j<4;j++){const x=-16+i*8,z=-12+j*8;mk(g,6,2.4,5,PAL[(i*4+j)%PAL.length],x,1.2,z);const r=new T.Mesh(prism(3.6,1.4,6),lam(0x7d8a96));r.position.set(x,2.4,z);r.rotation.y=Math.PI/2;g.add(r);mk(g,5.4,.5,.6,SIGN[(i+j)%SIGN.length],x,1.2,z+2.8);}
-const bs=spr('BORO BAZAR',6,1,'#7a1f1f','#ffffff');bs.position.set(0,4.4,20);g.add(bs);}
+const bs=spr('বড় বাজার',6,1,'#7a1f1f','#ffffff');bs.position.set(0,4.4,20);g.add(bs);}
 /* Kushtia central bus terminal on the R710 */
 {const g=LG(LM.bus,Math.PI/2);for(let k=0;k<6;k++)[-1,1].forEach(s=>mk(g,.5,5,.5,0x6c7178,-20+k*8,2.5,s*6));mk(g,46,.5,14,0x3f6e8c,0,5.2,0);mk(g,50,.12,30,0x55585c,0,.06,0);
 for(let k=0;k<7;k++){const c=[0xd62839,0x1f5fae,0x0f7a54,0xe67e22,0xf0f0f0][k%5];mk(g,2.5,2.9,11,c,-21+k*7,1.8,-2);mk(g,2.56,.9,9.5,0x1d2a36,-21+k*7,2.5,-1.8);}
-const ts=spr('KUSHTIA CENTRAL BUS TERMINAL',12,1.2,'#0b5d42','#ffffff');ts.position.set(0,6.4,7.2);g.add(ts);}
+const ts=spr('কুষ্টিয়া কেন্দ্রীয় বাস টার্মিনাল',12,1.2,'#0b5d42','#ffffff');ts.position.set(0,6.4,7.2);g.add(ts);}
 /* town mosque */
 {const g=LG(LM.mosque,Math.PI/2);mk(g,16,7,16,0xf3efe6,0,3.5,0);mk(g,16.4,.5,16.4,0x0f7a54,0,7.2,0);const d=lath([[0,0],[4.6,0],[5.2,1.6],[4.4,3.6],[2.6,5.2],[.8,6.2],[0,6.6]],lam(0x0f7a54));d.position.y=7.4;g.add(d);
 const mn=new T.Mesh(new T.CylinderGeometry(.9,1.1,24,10),lam(0xf3efe6));mn.position.set(9,12,9);g.add(mn);const mc=new T.Mesh(new T.ConeGeometry(1.2,3,10),lam(0x0f7a54));mc.position.set(9,25.5,9);g.add(mc);}
 /* road name signs, Haripur Bridge sign and country boats on the Gorai */
 KU.roads.forEach(r=>{if(!r.n)return;const q=r.P[Math.min(3,r.P.length-1)],sg=spr(r.n,6.4,.9,'#0b5d42','#ffffff'),x=q.x+q.nx*(r.hw+1.2),z=q.z+q.nz*(r.hw+1.2);sg.position.set(x,q.y+3.6,z);sg.rotation.y=Math.atan2(-q.nz,q.nx);scene.add(sg);add(kp,x,q.y,z,0,.12,3.2,.12,0x444444);});
-{const hr=KU.roads.find(r=>r.bridge);let bi=0;hr.P.forEach((q,i)=>{if(q.y-q.g>hr.P[bi].y-hr.P[bi].g)bi=i;});const q=hr.P[bi],sg=spr('HARIPUR BRIDGE · GORAI',8,1.1,'#0b5d42','#ffffff');sg.position.set(q.x+q.nx*6,q.y+3.4,q.z+q.nz*6);sg.rotation.y=Math.atan2(-q.nz,q.nx);scene.add(sg);}
+{const hr=KU.roads.find(r=>r.bridge);let bi=0;hr.P.forEach((q,i)=>{if(q.y-q.g>hr.P[bi].y-hr.P[bi].g)bi=i;});const q=hr.P[bi],sg=spr('হরিপুর সেতু · গড়াই',8,1.1,'#0b5d42','#ffffff');sg.position.set(q.x+q.nx*6,q.y+3.4,q.z+q.nz*6);sg.rotation.y=Math.atan2(-q.nz,q.nx);scene.add(sg);}
 {const GO=RIV[8],c=KW(190,90);GO.pts.forEach((p,i)=>{if(i%2||Math.hypot(p.x-c[0],p.z-c[1])>700)return;const a=GO.pts[Math.min(i+1,GO.pts.length-1)],ry=Math.atan2(a.x-p.x,a.z-p.z),o=(rnd()-.5)*30;
 const x=p.x+Math.cos(ry)*o,z=p.z-Math.sin(ry)*o;add(kp,x,.15,z,ry,2.2,.8,9,0x6b4a2f);const hd=new T.Mesh(new T.CylinderGeometry(1.15,1.15,3.6,10,1,true,-Math.PI/2,Math.PI),lam2(0x8a6f50));hd.position.set(x,.95,z);hd.rotation.order='YXZ';hd.rotation.set(Math.PI/2,ry,0);scene.add(hd);});}}
 /* river boats and ships */
@@ -678,18 +690,18 @@ if(rnd()<.45){const b=new T.Mesh(PG.bag,bagM[(rnd()*3)|0]);b.position.set(.31,1.
 function walkPose(p,dt,mv){const u=p.userData;if(mv)u.ph+=dt*9;const a=mv?Math.sin(u.ph)*.55:u.legs[0].rotation.x*.85;u.legs[0].rotation.x=a;u.legs[1].rotation.x=-a;u.arms[0].rotation.x=-a*.8;u.arms[1].rotation.x=a*.8;}
 /* hawkers: what each carries and what they call out */
 function bubble(t){const c=document.createElement('canvas');c.width=256;c.height=72;const g=c.getContext('2d');g.fillStyle='rgba(255,255,255,.95)';g.beginPath();g.moveTo(16,6);g.lineTo(240,6);g.quadraticCurveTo(250,6,250,16);g.lineTo(250,46);g.quadraticCurveTo(250,56,240,56);g.lineTo(140,56);g.lineTo(128,70);g.lineTo(116,56);g.lineTo(16,56);g.quadraticCurveTo(6,56,6,46);g.lineTo(6,16);g.quadraticCurveTo(6,6,16,6);g.fill();
-g.fillStyle='#1d2a36';g.font='bold 28px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(t,128,31);const s=new T.Sprite(new T.SpriteMaterial({map:new T.CanvasTexture(c),depthWrite:false}));s.scale.set(1.9,.54,1);return s;}
-const HKD=[{call:'Cha garam!',prop:h=>{const k=new T.Mesh(new T.CylinderGeometry(.11,.14,.24,10),lam(0xb8bec4));k.position.set(.36,.98,.12);h.add(k);const sp=new T.Mesh(new T.CylinderGeometry(.02,.03,.18,6),lam(0xb8bec4));sp.rotation.z=-.9;sp.position.set(.48,1.02,.12);h.add(sp);
+g.fillStyle='#1d2a36';g.font='bold 28px "Hind Siliguri","Noto Sans Bengali",sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(t,128,31);const s=new T.Sprite(new T.SpriteMaterial({map:new T.CanvasTexture(c),depthWrite:false}));s.scale.set(1.9,.54,1);return s;}
+const HKD=[{call:'চা গরম!',prop:h=>{const k=new T.Mesh(new T.CylinderGeometry(.11,.14,.24,10),lam(0xb8bec4));k.position.set(.36,.98,.12);h.add(k);const sp=new T.Mesh(new T.CylinderGeometry(.02,.03,.18,6),lam(0xb8bec4));sp.rotation.z=-.9;sp.position.set(.48,1.02,.12);h.add(sp);
 const tr=new T.Mesh(new T.BoxGeometry(.34,.03,.24),lam(0x8a6f50));tr.position.set(-.34,1.05,.18);h.add(tr);for(let c=0;c<4;c++){const cu=new T.Mesh(new T.CylinderGeometry(.04,.03,.07,6),lam(0xf3ead8));cu.position.set(-.42+(c%2)*.14,1.1,.13+Math.floor(c/2)*.1);h.add(cu);}}},
-{call:'Jhalmuri!',prop:h=>{const b=new T.Mesh(new T.CylinderGeometry(.22,.2,.36,12),lam(0xc9ced3));b.position.set(0,1.2,.34);h.add(b);const lb=new T.Mesh(new T.CylinderGeometry(.225,.225,.12,12),lam(0xc0392b));lb.position.set(0,1.2,.34);h.add(lb);const st=new T.Mesh(new T.TorusGeometry(.22,.015,4,12,Math.PI),lam(0x3a3a3a));st.position.set(0,1.42,.17);st.rotation.x=-.5;h.add(st);}},
-{call:'Badam, badam!',prop:h=>{const b=new T.Mesh(new T.CylinderGeometry(.36,.26,.2,12),lam(0x9a7a4a));b.position.set(0,2.0,0);h.add(b);for(let c=0;c<7;c++){const n=new T.Mesh(new T.SphereGeometry(.07,6,5),lam(0xc8924a));n.position.set(Math.cos(c)*.2,2.12,Math.sin(c)*.2);h.add(n);}}},
-{call:'Pani! Pani!',prop:h=>{for(let c=0;c<6;c++){const w=new T.Mesh(new T.CylinderGeometry(.04,.04,.24,8),new T.MeshPhongMaterial({color:0x7fc3e8,transparent:true,opacity:.75}));w.position.set(.34+(c%2)*.09,.98,-.06+Math.floor(c/2)*.09);h.add(w);}}}];
+{call:'ঝালমুড়ি!',prop:h=>{const b=new T.Mesh(new T.CylinderGeometry(.22,.2,.36,12),lam(0xc9ced3));b.position.set(0,1.2,.34);h.add(b);const lb=new T.Mesh(new T.CylinderGeometry(.225,.225,.12,12),lam(0xc0392b));lb.position.set(0,1.2,.34);h.add(lb);const st=new T.Mesh(new T.TorusGeometry(.22,.015,4,12,Math.PI),lam(0x3a3a3a));st.position.set(0,1.42,.17);st.rotation.x=-.5;h.add(st);}},
+{call:'বাদাম, বাদাম!',prop:h=>{const b=new T.Mesh(new T.CylinderGeometry(.36,.26,.2,12),lam(0x9a7a4a));b.position.set(0,2.0,0);h.add(b);for(let c=0;c<7;c++){const n=new T.Mesh(new T.SphereGeometry(.07,6,5),lam(0xc8924a));n.position.set(Math.cos(c)*.2,2.12,Math.sin(c)*.2);h.add(n);}}},
+{call:'পানি! পানি!',prop:h=>{for(let c=0;c<6;c++){const w=new T.Mesh(new T.CylinderGeometry(.04,.04,.24,8),new T.MeshPhongMaterial({color:0x7fc3e8,transparent:true,opacity:.75}));w.position.set(.34+(c%2)*.09,.98,-.06+Math.floor(c/2)*.09);h.add(w);}}}];
 function hawkTick(dt,cur,open){ST.forEach(st=>{if(!st.hk||!st.g.visible||cam.position.distanceTo(st.g.position)>320)return;const here=st===cur&&open&&st.D;
 st.hk.forEach((h,i)=>{const p=h.p;h.t+=dt;let tx,tz,sp=.8;if(here){const d=st.D[(i*2+1)%st.D.length];tx=3.35;tz=d.z+(i%2?.9:-.9);sp=1.6;}else{tz=p.position.z+h.dir*3;tx=4.2+.25*Math.sin(h.t*.4+i);if(p.position.z>26)h.dir=-1;if(p.position.z<-26)h.dir=1;}
 const dx=tx-p.position.x,dz=tz-p.position.z,dd=Math.hypot(dx,dz),stp=sp*dt;if(dd>.15){p.position.x+=dx/dd*Math.min(stp,dd);p.position.z+=dz/dd*Math.min(stp,dd);p.rotation.y=Math.atan2(dx,dz);walkPose(p,dt,true);}else{p.rotation.y=-Math.PI/2;walkPose(p,dt,false);}
 h.b.visible=here?((h.t+i*.7)%3<2.2):((h.t+i*1.9)%9<2);});});}
 /* station buildings, each after the real station (local frame: +x = platform side, +z = direction of travel) */
-const DN={'Dhaka':'Kamalapur','Kushtia':'Kushtia Court'};
+const DN={'Dhaka':'কমলাপুর','Kushtia':'কুষ্টিয়া কোর্ট'};
 const vaultG=(()=>{const g=new T.PlaneGeometry(12,12,14,14).rotateX(-Math.PI/2),p=g.attributes.position,f=t=>Math.pow(Math.max(0,1-Math.abs(2*t-1)),.55);for(let i=0;i<p.count;i++){const u=(p.getX(i)+6)/12,v=(p.getZ(i)+6)/12;p.setY(i,4.4*Math.max(f(u),f(v)));}g.computeVertexNormals();return g;})();
 const ribTex=(()=>{const c=document.createElement('canvas');c.width=256;c.height=8;const g=c.getContext('2d');for(let i=0;i<32;i++){g.fillStyle=i%2?'#efe6d2':'#fbf6ea';g.fillRect(i*8,0,8,8);}const t=new T.CanvasTexture(c);t.wrapS=T.RepeatWrapping;return t;})();
 const glassM=new T.MeshPhongMaterial({color:0x6fa8bf,transparent:true,opacity:.62,shininess:90,emissive:0x000000}),winMs=[glassM];
@@ -705,7 +717,7 @@ for(let i=0;i<3;i++)for(let j=0;j<6;j++){const v=new T.Mesh(vaultG,vm);v.positio
 for(let i=0;i<=3;i++)for(let j=0;j<=6;j++){const c=new T.Mesh(col,cm);c.position.set(9+i*12,0,-36+j*12);g.add(c);}
 for(let j=0;j<6;j++){const v=new T.Mesh(vaultG,vm);v.scale.set(.5,.62,.5);v.position.set(5.4,5,-27+j*6+ (j>2?0:0));g.add(v);}
 mk(g,26,3.4,14,0xd9d4c8,24,1.7,-14);mk(g,26,3.4,10,0xd9d4c8,24,1.7,16);[[-14,9.6],[16,9.6]].forEach(a=>{const w=new T.Mesh(new T.BoxGeometry(.1,2,10),glassM);w.position.set(10.9,1.9,a[0]);g.add(w);});
-const nm=spr('KAMALAPUR RAILWAY STATION',16,1.5,'#f1efe8','#0b5d42');nm.position.set(8.8,8.6,0);nm.rotation.y=-Math.PI/2;g.add(nm);},
+const nm=spr('কমলাপুর রেলস্টেশন',16,1.5,'#f1efe8','#0b5d42');nm.position.set(8.8,8.6,0);nm.rotation.y=-Math.PI/2;g.add(nm);},
 'Cox’s Bazar':g=>{/* Iconic station (2023): an opened oyster shell with a pearl in a fountain */
 const sm=new T.MeshPhongMaterial({color:0xffffff,map:ribTex,side:T.DoubleSide,shininess:40});const X=34;
 const lo=new T.Mesh(new T.SphereGeometry(1,48,14,0,6.283,Math.PI/2,Math.PI/2),sm);lo.scale.set(22,4,17);lo.position.set(X,4,0);g.add(lo);
@@ -714,7 +726,7 @@ const gl=new T.Mesh(new T.CylinderGeometry(16,18,9,40,1,true),glassM);gl.scale.s
 const pool=new T.Mesh(new T.CylinderGeometry(9,9,.7,32),new T.MeshPhongMaterial({color:0x2a8fbf,shininess:90}));pool.position.set(X+36,.35,0);g.add(pool);
 const ps=new T.Mesh(new T.SphereGeometry(1,24,8,0,6.283,Math.PI/2,Math.PI/2),sm);ps.scale.set(4.5,2,4);ps.position.set(X+36,2.6,0);g.add(ps);
 const pr=new T.Mesh(new T.SphereGeometry(2.1,24,18),new T.MeshPhongMaterial({color:0xf8f4ff,shininess:120,specular:0xffffff}));pr.position.set(X+36,3.6,0);g.add(pr);
-const nm=spr('COX’S BAZAR ICONIC RAILWAY STATION',16,1.5,'#f3ead8','#0b5d42');nm.position.set(11.5,3.2,0);nm.rotation.y=-Math.PI/2;g.add(nm);},
+const nm=spr('কক্সবাজার আইকনিক রেলস্টেশন',16,1.5,'#f3ead8','#0b5d42');nm.position.set(11.5,3.2,0);nm.rotation.y=-Math.PI/2;g.add(nm);},
 'Sylhet':g=>{/* modern terminal with shell roofs, among the tea gardens */
 mk(g,12,5.5,36,0xf1f0ea,15,2.75,0);const gw=new T.Mesh(new T.BoxGeometry(.1,3.4,30),glassM);gw.position.set(8.95,2.4,0);g.add(gw);
 const shm=new T.MeshLambertMaterial({color:0xf4f3ee,side:T.DoubleSide});for(let k=0;k<4;k++){const s=new T.Mesh(new T.CylinderGeometry(4.6,4.6,14,20,1,true,-Math.PI/2,Math.PI),shm);s.rotation.z=Math.PI/2;s.scale.set(1,1,.9);s.position.set(15,5.5,-13.5+k*9);g.add(s);}
@@ -746,19 +758,85 @@ ST.forEach(st=>{const g=new T.Group();place(g,st.s-21);scene.add(g);st.g=g;
 mk(g,5,.9,64,0xbdb8ac,5.4,.45,0);mk(g,.3,.05,64,0xe8c53a,3.1,.92,0);
 if(st.name!=='Dhaka'){[-24,-8,8,24].forEach(z=>mk(g,.3,4.3,.3,0x555a60,7.2,3,z));mk(g,5.6,.25,56,0xd8d5cc,5.6,5.2,0);}
 (SBLD[st.name]||(gg=>colonial(gg,{wall:0xe9d18a,roof:0x0f7a54})))(g);
-[-14,14].forEach(z=>{[-1,1].forEach(f=>{const b=spr(DN[st.name]||st.name,8,1.4,'#0b5d42','#ffffff');b.material.side=T.FrontSide;b.position.set(3.3+f*.02,4.2,z);b.rotation.y=f*Math.PI/2;g.add(b);});});
+[-14,14].forEach(z=>{[-1,1].forEach(f=>{const b=spr(DN[st.name]||bnn(st.name),8,1.4,'#0b5d42','#ffffff');b.material.side=T.FrontSide;b.position.set(3.3+f*.02,4.2,z);b.rotation.y=f*Math.PI/2;g.add(b);});});
 [-20,-2,16].forEach(z=>{mk(g,.5,.08,2.4,0x6b4a2f,6.6,1.4,z);mk(g,.08,.5,2.4,0x6b4a2f,6.9,1.65,z);});
-const sb=spr('STOP HERE',3,.9,'#b3261e','#ffffff');sb.position.set(3.1,2.5,29);sb.rotation.y=-Math.PI/2;g.add(sb);mk(g,.12,1.1,.12,0x333333,3.1,1.45,29);
+const sb=spr('এখানে থামুন',3,.9,'#b3261e','#ffffff');sb.position.set(3.1,2.5,29);sb.rotation.y=-Math.PI/2;g.add(sb);mk(g,.12,1.1,.12,0x333333,3.1,1.45,29);
 st.out=[];for(let i=0;i<14;i++){const p=person();p.position.set(4+rnd()*3.2,.9,-28+rnd()*56);p.rotation.y=rnd()*6;g.add(p);st.ppl.push(p);}
 for(let i=0;i<8;i++){const p=person();p.visible=false;g.add(p);st.out.push(p);}
 /* platform hawkers (tea, jhalmuri, peanuts, water) and a tea stall */
 st.hk=[];HKD.forEach((hd,k)=>{const h=person();hd.prop(h);h.position.set(4.2+rnd()*.5,.9,-24+k*15+rnd()*4);h.rotation.y=rnd()<.5?0:Math.PI;g.add(h);const b=bubble(hd.call);b.position.set(0,2.55,0);b.visible=false;h.add(b);st.hk.push({p:h,b,dir:rnd()<.5?1:-1,t:rnd()*6,k});});
 {const ts=new T.Group();ts.position.set(6.9,.9,-12);g.add(ts);mk(ts,1.6,1,2.6,0x8a5a3a,0,.5,0);mk(ts,1.8,.1,2.8,0x6b4a2f,0,1.02,0);[-1,1].forEach(s=>mk(ts,.08,1.6,.08,0x5b3a22,-.8,1.8,s*1.3));mk(ts,2.2,.08,3.2,0xc0392b,-.2,2.6,0);
 const kt_=new T.Mesh(new T.CylinderGeometry(.18,.22,.35,10),lam(0xb8bec4));kt_.position.set(.2,1.25,-.6);ts.add(kt_);for(let c=0;c<6;c++){const cu=new T.Mesh(new T.CylinderGeometry(.05,.04,.09,8),lam(0xf3ead8));cu.position.set(-.3+(c%3)*.15,1.11,.3+Math.floor(c/3)*.15);ts.add(cu);}
-const sg=spr('CHA STALL',1.8,.5,'#c0392b','#ffffff');sg.position.set(-1.25,2.1,0);sg.rotation.y=-Math.PI/2;ts.add(sg);const sv=person();sv.position.set(.9,0,0);sv.rotation.y=-Math.PI/2;ts.add(sv);}
+const sg=spr('চায়ের দোকান',1.8,.5,'#c0392b','#ffffff');sg.position.set(-1.25,2.1,0);sg.rotation.y=-Math.PI/2;ts.add(sg);const sv=person();sv.position.set(.9,0,0);sv.rotation.y=-Math.PI/2;ts.add(sv);}
 const pl=new T.PointLight(0xffd9a0,0,90);pl.position.set(6,6,0);g.add(pl);lights.push(pl);});
+/* ===== Kushtia countryside beside the line: paddy plots with raised bunds, farmers planting under bamboo hats, grazing cows and goats,
+   a tractor ploughing, a power tiller, haystacks, a pond, a farmhouse and children playing football in a harvested field ===== */
+const FARM={a:[],tr:null,kids:[],ball:null};
+if(KU.st){const FW=KU.W,RYk=KU.ry,fy=(x,z)=>Math.max(hgt(x,z),.4);
+const rtex=(base,row,lines)=>{const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d');g.fillStyle=base;g.fillRect(0,0,128,128);if(lines){g.fillStyle=row;for(let y=4;y<128;y+=10)for(let x=2;x<128;x+=6){g.fillRect(x,y,3,5);}}else{for(let k=0;k<500;k++){g.fillStyle='rgba(60,40,20,'+(.1+Math.random()*.25)+')';g.fillRect(Math.random()*128,Math.random()*128,3,2);}}const t=new T.CanvasTexture(c);t.wrapS=t.wrapT=T.RepeatWrapping;return t;};
+const PM={young:new T.MeshLambertMaterial({map:rtex('#6b8f4e','#8fd14f',1)}),green:new T.MeshLambertMaterial({map:rtex('#4f7f2c','#6cc23a',1)}),gold:new T.MeshLambertMaterial({map:rtex('#b79a3a','#e6c65a',1)}),
+water:new T.MeshPhongMaterial({map:rtex('#5b7d6c','#9ccf6a',1),shininess:90,specular:0x99aaaa}),soil:new T.MeshLambertMaterial({map:rtex('#7a5a3a','',0)}),stub:new T.MeshLambertMaterial({map:rtex('#a8935a','#c8b26a',1)})};Object.values(PM).forEach(m=>m.color.setHex(0xa8aca4));PM.gold.color.setHex(0x9c9a88);
+const bund=IMC(BOX1,lam(0x8a7a52),1e9,30);
+const plot=(cx,cz,w,d,mat)=>{const g=new T.PlaneGeometry(w,d,4,4).rotateX(-Math.PI/2),p=g.attributes.position;const c=Math.cos(RYk),s_=Math.sin(RYk);
+for(let i=0;i<p.count;i++){const lx=p.getX(i),lz=p.getZ(i),x=cx+lx*c+lz*s_,z=cz-lx*s_+lz*c;p.setXYZ(i,x,fy(x,z)+.12,z);}g.computeVertexNormals();const uv=g.attributes.uv;for(let i=0;i<uv.count;i++)uv.setXY(i,uv.getX(i)*w/8,uv.getY(i)*d/8);
+const m=new T.Mesh(g,mat);scene.add(m);[[0,d/2,w,.6],[0,-d/2,w,.6],[w/2,0,.6,d],[-w/2,0,.6,d]].forEach(b=>{const x=cx+b[0]*c+b[1]*s_,z=cz-b[0]*s_+b[1]*c;add(bund,x,fy(x,z),z,RYk,b[2],.5,b[3]);});return m;};
+const kinds=['young','green','water','gold','green','young','soil','stub'],PL=[];
+for(let i=0;i<7;i++)for(let j=0;j<9;j++){const lx=-60-i*46,lz=-330+j*78;const w=FW(lx,lz),k=(i===2&&j===3)?'soil':(i===4&&j===6)?'stub':kinds[(i*3+j*5)%kinds.length];if(onRoad(w[0],w[1],30))continue;plot(w[0],w[1],42,74,PM[k]);PL.push({lx,lz,k,x:w[0],z:w[1]});}
+/* conical bamboo hat for farmers */
+const hatG=new T.ConeGeometry(.42,.28,12).translate(0,1.98,0),hatM=lam(0xd9b46a);
+const farmer=(x,z,ry)=>{const p=person();p.add(new T.Mesh(hatG,hatM));p.position.set(x,fy(x,z)+.2,z);p.rotation.y=ry;scene.add(p);return p;};
+PL.filter(q=>q.k==='water'||q.k==='young').slice(0,6).forEach((q,n)=>{for(let k=0;k<4;k++){const ox=(k-1.5)*3.2,oz=-12+n%3*6,w=FW(q.lx+ox,q.lz+oz),p=farmer(w[0],w[1],RYk+Math.PI);FARM.a.push({t:'plant',p,ph:rnd()*6});}});
+PL.filter(q=>q.k==='gold').slice(0,2).forEach(q=>{for(let k=0;k<3;k++){const w=FW(q.lx+(k-1)*4,q.lz+20),p=farmer(w[0],w[1],RYk);FARM.a.push({t:'plant',p,ph:rnd()*6,cut:1});}});
+/* cows and goats */
+const cowM=[0xf2efe6,0x8a5a3a,0x5c3a24,0xd8c8a8,0x2b2420].map(c=>lam(c)),hornM=lam(0xe8dcc0);
+const animal=(goat,col)=>{const g=new T.Group(),m=cowM[col],s=goat?.55:1;const bd=new T.Mesh(new T.BoxGeometry(.9*s,.85*s,1.9*s),m);bd.position.y=1.15*s;g.add(bd);
+const hd=new T.Group();hd.position.set(0,1.3*s,1.05*s);g.add(hd);const hm=new T.Mesh(new T.BoxGeometry(.5*s,.5*s,.75*s),m);hm.position.z=.3*s;hd.add(hm);const mz=new T.Mesh(new T.BoxGeometry(.4*s,.32*s,.2*s),lam(0x3a2a24));mz.position.set(0,-.08*s,.72*s);hd.add(mz);
+[-1,1].forEach(k=>{const h=new T.Mesh(new T.ConeGeometry(.06*s,(goat?.35:.32)*s,6),hornM);h.position.set(k*.2*s,.32*s,.1*s);h.rotation.z=-k*.5;h.rotation.x=goat?-.6:0;hd.add(h);const e=new T.Mesh(new T.BoxGeometry(.28*s,.08*s,.14*s),m);e.position.set(k*.33*s,.15*s,.05*s);hd.add(e);});
+if(!goat){const hp=new T.Mesh(new T.BoxGeometry(.5,.35,.5),m);hp.position.set(0,1.62,.62);g.add(hp);}
+const legs=[];[[-1,1],[1,1],[-1,-1],[1,-1]].forEach(a=>{const l=new T.Mesh(new T.BoxGeometry(.18*s,.85*s,.18*s).translate(0,-.42*s,0),m);l.position.set(a[0]*.3*s,.78*s,a[1]*.7*s);g.add(l);legs.push(l);});
+const tl=new T.Mesh(new T.BoxGeometry(.06,.7*s,.06).translate(0,-.35*s,0),m);tl.position.set(0,1.45*s,-.95*s);tl.rotation.x=.2;g.add(tl);g.userData={hd,legs,tl};return g;};
+const herd=(lx,lz,n,goat)=>{for(let k=0;k<n;k++){const a=animal(goat,(rnd()*5)|0),w=FW(lx+(rnd()-.5)*30,lz+(rnd()-.5)*40);a.position.set(w[0],fy(w[0],w[1])+.1,w[1]);a.rotation.y=rnd()*6;scene.add(a);
+FARM.a.push({t:'graze',p:a,cx:w[0],cz:w[1],ph:rnd()*20,goat,dir:rnd()*6});}};
+herd(-150,-250,5,0);herd(-290,140,4,0);herd(-110,320,7,1);herd(-380,-120,5,1);
+{const peg=IMC(new T.CylinderGeometry(.05,.05,.6,5).translate(0,.3,0),lam(0x6b4a2f),1e9,10);FARM.a.filter(a=>a.t==='graze').forEach(a=>add(peg,a.cx,fy(a.cx,a.cz),a.cz,0,1,1,1));}
+/* red 4-wheel tractor ploughing the brown plot back and forth, with a driver */
+{const q=PL.find(c=>c.k==='soil');if(q){const g=new T.Group(),red=lam(0xc62828);mk(g,1.2,.9,2.2,0xc62828,0,1.2,.5);mk(g,1.0,.7,1.0,0x2b2b2b,0,1.25,1.7);mk(g,1.3,.12,.9,0x9e9e9e,0,1.75,-.2);
+[-1,1].forEach(s_=>{const rw=new T.Mesh(new T.CylinderGeometry(.85,.85,.45,14).rotateZ(Math.PI/2),lam(0x1b1b1b));rw.position.set(s_*.95,.85,-.4);g.add(rw);const fw=new T.Mesh(new T.CylinderGeometry(.45,.45,.3,12).rotateZ(Math.PI/2),lam(0x1b1b1b));fw.position.set(s_*.75,.45,1.7);g.add(fw);
+const mg=new T.Mesh(new T.CircleGeometry(.5,12),lam2(0xf2c230));mg.position.set(s_*1.18,.85,-.4);mg.rotation.y=s_*Math.PI/2;g.add(mg);});
+const ex=new T.Mesh(new T.CylinderGeometry(.06,.06,1.1,6),lam(0x333333));ex.position.set(.4,2.2,1.4);g.add(ex);mk(g,1.8,.25,.5,0x6d6d6d,0,.5,-1.8);[-.6,0,.6].forEach(x=>mk(g,.1,.5,.4,0x4a4a4a,x,.25,-1.9));
+const dr=person();dr.position.set(0,1.05,-.25);dr.scale.setScalar(.9);g.add(dr);g.position.set(q.x,fy(q.x,q.z)+.1,q.z);scene.add(g);FARM.tr={g,q,t:0};}}
+/* power tiller with a man walking behind it */
+{const q=PL.filter(c=>c.k==='water')[1]||PL[5],g=new T.Group();mk(g,.7,.6,1.1,0x1f5fae,0,.95,.2);mk(g,.5,.4,.6,0x333333,0,1.4,.3);[-1,1].forEach(s_=>{const w=new T.Mesh(new T.CylinderGeometry(.45,.45,.18,10).rotateZ(Math.PI/2),lam(0x2b2b2b));w.position.set(s_*.5,.45,.6);g.add(w);
+const hb=mk(g,.06,.06,1.6,0x555555,s_*.3,1.2,-.7);hb.rotation.x=-.4;});const m=person();m.position.set(0,.2,-1.6);g.add(m);g.position.set(q.x+8,fy(q.x,q.z)+.1,q.z);scene.add(g);FARM.pt={g,q,t:0,m};}
+/* haystacks, scarecrow, farmhouse, pond */
+{const hay=IMC(new T.ConeGeometry(1,1,10).translate(0,.5,0),lam(0xd9b24a),1e9,10),pole=IMC(new T.CylinderGeometry(.06,.06,1,5).translate(0,.5,0),lam(0x6b4a2f),1e9,10);
+[[-170,60],[-178,70],[-165,78],[-330,-260],[-318,-250],[-90,200]].forEach(a=>{const w=FW(a[0],a[1]),y=fy(w[0],w[1]);add(hay,w[0],y,w[1],0,2.4,2.2,2.4);add(hay,w[0],y+1.9,w[1],0,1.6,1.8,1.6);add(pole,w[0],y,w[1],0,1,5,1);});}
+{const w=FW(-200,-40),g=new T.Group();g.position.set(w[0],fy(w[0],w[1]),w[1]);g.rotation.y=RYk;scene.add(g);mk(g,.12,2.6,.12,0x6b4a2f,0,1.3,0);mk(g,1.8,.1,.1,0x6b4a2f,0,1.9,0);mk(g,.7,.9,.3,0xc0392b,0,1.7,0);
+const hd=new T.Mesh(new T.SphereGeometry(.28,8,6),lam(0xe8dcc0));hd.position.y=2.45;g.add(hd);const ht=new T.Mesh(hatG,hatM);ht.position.y=.6;g.add(ht);}
+{const w=FW(-430,60),g=new T.Group();g.position.set(w[0],fy(w[0],w[1]),w[1]);g.rotation.y=RYk+Math.PI/2;scene.add(g);mk(g,9,3,6,0xc8a878,0,1.5,0);const r=new T.Mesh(prism(5.2,2.6,10.4),lam(0x8a6a3a));r.position.y=3;g.add(r);mk(g,1.2,2,.1,0x5b3a22,0,1,3.05);
+mk(g,6,1.2,.15,0xc8a878,7,.6,4);mk(g,.15,1.2,6,0xc8a878,4,.6,1);const pond=new T.Mesh(new T.CircleGeometry(9,24).rotateX(-Math.PI/2),new T.MeshPhongMaterial({color:0x3f7f8a,shininess:90}));pond.position.set(-16,.15,0);g.add(pond);
+for(let k=0;k<6;k++){const p=new T.Mesh(new T.CylinderGeometry(.18,.25,7,6),lam(0x8a6f50));p.position.set(-16+Math.cos(k)*11,3.5,Math.sin(k)*11);g.add(p);const c=new T.Mesh(new T.IcosahedronGeometry(2.2,0).scale(1,.45,1),lam(0x3f8a3a));c.position.set(-16+Math.cos(k)*11,7.2,Math.sin(k)*11);g.add(c);}}
+/* children playing football on the harvested plot: bamboo goals, a ball, kids chasing it */
+{const q=PL.find(c=>c.k==='stub');if(q){const C_=FW(q.lx,q.lz),c=Math.cos(RYk),s_=Math.sin(RYk),L_=(a,b)=>[q.x+a*c+b*s_,q.z-a*s_+b*c];
+[-30,30].forEach(e=>{const g=new T.Group(),p=L_(0,e);g.position.set(p[0],fy(p[0],p[1]),p[1]);g.rotation.y=RYk;scene.add(g);[-2.5,2.5].forEach(x=>mk(g,.12,2.2,.12,0xc9b26a,x,1.1,0));mk(g,5.1,.12,.12,0xc9b26a,0,2.2,0);});
+const ball=new T.Mesh(new T.SphereGeometry(.22,10,8),lam(0xf5f5f5));scene.add(ball);FARM.ball={m:ball,a:0,b:0,va:0,vb:0,L_};
+for(let k=0;k<10;k++){const p=person();p.scale.setScalar(.62+rnd()*.12);scene.add(p);FARM.kids.push({p,a:(rnd()-.5)*30,b:(rnd()-.5)*50,sp:3.2+rnd()*1.8,team:k%2,L_});}}}}
+function farmTick(dt){if(!KU.st||cam.position.distanceTo(KU.p)>fogFar+500)return;const t=time;
+FARM.a.forEach(a=>{const p=a.p;if(a.t==='plant'){const b=Math.sin(t*1.6+a.ph);p.rotation.x=.55+.25*b;p.userData.arms[0].rotation.x=-1.2-.5*b;p.userData.arms[1].rotation.x=-1.1-.4*Math.sin(t*1.6+a.ph+1);}
+else{const u=p.userData,w=Math.sin(t*.35+a.ph);if(w>.6){a.dir+=dt*.3*Math.sin(a.ph);const sp=a.goat?.5:.35;p.position.x+=Math.sin(a.dir)*sp*dt;p.position.z+=Math.cos(a.dir)*sp*dt;const dx=p.position.x-a.cx,dz=p.position.z-a.cz;if(dx*dx+dz*dz>64)a.dir=Math.atan2(-dx,-dz);
+p.rotation.y=a.dir;u.legs.forEach((l,k)=>l.rotation.x=Math.sin(t*5+(k%2?Math.PI:0)+(k>1?Math.PI:0))*.35);u.hd.rotation.x=.2;}else{u.legs.forEach(l=>l.rotation.x*=.9);u.hd.rotation.x=.75+.12*Math.sin(t*3+a.ph);}
+p.position.y=Math.max(hgt(p.position.x,p.position.z),.4)+.1;u.tl.rotation.z=.4*Math.sin(t*2.3+a.ph);}});
+if(FARM.tr){const T_=FARM.tr,q=T_.q,c=Math.cos(KU.ry),s_=Math.sin(KU.ry);T_.t+=dt;const lane=Math.floor(T_.t/22)%6,f=(T_.t%22)/22,dirn=lane%2?-1:1,a=-15+lane*6,b=dirn*(-30+60*f);
+const x=q.x+a*c+b*s_,z=q.z-a*s_+b*c;T_.g.position.set(x,Math.max(hgt(x,z),.4)+.1,z);T_.g.rotation.y=KU.ry+(dirn>0?0:Math.PI);}
+if(FARM.pt){const P_=FARM.pt,q=P_.q,c=Math.cos(KU.ry),s_=Math.sin(KU.ry);P_.t+=dt;const f=(P_.t%40)/40,dirn=f<.5?1:-1,b=dirn>0?-28+112*f:28-112*(f-.5),a=10;const x=q.x+a*c+b*s_,z=q.z-a*s_+b*c;
+P_.g.position.set(x,Math.max(hgt(x,z),.4)+.1,z);P_.g.rotation.y=KU.ry+(dirn>0?0:Math.PI);walkPose(P_.m,dt*.6,true);}
+const B=FARM.ball;if(B){let near=null,nd=1e9;FARM.kids.forEach(k=>{const da=B.a-k.a,db=B.b-k.b,d=Math.hypot(da,db);if(d<nd){nd=d;near=k;}});
+FARM.kids.forEach((k,i)=>{const tgtA=k===near?B.a:B.a+(k.team?-1:1)*(4+i%3*3),tgtB=k===near?B.b:B.b+(k.team?8:-8)+(i%4-1.5)*4,da=tgtA-k.a,db=tgtB-k.b,d=Math.hypot(da,db);
+if(d>.6){const st=Math.min(d,k.sp*dt);k.a+=da/d*st;k.b+=db/d*st;walkPose(k.p,dt*1.6,true);}else walkPose(k.p,dt,false);const w=k.L_(k.a,k.b);k.p.position.set(w[0],Math.max(hgt(w[0],w[1]),.4)+.12,w[1]);k.p.rotation.y=KU.ry+Math.atan2(da,db);});
+if(nd<.9){const k=near,goal=k.team?-30:30;B.va=(rnd()-.5)*10;B.vb=(goal-B.b)*.35+(rnd()-.5)*6;}B.a+=B.va*dt;B.b+=B.vb*dt;B.va*=Math.pow(.4,dt);B.vb*=Math.pow(.4,dt);
+if(Math.abs(B.a)>19){B.a=Math.sign(B.a)*19;B.va*=-.6;}if(Math.abs(B.b)>34){B.b=0;B.a=0;B.va=0;B.vb=(rnd()-.5)*8;}const w=B.L_(B.a,B.b);B.m.position.set(w[0],Math.max(hgt(w[0],w[1]),.4)+.34,w[1]);B.m.rotation.x+=B.vb*dt*2;}}
 /* Kushtia pedestrians strolling on the footpaths */
-const KWK=[];if(KU.st){KU.roads.forEach(r=>{const R_=RP.find(q=>q.P===r.P);if(!R_)return;const n=Math.floor(R_.len/(r.n==='N.S. ROAD'?18:50));for(let k=0;k<n;k++){const p=person();scene.add(p);KWK.push({p,R:R_,s:rnd()*R_.len,dir:rnd()<.5?1:-1,off:(rnd()<.5?1:-1)*(r.hw+1.1+rnd()*.5),sp:1.1+rnd()*.5});}});}
+const KWK=[];if(KU.st){KU.roads.forEach(r=>{const R_=RP.find(q=>q.P===r.P);if(!R_)return;const n=Math.floor(R_.len/(r.n==='এন.এস. রোড'?18:50));for(let k=0;k<n;k++){const p=person();scene.add(p);KWK.push({p,R:R_,s:rnd()*R_.len,dir:rnd()<.5?1:-1,off:(rnd()<.5?1:-1)*(r.hw+1.1+rnd()*.5),sp:1.1+rnd()*.5});}});}
 function kWalkTick(dt){if(!KU.st||cam.position.distanceTo(KU.p)>fogFar+400){KWK.forEach(w=>w.p.visible=false);return;}
 KWK.forEach(w=>{const R_=w.R,cl=R_.cl;w.s+=w.sp*dt*w.dir;if(w.s>R_.len){w.s=R_.len;w.dir=-1;}if(w.s<0){w.s=0;w.dir=1;}let a=0,b=cl.length-1;while(b-a>1){const m=(a+b)>>1;if(cl[m]<=w.s)a=m;else b=m;}
 const p=R_.P[a],q=R_.P[b],f=(w.s-cl[a])/Math.max(.01,cl[b]-cl[a]),x=p.x+(q.x-p.x)*f+p.nx*w.off,z=p.z+(q.z-p.z)*f+p.nz*w.off;w.p.visible=true;w.p.position.set(x,p.y+(q.y-p.y)*f+.12,z);w.p.rotation.y=Math.atan2((q.x-p.x)*w.dir,(q.z-p.z)*w.dir);walkPose(w.p,dt,true);});}
@@ -767,13 +845,13 @@ const SG=[];for(let k=0;k<16;k++){let i=Math.floor((k+.5)*NS/16),tr=0;while(!okS
 const r=new T.Mesh(new T.SphereGeometry(.24,10,8),new T.MeshBasicMaterial({color:0x330000})),gr=new T.Mesh(new T.SphereGeometry(.24,10,8),new T.MeshBasicMaterial({color:0x003311}));r.position.set(0,5.95,-.22);gr.position.set(0,5.1,-.22);g.add(r,gr);SG.push({s:SP[i].s,r,g:gr,off:k*13,red:false});}
 function sgn(s,t){const g=new T.Group();place(g,s,3.4);scene.add(g);mk(g,.12,2.6,.12,0x444444,0,1.3,0);const b=spr(t,1.1,1.1,'#ffffff','#cc0000');b.position.y=3;b.rotation.y=Math.PI;g.add(b);}
 
-const REG=['Bangladesh plains','Bridge','Chattogram hills','Hill tunnel','Foothill viaduct','Sylhet tea country','Khulna \u00b7 Sundarbans edge','Cox\u2019s Bazar coast','Rangpur \u00b7 northern plains','Rajshahi \u00b7 Barind','Dhaka','Kushtia \u00b7 land of Lalon and Tagore'];
-const regName=p=>p.reg===1?RIV[(p.br||p.ap)-1].br:REG[p.reg];
+const REG=['বাংলাদেশের সমতল','সেতু','চট্টগ্রামের পাহাড়','পাহাড়ি টানেল','পাহাড়ের পাদদেশে ভায়াডাক্ট','সিলেটের চা-বাগান','খুলনা · সুন্দরবনের ধারে','কক্সবাজার উপকূল','রংপুর · উত্তরের সমতল','রাজশাহী · বরেন্দ্র','ঢাকা','কুষ্টিয়া · লালন ও রবীন্দ্রনাথের দেশ'];
+const regName=p=>p.reg===1?RIV[(p.br||p.ap)-1].bn:REG[p.reg];
 const LC=[];
 function limAt(s){const x=((s%L)+L)%L;for(const t of ST){let d=Math.abs(x-t.s);d=Math.min(d,L-d);if(d<300)return 60/3.6;}const r=SP[Math.floor(x/L*NS)%NS].reg;return(r===1?100:r===4?80:r===3?90:120)/3.6;}
 
 /* speed-limit signs stand exactly where each limit begins */
-{let pv=limAt(-6);for(let s=0;s<L;s+=6){const l=limAt(s);if(Math.abs(l-pv)>.1){LC.push({s,v:Math.round(l*3.6)});sgn(s,String(Math.round(l*3.6)));pv=l;}}}
+{let pv=limAt(-6);for(let s=0;s<L;s+=6){const l=limAt(s);if(Math.abs(l-pv)>.1){LC.push({s,v:Math.round(l*3.6)});sgn(s,bnum(Math.round(l*3.6)));pv=l;}}}
 function nextLim(ssv){let b=null,bd=1e9;for(const c of LC){const d=((c.s-ssv)%L+L)%L;if(d<bd){bd=d;b=c;}}return b?{v:b.v,d:bd}:null;}
 /* train */
 const GR=0x0f7a54,WT=0xf6f6f0,RD=0xd62839,GD=0xf2c230,CH=0x1b2430;
@@ -790,7 +868,7 @@ mk(body,3,.8,10.4,CH,0,1.45,0);mk(body,3.26,.5,10,WT,0,2.45,-.1);mk(body,3.28,.0
 const ws=new T.Mesh(new T.BoxGeometry(2.5,1.5,.05),winM);ws.position.set(0,4.15,3.95);ws.rotation.x=-.98;body.add(ws);
 const fd=new T.Mesh(new T.CircleGeometry(.42,24),new T.MeshBasicMaterial({color:0xf42a41}));fd.position.set(0,3.0,5.3);body.add(fd);
 [-1,1].forEach(s=>{const w=new T.Mesh(new T.BoxGeometry(.06,1,2.4),winM);w.position.set(s*1.63,4,2.2);body.add(w);mk(body,.05,1.1,2.4,0x2b3138,s*1.63,3.4,-3.6);
-const l=spr('PADMA EXPRESS',3.4,.55,'#0f7a54','#f2c230');l.position.set(s*1.64,3.45,-1);l.rotation.y=s*Math.PI/2;body.add(l);
+const l=spr('পদ্মা এক্সপ্রেস',3.4,.55,'#0f7a54','#f2c230');l.position.set(s*1.64,3.45,-1);l.rotation.y=s*Math.PI/2;body.add(l);
 const f=new T.Mesh(new T.PlaneGeometry(1.3,.78),flagM);f.position.set(s*1.64,3.0,2.2);f.rotation.y=s*Math.PI/2;body.add(f);
 const b=new T.Mesh(new T.CylinderGeometry(.2,.2,.5,10).rotateX(Math.PI/2),lam(0x777c82));b.position.set(s*.95,1.65,5.45);body.add(b);
 const r=new T.Mesh(new T.BoxGeometry(.3,.2,.06),new T.MeshBasicMaterial({color:0xff2020}));r.position.set(s*1.25,2.2,5.3);body.add(r);});
@@ -798,7 +876,7 @@ const r=new T.Mesh(new T.BoxGeometry(.3,.2,.06),new T.MeshBasicMaterial({color:0
 const pgp=new T.Group();pgp.position.set(0,4.7,.4);mk(pgp,1.7,.12,2,CH,0,0,0);[-1,1].forEach(s=>{const a=mk(pgp,.08,2.3,.08,0x9aa0a6,0,1.05,s*.5);a.rotation.x=s*.38;});mk(pgp,1.9,.06,.5,0x9aa0a6,0,2.1,0);body.add(pgp);
 const ft=new T.Mesh(new T.CylinderGeometry(.5,.5,3.6,12).rotateX(Math.PI/2),lam(0x1a1d21));ft.position.set(0,1.2,-.4);body.add(ft);
 const hlm=new T.MeshBasicMaterial({color:0xfff6c8});[-1.05,1.05].forEach(x=>{const h=new T.Mesh(new T.BoxGeometry(.5,.35,.08),hlm);h.position.set(x,2.9,5.28);body.add(h);});
-const np=spr('4021',1.1,.36,'#0e1620','#ffffff');np.position.set(0,2.35,5.28);body.add(np);
+const np=spr('৪০২১',1.1,.36,'#0e1620','#ffffff');np.position.set(0,2.35,5.28);body.add(np);
 mk(body,.3,.3,.8,0x222222,0,1.5,5.5);wheels(body,[-3.9,-2.7,2.7,3.9]);
 const spot=new T.SpotLight(0xfff0c8,3,320,.5,.6,1),tg_=new T.Object3D();spot.position.set(0,2.8,5);tg_.position.set(0,.5,60);loco.add(spot,tg_);spot.target=tg_;
 /* driver cab */
@@ -820,10 +898,10 @@ const cx=140,cy=135,r=100,a0=Math.PI*.75,sw=Math.PI*1.5,sk=v*3.6;
 g.lineWidth=14;g.strokeStyle='#202c39';g.beginPath();g.arc(cx,cy,r,a0,a0+sw);g.stroke();
 g.strokeStyle=over?'#f87171':sk>lim*3.6*.9?'#fbbf24':'#5eead4';g.beginPath();g.arc(cx,cy,r,a0,a0+sw*Math.min(1,sk/140));g.stroke();
 const la=a0+sw*Math.min(1,lim*3.6/140);g.lineWidth=5;g.lineCap='butt';g.strokeStyle='#fbbf24';g.beginPath();g.moveTo(cx+Math.cos(la)*(r-16),cy+Math.sin(la)*(r-16));g.lineTo(cx+Math.cos(la)*(r+14),cy+Math.sin(la)*(r+14));g.stroke();
-g.fillStyle='#fff';g.font='bold 62px sans-serif';g.fillText(Math.round(sk),cx,cy+18);g.fillStyle='#9db0c9';g.font='16px sans-serif';g.fillText('km/h',cx,cy+42);g.fillText('LIMIT '+Math.round(lim*3.6),cx,cy+68);
-[['THR',thr,'#5eead4',300],['BRK',Math.max(brk,eb?1:0),'#f87171',350]].forEach(a=>{g.fillStyle='#202c39';g.fillRect(a[3],30,32,170);g.fillStyle=a[2];g.fillRect(a[3],200-170*a[1],32,170*a[1]);g.fillStyle='#9db0c9';g.font='14px sans-serif';g.fillText(a[0],a[3]+16,222);});
-[['DOORS',doors,'#fbbf24'],['LIGHTS',hl,'#fef08a'],['REVERSE',dir<0,'#f87171'],['OVERSPEED',over,'#f87171']].forEach((a,i)=>{g.fillStyle=a[1]?a[2]:'#202c39';g.fillRect(412,30+i*42,90,32);g.fillStyle=a[1]?'#111':'#6b7c93';g.font='bold 13px sans-serif';g.fillText(a[0],457,51+i*42);});
-g.fillStyle='#e8eef7';g.font='bold 18px sans-serif';g.fillText(hudN+'  -  '+hudD,256,258);dtex.needsUpdate=true;}
+g.fillStyle='#fff';g.font='bold 62px "Hind Siliguri","Noto Sans Bengali",sans-serif';g.fillText(bnum(Math.round(sk)),cx,cy+18);g.fillStyle='#9db0c9';g.font='16px "Hind Siliguri","Noto Sans Bengali",sans-serif';g.fillText('কিমি/ঘণ্টা',cx,cy+42);g.fillText('সীমা '+bnum(Math.round(lim*3.6)),cx,cy+68);
+[['থ্রটল',thr,'#5eead4',300],['ব্রেক',Math.max(brk,eb?1:0),'#f87171',350]].forEach(a=>{g.fillStyle='#202c39';g.fillRect(a[3],30,32,170);g.fillStyle=a[2];g.fillRect(a[3],200-170*a[1],32,170*a[1]);g.fillStyle='#9db0c9';g.font='14px "Hind Siliguri","Noto Sans Bengali",sans-serif';g.fillText(a[0],a[3]+16,222);});
+[['দরজা',doors,'#fbbf24'],['লাইট',hl,'#fef08a'],['পেছনে',dir<0,'#f87171'],['অতিরিক্ত গতি',over,'#f87171']].forEach((a,i)=>{g.fillStyle=a[1]?a[2]:'#202c39';g.fillRect(412,30+i*42,90,32);g.fillStyle=a[1]?'#111':'#6b7c93';g.font='bold 13px "Hind Siliguri","Noto Sans Bengali",sans-serif';g.fillText(a[0],457,51+i*42);});
+g.fillStyle='#e8eef7';g.font='bold 18px "Hind Siliguri","Noto Sans Bengali",sans-serif';g.fillText(hudN+'  -  '+hudD,256,258);dtex.needsUpdate=true;}
 /* coaches */
 const bsh=new T.Shape();bsh.moveTo(-1.55,1.85);bsh.lineTo(1.55,1.85);bsh.lineTo(1.55,4.15);bsh.lineTo(-1.55,4.15);bsh.closePath();
 const rsh=new T.Shape();rsh.moveTo(-1.55,4.15);rsh.lineTo(1.55,4.15);rsh.lineTo(1.55,4.3);rsh.quadraticCurveTo(1.55,4.98,.7,4.98);rsh.lineTo(-.7,4.98);rsh.quadraticCurveTo(-1.55,4.98,-1.55,4.3);rsh.closePath();
@@ -833,7 +911,7 @@ for(let i=0;i<4;i++){const c=new T.Group();c.add(new T.Mesh(cbG,lam2(WT)),new T.
 mk(c,2,.35,3,0x888d92,0,5.15,4);mk(c,2,.35,3,0x888d92,0,5.15,-4);mk(c,2.5,2.9,1.5,0x15181c,0,3.3,-8.25);
 [-1,1].forEach(s=>{[-4.4,-2.2,0,2.2,4.4].forEach(z=>{const w=new T.Mesh(winG,winM);w.position.set(s*1.56,3.7,z);c.add(w);});[-6.2,6.2].forEach(z=>{const d=new T.Mesh(new T.BoxGeometry(.08,2.1,1.2),doorM);d.position.set(s*1.57,3,z);c.add(d);});
 const k=new T.Mesh(skG,winM);k.position.set(s*1.15,4.78,0);k.rotation.z=-s*.55;c.add(k);
-const l=spr('PADMA EXPRESS',5,.5,'#0f7a54','#f2c230');l.position.set(s*1.585,2.2,0);l.rotation.y=s*Math.PI/2;c.add(l);});
+const l=spr('পদ্মা এক্সপ্রেস',5,.5,'#0f7a54','#f2c230');l.position.set(s*1.585,2.2,0);l.rotation.y=s*Math.PI/2;c.add(l);});
 if(i===3)[-1,1].forEach(x=>{const t=new T.Mesh(new T.BoxGeometry(.4,.3,.06),new T.MeshBasicMaterial({color:0xff2020}));t.position.set(x,2.6,-7.55);c.add(t);});
 wheels(c,[-6.2,-4.4,4.4,6.2]);cars.push(c);}
 cars.forEach(c=>scene.add(c));
@@ -845,8 +923,8 @@ g.strokeStyle='rgba(255,255,255,.9)';g.lineWidth=big?2.5:1.5;g.setLineDash([6,4]
 g.strokeStyle='#ffffff';g.lineWidth=big?3:2;g.beginPath();SP.forEach((p,i)=>{if(i%3)return;const q=mp(p.x,p.z);i?g.lineTo(q[0],q[1]):g.moveTo(q[0],q[1]);});g.closePath();g.stroke();
 g.lineWidth=big?6:4;[[BI,'#fb923c'],[VI,'#f472b6'],[SP.slice(TA,TB+1).map((p,k)=>TA+k),'#475569']].forEach(a=>{g.strokeStyle=a[1];a[0].forEach((i,k)=>{const q=mp(SP[i].x,SP[i].z);g.beginPath();g.moveTo(q[0],q[1]);const n=SP[(i+1)%NS],r=mp(n.x,n.z);g.lineTo(r[0],r[1]);g.stroke();});});
 ST.forEach(t=>{const q=mp(SP[t.i].x,SP[t.i].z);g.fillStyle='#5eead4';g.strokeStyle='#06231f';g.lineWidth=2;g.beginPath();g.arc(q[0],q[1],big?7:5,0,6.3);g.fill();g.stroke();
-if(big){g.font='bold 15px sans-serif';g.textAlign='left';g.lineWidth=4;g.strokeStyle='rgba(0,0,0,.75)';g.fillStyle='#fff';g.strokeText(t.name,q[0]+10,q[1]+5);g.fillText(t.name,q[0]+10,q[1]+5);}});
-if(big){g.font='italic 14px sans-serif';g.textAlign='center';g.lineWidth=3;[['Bay of Bengal',90.1,20.9],['Sundarbans',89.45,22.0],['Padma',89.6,23.55],['Jamuna',89.55,25.2],['Meghna',90.95,23.4],['Chattogram Hill Tracts',92.35,22.6],['Sylhet hills',91.4,25.35],['Himalayas',89.0,26.95],['Cox\u2019s Bazar beach',91.55,21.2],['Gorai',89.3,23.5],['Karnaphuli Tunnel',91.7,22.18],['INDIA',88.2,24.0],['INDIA',91.0,25.9],['MYANMAR',92.9,21.6]].forEach(a=>{const q=mp(X(a[1]),Z(a[2]));g.strokeStyle='rgba(0,0,0,.7)';g.fillStyle='rgba(255,255,255,.92)';g.strokeText(a[0],q[0],q[1]);g.fillText(a[0],q[0],q[1]);});}
+if(big){g.font='bold 15px "Hind Siliguri","Noto Sans Bengali",sans-serif';g.textAlign='left';g.lineWidth=4;g.strokeStyle='rgba(0,0,0,.75)';g.fillStyle='#fff';g.strokeText(bnn(t.name),q[0]+10,q[1]+5);g.fillText(bnn(t.name),q[0]+10,q[1]+5);}});
+if(big){g.font='italic 14px "Hind Siliguri","Noto Sans Bengali",sans-serif';g.textAlign='center';g.lineWidth=3;[['বঙ্গোপসাগর',90.1,20.9],['সুন্দরবন',89.45,22.0],['পদ্মা',89.6,23.55],['যমুনা',89.55,25.2],['মেঘনা',90.95,23.4],['পার্বত্য চট্টগ্রাম',92.35,22.6],['সিলেটের পাহাড়',91.4,25.35],['হিমালয়',89.0,26.95],['কক্সবাজার সৈকত',91.55,21.2],['গড়াই',89.3,23.5],['কর্ণফুলী টানেল',91.7,22.18],['ভারত',88.2,24.0],['ভারত',91.0,25.9],['মিয়ানমার',92.9,21.6]].forEach(a=>{const q=mp(X(a[1]),Z(a[2]));g.strokeStyle='rgba(0,0,0,.7)';g.fillStyle='rgba(255,255,255,.92)';g.strokeText(a[0],q[0],q[1]);g.fillText(a[0],q[0],q[1]);});}
 return{c,mp};}
 const mmc=$('mm'),mx=mmc.getContext('2d'),MM=mapBG(300,412,.0265,0,180,false),bmc=$('bm'),bx=bmc.getContext('2d');let BM=null,bigOpen=false;
 function mapDyn(g,m,st,w,h,r){g.clearRect(0,0,w,h);g.drawImage(m.c,0,0);const n=m.mp(SP[st.i].x,SP[st.i].z);g.strokeStyle='#fbbf24';g.lineWidth=3;g.beginPath();g.arc(n[0],n[1],r+6,0,6.3);g.stroke();const q=m.mp(loco.position.x,loco.position.z);g.fillStyle='#f87171';g.strokeStyle='#fff';g.lineWidth=2;g.beginPath();g.arc(q[0],q[1],r,0,6.3);g.fill();g.stroke();}
@@ -901,8 +979,8 @@ let started=false,ini=0,frameN=0,hudN='',hudD='',reg=-1,dk=0;
 let S=ST[nextI0].s-260,v=0,thr=0,brk=0,eb=false,dir=1,doors=false,board=0,boarded=false,nextI=nextI0,score=0,done=0,hl=true,mode=1,time=0,over=false,mt=0;
 const K={};
 function msg(t,ms){const m=$('msg');m.textContent=t;m.style.opacity=1;clearTimeout(mt);mt=setTimeout(()=>m.style.opacity=0,ms||2600);}
-function toggleDoors(){if(!doors){if(v<.3){doors=true;}else msg('Stop the train first');}else doors=false;doorM.color.setHex(doors?0x050505:RD);}
-function rev(){if(v<.3){dir=-dir;msg(dir>0?'Direction: forward':'Direction: reverse');}else msg('Stop the train first');}
+function toggleDoors(){if(!doors){if(v<.3){doors=true;}else msg('আগে ট্রেন থামান');}else doors=false;doorM.color.setHex(doors?0x050505:RD);}
+function rev(){if(v<.3){dir=-dir;msg(dir>0?'দিক: সামনে':'দিক: পেছনে');}else msg('আগে ট্রেন থামান');}
 const IC={cam:'<path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/>',up:'<path d="M6 15l6-6 6 6"/>',dn:'<path d="M6 9l6 6 6-6"/>',brake:'<circle cx="12" cy="12" r="8"/><path d="M9.5 9v6M14.5 9v6"/>',eb:'<path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17v.5"/>',
 horn:'<path d="M4 10v4h3l6 4V6L7 10z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/>',doors:'<rect x="6" y="3" width="12" height="18" rx="1"/><circle cx="15" cy="12" r=".8"/>',rev:'<path d="M7 7h11l-3-3M17 17H6l3 3"/>',
 light:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/>',night:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/>',
@@ -911,22 +989,22 @@ v0:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.2"/><path d="M12
 v3:'<rect x="3" y="7" width="18" height="8" rx="1"/><circle cx="7" cy="18" r="1.5"/><circle cx="17" cy="18" r="1.5"/><path d="M8 11h8"/>',v4:'<rect x="6" y="5" width="12" height="12" rx="2"/><circle cx="9.5" cy="12" r="1"/><circle cx="14.5" cy="12" r="1"/><path d="M8 20h8"/>',
 v5:'<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/>',v7:'<path d="M3 19V12a9 9 0 0 1 18 0v7"/><path d="M8 19v-6a4 4 0 0 1 8 0v6M3 19h18"/>',v8:'<path d="M4 20V9l5-4 5 4v11M14 20v-7h6v7M2 20h20"/><path d="M8 12h2M8 16h2"/>',v6:'<ellipse cx="12" cy="12" rx="9" ry="4"/><circle cx="12" cy="12" r="2"/><path d="M19 9l2 1-1 2"/>'};
 const svg=p=>'<svg viewBox="0 0 24 24">'+p+'</svg>';
-const VIEWS=['Driver view','Chase view','Side view, left','Side view, right','Front view','Aerial view','Orbit view (drag)','Karnaphuli Tunnel ride','Kushtia town tour'],MI=[],BTNS={};
-function setMode(i){mode=i;if(tcam)tcam.user=true;MI.forEach((b,k)=>b.classList.toggle('on',k===i));$('vw').textContent=VIEWS[i];$('camMenu').style.display='none';if(i===6)msg('Drag to orbit, scroll to zoom',2200);if(i===7){KT.car=-1;msg('Riding through the Karnaphuli Tunnel: 3.32 km, twin tubes under the river (opened 2023)',4200);}if(i===8)msg('Kushtia: Court station, N.S. Road, Lalon Shah mazar, Shilaidaha Kuthibari',4200);}
+const VIEWS=['চালকের আসন','চেজ ভিউ','পাশ থেকে, বাঁয়ে','পাশ থেকে, ডানে','সামনে থেকে','আকাশ থেকে','ঘুরিয়ে দেখা (টেনে)','কর্ণফুলী টানেল যাত্রা','কুষ্টিয়া শহর ভ্রমণ'],MI=[],BTNS={};
+function setMode(i){mode=i;if(tcam)tcam.user=true;MI.forEach((b,k)=>b.classList.toggle('on',k===i));$('vw').textContent=VIEWS[i];$('camMenu').style.display='none';if(i===6)msg('টেনে ঘোরান, স্ক্রল করে কাছে-দূরে নিন',2200);if(i===7){KT.car=-1;msg('কর্ণফুলী টানেল: নদীর নিচে জোড়া সুড়ঙ্গ, ৩.৩২ কিমি (চালু ২০২৩)',4200);}if(i===8)msg('কুষ্টিয়া: কোর্ট স্টেশন, এন.এস. রোড, লালন শাহের মাজার, শিলাইদহ কুঠিবাড়ি',4200);}
 function toggleCam(){const m=$('camMenu');if(m.style.display==='flex'){m.style.display='none';return;}const r=BTNS.cam.getBoundingClientRect();m.style.left=Math.max(8,r.left)+'px';m.style.bottom=(innerHeight-r.top+8)+'px';m.style.display='flex';}
 VIEWS.forEach((n,i)=>{const e=document.createElement('button');e.innerHTML=svg(IC['v'+i])+'<span>'+n+'</span><small>'+(i+1)+'</small>';e.onclick=()=>setMode(i);$('camMenu').appendChild(e);MI.push(e);});
 const orb={y:.8,p:.35,d:48},V1=new T.Vector3(),V2=new T.Vector3();let drg=null;
 R.domElement.addEventListener('pointerdown',e=>{if(mode===6)drg=[e.clientX,e.clientY];});addEventListener('pointermove',e=>{if(drg&&mode===6){orb.y-=(e.clientX-drg[0])*.006;orb.p=Math.max(.05,Math.min(1.45,orb.p+(e.clientY-drg[1])*.005));drg=[e.clientX,e.clientY];}});addEventListener('pointerup',()=>{drg=null;});
 R.domElement.addEventListener('wheel',e=>{if(mode===6)orb.d=Math.max(15,Math.min(150,orb.d+e.deltaY*.05));},{passive:true});
-const A={up:()=>thr=Math.min(1,thr+.1),dn:()=>thr=Math.max(0,thr-.1),horn:hornOn,eb:()=>eb=!eb,doors:toggleDoors,rev,light:()=>hl=!hl,cam:()=>setMode((mode+1)%VIEWS.length),night:()=>{setTime(!night);msg(night?'Night falls':'Day breaks',1500);},wx:()=>{if(wxAuto)setWx(0,false);else if(WXI<WX.length-1)setWx(WXI+1,false);else{setWx(WXI,true);msg('Weather: automatic',1800);}},map:toggleBig,snd:()=>{muted=!muted;if(master)master.gain.value=muted?0:.7;msg(muted?'Sound off':'Sound on',1200);}};
+const A={up:()=>thr=Math.min(1,thr+.1),dn:()=>thr=Math.max(0,thr-.1),horn:hornOn,eb:()=>eb=!eb,doors:toggleDoors,rev,light:()=>hl=!hl,cam:()=>setMode((mode+1)%VIEWS.length),night:()=>{setTime(!night);msg(night?'রাত নামল':'সকাল হলো',1500);},wx:()=>{if(wxAuto)setWx(0,false);else if(WXI<WX.length-1)setWx(WXI+1,false);else{setWx(WXI,true);msg('আবহাওয়া: স্বয়ংক্রিয়',1800);}},map:toggleBig,snd:()=>{muted=!muted;if(master)master.gain.value=muted?0:.7;msg(muted?'শব্দ বন্ধ':'শব্দ চালু',1200);}};
 addEventListener('keydown',e=>{K[e.code]=true;audio();const a={KeyH:hornOn,KeyL:A.light,KeyC:A.cam,KeyN:A.night,KeyO:toggleDoors,KeyR:rev,KeyM:toggleBig,KeyU:A.snd,KeyE:A.wx,KeyB:A.eb,Digit1:()=>setMode(0),Digit2:()=>setMode(1),Digit3:()=>setMode(2),Digit4:()=>setMode(3),Digit5:()=>setMode(4),Digit6:()=>setMode(5),Digit7:()=>setMode(6),Digit8:()=>setMode(7),Digit9:()=>setMode(8)}[e.code];if(a&&!e.repeat)a();if(e.code==='Space'||e.code.startsWith('Arrow'))e.preventDefault();});
 addEventListener('keyup',e=>{K[e.code]=false;if(e.code==='KeyH')hornOff();});addEventListener('pointerdown',audio);
-[[['cam','Camera views (C)']],[['dn','Throttle down (S)'],['up','Throttle up (W)'],['brake','Brake, hold (Space)'],['eb','Emergency brake (B)']],[['horn','Horn, hold (H)'],['doors','Doors (O)'],['rev','Reverse (R)'],['light','Headlights (L)'],['night','Day or night (N)'],['wx','Weather (E)']],[['map','Map (M)'],['snd','Sound (U)']]].forEach(gr=>{const d=document.createElement('div');d.className='grp';gr.forEach(b=>{const a=b[0],e=document.createElement('button');e.className='ib';e.title=b[1];e.innerHTML=svg(IC[a]);BTNS[a]=e;d.appendChild(e);
+[[['cam','ক্যামেরা (C)']],[['dn','থ্রটল কমান (S)'],['up','থ্রটল বাড়ান (W)'],['brake','ব্রেক, চেপে ধরুন (Space)'],['eb','জরুরি ব্রেক (B)']],[['horn','হর্ন, চেপে ধরুন (H)'],['doors','দরজা (O)'],['rev','পেছনে চলা (R)'],['light','হেডলাইট (L)'],['night','দিন বা রাত (N)'],['wx','আবহাওয়া (E)']],[['map','ম্যাপ (M)'],['snd','শব্দ (U)']]].forEach(gr=>{const d=document.createElement('div');d.className='grp';gr.forEach(b=>{const a=b[0],e=document.createElement('button');e.className='ib';e.title=b[1];e.innerHTML=svg(IC[a]);BTNS[a]=e;d.appendChild(e);
 const dn=()=>{audio();if(a==='cam')toggleCam();else if(a==='brake')K.Space=true;else A[a]();},up=()=>{if(a==='brake')K.Space=false;if(a==='horn')hornOff();};e.addEventListener('pointerdown',dn);e.addEventListener('pointerup',up);e.addEventListener('pointerleave',up);});$('bt').appendChild(d);});
 addEventListener('pointerdown',e=>{if(e.target&&e.target.closest&&!e.target.closest('#camMenu')&&!e.target.closest('.ib'))$('camMenu').style.display='none';});
 addEventListener('resize',()=>{R.setSize(innerWidth,innerHeight);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();});
-ST.forEach(st=>{const i=document.createElement('i');i.className='sd';i.style.left=st.s/L*100+'%';i.title=st.name;$('rl').appendChild(i);});
-$('go').onclick=()=>{started=true;$('start').style.display='none';audio();setMode(1);msg('Welcome aboard. Throttle up with W, then stop at '+ST[nextI%ST.length].name,5000);};
+ST.forEach(st=>{const i=document.createElement('i');i.className='sd';i.style.left=st.s/L*100+'%';i.title=bnn(st.name);$('rl').appendChild(i);});
+$('go').onclick=()=>{started=true;$('start').style.display='none';audio();setMode(1);msg('স্বাগতম! W দিয়ে থ্রটল বাড়ান, প্রথম স্টেশন '+bnn(ST[nextI%ST.length].name),5000);};
 /* passenger flow: alighting passengers step down and walk to the concourse, then the waiting crowd walks to the nearest door and boards */
 const _dv=new T.Vector3();
 function startFlow(st){const D=[];for(let c=1;c<cars.length;c++)[-6.2,6.2].forEach(zz=>{cars[c].updateMatrixWorld();_dv.set(1.62,0,zz);cars[c].localToWorld(_dv);st.g.worldToLocal(_dv);if(Math.abs(_dv.z)<31)D.push({x:_dv.x,z:_dv.z});});if(!D.length)D.push({x:1.8,z:0});
@@ -951,7 +1029,7 @@ function lcTick(dt){XC.forEach(c=>{let d=((c.s-S)%L+L)%L;if(d>L/2)d-=L;const occ
 c.t=closed?c.t+dt:0;const tgt=closed&&c.t>2?0:1.45;c.ang+=(tgt-c.ang)*Math.min(1,dt*(tgt<c.ang?.9:1.4));c.arms.forEach(a=>a.pv.rotation.x=a.s*c.ang);
 const fl=closed||c.ang<1.38,ph=Math.floor(time*2.6)%2;c.lamps.forEach((l,k)=>l.material.color.setHex(fl&&(k%2===ph)?0xff2a1a:0x330000));c.r.lc.closed=closed||c.ang<1.2;
 if(fl&&started&&cam.position.distanceTo(c.g.position)<380){c.bell-=dt;if(c.bell<=0){bell();c.bell=.55;}}
-if(dir>=0&&started){if(ah>380&&ah<430&&!c.warn){c.warn=true;msg('Level crossing ahead: sound the horn (H)',2600);}if(ah>30&&ah<380&&hornHeld&&!c.hb){c.hb=true;score+=10;msg('Horn at the level crossing +10',1800);}if(ah<-120){c.hb=false;c.warn=false;}}});}
+if(dir>=0&&started){if(ah>380&&ah<430&&!c.warn){c.warn=true;msg('সামনে লেভেল ক্রসিং: হর্ন দিন (H)',2600);}if(ah>30&&ah<380&&hornHeld&&!c.hb){c.hb=true;score+=10;msg('লেভেল ক্রসিংয়ে হর্ন দিয়েছেন +১০',1800);}if(ah<-120){c.hb=false;c.warn=false;}}});}
 const lv=new T.Vector3();let last=performance.now();
 function frame(now){requestAnimationFrame(frame);const rdt=Math.min(.05,(now-last)/1000),dt=started?rdt:0;last=now;time+=dt;
 if(K.KeyW||K.ArrowUp)thr=Math.min(1,thr+dt*.45);if(K.KeyS||K.ArrowDown)thr=Math.max(0,thr-dt*.6);if(K.KeyX)thr=0;
@@ -962,24 +1040,24 @@ const acc=thr*2*Math.max(0,1-v/50),res=.04+.00045*v*v,bk=(brk+(eb?1.2:0))*(v>0?1
 v=Math.max(0,v+(acc-res-bk-5.9*dir*gr)*dt);if(v<.3&&thr<.02)v=0;if(eb&&v===0)eb=false;
 const pS=S;S+=dir*v*dt;
 SG.forEach(g=>{const want=((time+g.off)%36)<12,ah=((g.s-ssv)%L+L)%L;if(!(want&&!g.red&&dir>0&&ah<900))g.red=want;g.r.material.color.setHex(g.red?0xff2a1a:0x330000);g.g.material.color.setHex(g.red?0x003311:0x22ff55);
-if(dir>0&&g.red&&Math.floor((S-g.s)/L)!==Math.floor((pS-g.s)/L)){score=Math.max(0,score-50);msg('Signal passed at danger: -50');}});
+if(dir>0&&g.red&&Math.floor((S-g.s)/L)!==Math.floor((pS-g.s)/L)){score=Math.max(0,score-50);msg('লাল সিগন্যাল পার হয়েছেন: -৫০');}});
 over=v>lim+1.4;if(over)score=Math.max(0,score-dt*6);
 const rk=P.reg*100+(P.br||P.ap);if(rk!==reg){reg=rk;const nm=regName(P);$('rg').textContent=nm;if(started)msg(nm,2600);}
 dk+=((P.reg===3?1:0)-dk)*Math.min(1,rdt*2.5);hemi.intensity=envHemi*(1-.88*dk);sun.intensity=envSun*(1-.95*dk);
 const st=ST[nextI%ST.length],dist=((st.s-ssv+1.5*L)%L)-L*.5,inZ=Math.abs(dist)<8&&v<.4;
-if(inZ&&!doors&&!boarded&&time%4<.05)msg('Press O to open the doors');
+if(inZ&&!doors&&!boarded&&time%4<.05)msg('দরজা খুলতে O চাপুন');
 if(doors&&inZ&&!boarded&&!st.flow)startFlow(st);
-walkTick(dt);hawkTick(rdt,st,doors&&inZ);if(st.flow){flowTick(st,dt,doors&&inZ);board=st.flow.prog;if(st.flow.done&&!boarded){boarded=true;const b=100+Math.round((8-Math.abs(dist))*10);score+=b;done++;msg('All aboard +'+b+'. Close doors and depart');}}
+walkTick(dt);hawkTick(rdt,st,doors&&inZ);if(st.flow){flowTick(st,dt,doors&&inZ);board=st.flow.prog;if(st.flow.done&&!boarded){boarded=true;const b=100+Math.round((8-Math.abs(dist))*10);score+=b;done++;msg('সবাই উঠেছে +'+bnum(b)+'। দরজা বন্ধ করে ট্রেন ছাড়ুন');}}
 if(!doors&&boarded&&v>1){resetStation(st);nextI++;boarded=false;board=0;}
-if(!boarded&&dist<-60&&v>2){score=Math.max(0,score-75);msg('Station missed: -75');resetStation(st);nextI++;board=0;}
+if(!boarded&&dist<-60&&v>2){score=Math.max(0,score-75);msg('স্টেশন ফেলে এসেছেন: -৭৫');resetStation(st);nextI++;board=0;}
 cars.forEach((c,i)=>place(c,S+OFF[i]));loco.updateMatrixWorld(true);const rot=dir*v*dt/.55;WH.forEach(w=>w.rotation.x+=rot);if(v>.5&&Math.floor(S/12.5)!==Math.floor(pS/12.5))click(Math.min(1,.4+v/14),v);
 /* cinematic tunnel camera: fixed shots inside and at the portals, then back to the previous view */
 const inT=dir>0?ssv>sTA-120&&ssv<sTB+50:ssv>sTA-50&&ssv<sTB+120;
-if(inT&&!tcam&&started){tcam={k:0,user:false};tAnchor();$('vw').textContent='Tunnel camera';}
+if(inT&&!tcam&&started){tcam={k:0,user:false};tAnchor();$('vw').textContent='টানেল ক্যামেরা';}
 if(tcam&&!inT){const u=tcam.user;tcam=null;if(!u)setMode(mode);}
 const TC=!!(tcam&&!tcam.user);if(TC&&(tcam.as-S)*dir<(tcam.out?-40:-16))tAnchor();
 body.visible=mode!==0||TC;cab.visible=mode===0&&!TC;spot.intensity=hl?((ENV.n>.5||ENV.dark>.5||ENV.fog>.5||dk>.2)?3:1):0;hlm.color.setHex(hl?0xfff6c8:0x555555);cabL.intensity=ENV.n>.5?.9:.35;
-hudN=st.name;hudD=boarded?'Close doors and depart':doors&&inZ?'Boarding '+Math.round(board*100)+'%':dist>0?Math.round(dist)+' m to stop':'Passed by '+Math.round(-dist)+' m';
+hudN=bnn(st.name);hudD=boarded?'দরজা বন্ধ করে ছাড়ুন':doors&&inZ?'যাত্রী উঠছে '+bnum(Math.round(board*100))+'%':dist>0?bnum(Math.round(dist))+' মিটার বাকি':bnum(Math.round(-dist))+' মিটার পেরিয়ে গেছেন';
 if(TC){cam.position.copy(tcam.pos);cam.lookAt(loco.localToWorld(lv.set(0,2.4,(tcam.as-S)*dir>8?4:-10)));}
 else if(mode===0){const sh=Math.sin(time*23)*.01*Math.min(1,v/15);
 cam.position.copy(loco.localToWorld(lv.set(0,4.1+sh,2.2)));cam.lookAt(loco.localToWorld(lv.set(0,-1.5,60)));
@@ -999,16 +1077,16 @@ cam.fov=TC?48:65+v*.3;cam.updateProjectionMatrix();sky.position.copy(cam.positio
 sunS.position.copy(cam.position).addScaledVector(SUND,5200);moonS.position.copy(cam.position).addScaledVector(MOOND,5200);boatsTick(now/1000);
 audioTick();
 const sk=Math.round(v*3.6),lk=Math.round(lim*3.6),AR=402.1*.75;
-const nl=nextLim(ssv);$('kmh').textContent=sk;$('lim').textContent=nl&&nl.v<lk&&nl.d<700&&dir>0?'LIMIT '+lk+' ▸ '+nl.v+' IN '+Math.round(nl.d)+'m':'LIMIT '+lk;$('lim').setAttribute('fill',over?'#f87171':'#9db0c9');
+const nl=nextLim(ssv);$('kmh').textContent=bnum(sk);$('lim').textContent=nl&&nl.v<lk&&nl.d<700&&dir>0?'সীমা '+bnum(lk)+' ▸ '+bnum(nl.v)+' · '+bnum(Math.round(nl.d))+' মি':'সীমা '+bnum(lk);$('lim').setAttribute('fill',over?'#f87171':'#9db0c9');$('lim').setAttribute('font-size',$('lim').textContent.length>9?'8':'10');
 $('gv').setAttribute('stroke-dasharray',Math.min(1,sk/140)*AR+' 402');$('gv').setAttribute('stroke',over?'#f87171':sk>lk*.9?'#fbbf24':'#5eead4');
 $('gl').setAttribute('stroke-dasharray','0 '+(Math.min(1,lk/140)*AR-1.5)+' 3 402');
 $('th').style.height=thr*100+'%';$('bk').style.height=Math.max(brk,eb?1:0)*100+'%';
 BTNS.light.classList.toggle('on',hl);BTNS.doors.classList.toggle('on',doors);BTNS.night.classList.toggle('on',night);BTNS.snd.classList.toggle('on',!muted);$('c1').classList.toggle('on',doors);$('c2').classList.toggle('on',hl);$('c3').classList.toggle('on',dir<0);
-$('sc').textContent=Math.round(score);$('dn').textContent=done;$('nx').textContent=hudN+' \u00b7 '+hudD;$('rm').style.left=ssv/L*100+'%';
+$('sc').textContent=bnum(Math.round(score));$('dn').textContent=bnum(done);$('nx').textContent=hudN+' \u00b7 '+hudD;$('rm').style.left=ssv/L*100+'%';
 if((frameN&1)===0)drawMap(st);frameN++;
-ST.forEach(t=>{t.g.visible=t.g.position.distanceTo(cam.position)<fogFar+180;});kWalkTick(rdt);lcTick(rdt);vehiclesTick(rdt);envTick(rdt,now/1000);if(dk>.3)rainM.visible=false;wipersTick(rdt);cullChunks();R.render(scene,cam);}
+ST.forEach(t=>{t.g.visible=t.g.position.distanceTo(cam.position)<fogFar+180;});kWalkTick(rdt);farmTick(rdt);lcTick(rdt);vehiclesTick(rdt);KT.fs.visible=cam.position.y>1;envTick(rdt,now/1000);if(dk>.3)rainM.visible=false;wipersTick(rdt);cullChunks();R.render(scene,cam);}
 $('mm').onclick=toggleBig;$('bigmap').onclick=toggleBig;setTime(false);setMode(1);$('go').style.display='';$('ld').style.display='none';requestAnimationFrame(frame);
 
 }
-requestAnimationFrame(function(){setTimeout(function(){if(window.THREE)boot();},40);});
+requestAnimationFrame(function(){var go=function(){if(window.THREE)boot();};var fl=document.fonts&&document.fonts.load?Promise.all(['400','600','700'].map(function(w){return document.fonts.load(w+' 24px "Hind Siliguri"','অআ');})):Promise.resolve();Promise.race([fl,new Promise(function(r){setTimeout(r,3500);})]).then(function(){setTimeout(go,40);},function(){setTimeout(go,40);});});
 </script></body></html>
