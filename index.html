@@ -1015,8 +1015,8 @@ wdF=flt('lowpass',380);wdG=gn(0);src(noiseB,wdF);wdF.connect(wdG);wdG.connect(ma
 /* road traffic: tyre/engine rumble bed and CNG two-stroke putter */
 TR.rf=flt('lowpass',260,.7);TR.rg=gn(0);src(noiseB,TR.rf);TR.rf.connect(TR.rg);TR.rg.connect(master);
 /* recorded samples (embedded); real recordings in sounds/*.mp3 on the server replace them if present */
-SB={};const load=(k,u)=>fetch(u).then(r=>{if(!r.ok)throw 0;return r.arrayBuffer();}).then(b=>new Promise((ok,no)=>AC.decodeAudioData(b,ok,no))).then(buf=>{SB[k]=buf;if(k==='rail'||k==='engine')startLoop(k);});
-Object.keys(SNDDATA).forEach(k=>load(k,SNDDATA[k]).catch(()=>{}));['engine','rail','horn','traffic'].forEach(k=>load(k,'sounds/'+k+'.mp3').catch(()=>{}));
+SB={};const SBP={},load=(k,u,pr)=>fetch(u).then(r=>{if(!r.ok)throw 0;return r.arrayBuffer();}).then(b=>new Promise((ok,no)=>AC.decodeAudioData(b,ok,no))).then(buf=>{if((SBP[k]||0)>pr)return;SBP[k]=pr;SB[k]=buf;SB[k+'_file']=pr>1;if(k==='rail'||k==='engine')startLoop(k);});
+Object.keys(SNDDATA).forEach(k=>load(k,SNDDATA[k],1).catch(()=>{}));['engine','rail','horn','traffic'].forEach(k=>load(k,'sounds/'+k+'.mp3',2).catch(()=>{}));
 TR.co=AC.createOscillator();TR.co.type='square';TR.co.frequency.value=26;TR.cf=flt('lowpass',520,1.4);TR.cg=gn(0);TR.co.connect(TR.cf);TR.cf.connect(TR.cg);TR.cg.connect(master);TR.co.start();
 }catch(e){AC=null;}}
 function startLoop(k){if(!AC||!SB[k])return;if(LP[k])try{LP[k].s.stop();}catch(e){}const s=AC.createBufferSource(),g=AC.createGain();s.buffer=SB[k];s.loop=true;g.gain.value=0;s.connect(g);g.connect(master);s.start(0,Math.random()*SB[k].duration*.9);LP[k]={s,g};}
@@ -1028,7 +1028,7 @@ function audioTick(){if(!AC||!EN.g)return;const t=AC.currentTime,sp=Math.min(1,v
 const notch=thr,f0=22+40*notch;EN.o1.frequency.setTargetAtTime(f0,t,.6);EN.o2.frequency.setTargetAtTime(f0*.5,t,.6);EN.f.frequency.setTargetAtTime(200+260*notch,t,.4);
 const cab=mode===0?1.15:1,re=LP.engine?0:1;EN.g.gain.setTargetAtTime((.05+.1*notch)*cab*inT*re,t,.35);if(LP.engine){LP.engine.g.gain.setTargetAtTime((.25+.4*notch)*inT,t,.3);LP.engine.s.playbackRate.setTargetAtTime(.8+.45*notch,t,.4);}EN.xf.frequency.setTargetAtTime(90+90*notch,t,.4);EN.xg.gain.setTargetAtTime((.03+.06*notch)*inT,t,.4);EN.am.frequency.setTargetAtTime(f0*.5,t,.4);
 EN.tb.frequency.setTargetAtTime(1500+1900*notch,t,1.2);EN.tg.gain.setTargetAtTime(0,t,.8);
-EN.rg.gain.setTargetAtTime(.1*sp*inT,t,.3);if(LP.rail){LP.rail.g.gain.setTargetAtTime(v<.3?0:Math.min(.85,.12+.75*Math.pow(sp,.7))*inT,t,.25);LP.rail.s.playbackRate.setTargetAtTime(.55+.75*sp,t,.3);}EN.rf.frequency.setTargetAtTime(110+90*sp,t,.4);
+EN.rg.gain.setTargetAtTime(.1*sp*inT,t,.3);if(LP.rail){LP.rail.g.gain.setTargetAtTime(v<.3?0:Math.min(.85,.12+.75*Math.pow(sp,.7))*inT,t,.25);LP.rail.s.playbackRate.setTargetAtTime(SB.rail_file?.7+.4*sp:.55+.75*sp,t,.3);}EN.rf.frequency.setTargetAtTime(110+90*sp,t,.4);
 EN.sg.gain.setTargetAtTime(brk>.35&&v>1&&v<14?.02*brk:0,t,.12);EN.sq.frequency.setTargetAtTime(2200+200*Math.sin(t*7),t,.05);
 if(rnG){const ins=dk>.5?.15:1;rnG.gain.setTargetAtTime(.3*ENV.rain*ins,t,.4);wdG.gain.setTargetAtTime(.04*ENV.wind*ENV.wind*ins,t,.6);}
 trafficAudio(t);}
@@ -1040,7 +1040,7 @@ const m=AC.createOscillator(),me=AC.createGain();m.type='triangle';m.frequency.v
 const JOINT=13;let AXP=null;
 function axleTick(pS){if(!AC||v<.4){AXP=null;return;}const AX=[3.9,2.7,-2.7,-3.9];if(!AXP)AXP=new Map();const fw=V1.set(0,0,-1).applyQuaternion(cam.quaternion),rt=V2.set(1,0,0).applyQuaternion(cam.quaternion);let n=0;
 for(let c=0;c<cars.length;c++){const base=OFF[c],ax=c===0?AX:[6.2,4.4,-4.4,-6.2];for(const a of ax){const o=base+a,j0=Math.floor((pS+o)/JOINT),j1=Math.floor((S+o)/JOINT);if(j0===j1)continue;
-const w=cars[c].localToWorld(lv.set(0,1,a)),d=w.distanceTo(cam.position),g=Math.min(1,.25+v/16)*.38/(1+d/14)*(dk>.5?1.3:1);if(n++<10)axleHit(g,(w.x-cam.position.x)*rt.x/(d+1)+(w.z-cam.position.z)*rt.z/(d+1));}}}
+const w=cars[c].localToWorld(lv.set(0,1,a)),d=w.distanceTo(cam.position),g=Math.min(1,.25+v/16)*(SB.rail_file?.14:.38)/(1+d/14)*(dk>.5?1.3:1);if(n++<10)axleHit(g,(w.x-cam.position.x)*rt.x/(d+1)+(w.z-cam.position.z)*rt.z/(d+1));}}}
 function hornOn(){hornHeld=true;audio();if(!AC||!hornG)return;const t=AC.currentTime;if(SB.horn){if(hornSrc)try{hornSrc.s.stop();}catch(e){}const h=SB.horn,s=AC.createBufferSource(),e=AC.createGain();s.buffer=h;s.loop=true;s.loopStart=Math.min(.45,h.duration*.25);s.loopEnd=Math.min(1.35,h.duration*.7);e.gain.value=1.25;s.connect(e);e.connect(master);s.start(t);hornSrc={s,e};return;}hornG.gain.cancelScheduledValues(t);hornG.gain.setTargetAtTime(1.0,t,.04);EN.hv.forEach(o=>{const f=o.frequency.value;o.frequency.cancelScheduledValues(t);o.frequency.setValueAtTime(f*.97,t);o.frequency.setTargetAtTime(f,t,.08);});}
 function hornOff(){hornHeld=false;if(!AC||!hornG)return;if(hornSrc){const h=hornSrc,t=AC.currentTime;h.e.gain.setTargetAtTime(0,t,.09);h.s.loop=false;try{h.s.stop(t+.5);}catch(e){}hornSrc=null;}hornG.gain.cancelScheduledValues(AC.currentTime);hornG.gain.setTargetAtTime(0,AC.currentTime,.1);}
 function bell(){if(!AC||muted||!master)return;if(SB.bell){if(AC.currentTime>bellT){playS('bell',.55);bellT=AC.currentTime+SB.bell.duration-.05;}return;}const t=AC.currentTime;[1320,2640].forEach((f,k)=>{const o=AC.createOscillator(),e=AC.createGain();o.frequency.value=f;e.gain.setValueAtTime(k?.05:.16,t);e.gain.exponentialRampToValueAtTime(.0005,t+.4);o.connect(e);e.connect(master);o.start(t);o.stop(t+.42);});}

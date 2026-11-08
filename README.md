@@ -16,8 +16,10 @@ Open `index.html` in a browser to play, or visit the deployed site.
 W/S throttle · Space brake · B emergency brake · H horn · O doors · R reverse · 1–7 camera views · L lights · N night · E weather · M map · U sound
 
 ## Sound credits
-Recorded sounds come from [OpenSFX](https://github.com/OpenTTD/OpenSFX) (the OpenTTD sound set), edited (trimmed, looped, re-encoded) for this game and embedded in `index.html`:
-- Rail rolling loop: cut from "Train passby (tape stop)" by Metzik, edited by Wuzzy (CC BY 3.0)
+Running-train sound: `sounds/rail.mp3`, a seamless 64-second loop made from "A Train on the Railways" by kokoreli777 (Pixabay, Pixabay Content License), supplied by the project owner. It replaces the built-in rail loop when the game is served from a web server.
+
+Other recorded sounds come from [OpenSFX](https://github.com/OpenTTD/OpenSFX) (the OpenTTD sound set), edited (trimmed, looped, re-encoded) for this game and embedded in `index.html`:
+- Built-in rail rolling loop (fallback when `sounds/rail.mp3` cannot be loaded, e.g. opening the file directly): cut from "Train passby (tape stop)" by Metzik, edited by Wuzzy (CC BY 3.0)
 - Locomotive horn: "Locomotive 1 Distant horn" by patchen, edited by Janis Lukss (CC BY 3.0)
 - Level crossing bell: "RRCrossing" by Mark_Ian, edited by Wuzzy (CC0)
 - Car horn (also pitched for buses, trucks, CNGs and motorbikes): "claxon" by han1, edited by Janis Lukss (CC BY 3.0)
