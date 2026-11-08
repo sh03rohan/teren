@@ -14,3 +14,18 @@ Open `index.html` in a browser to play, or visit the deployed site.
 
 ## Controls
 W/S throttle · Space brake · B emergency brake · H horn · O doors · R reverse · 1–7 camera views · L lights · N night · E weather · M map · U sound
+
+## Sound credits
+Recorded sounds come from [OpenSFX](https://github.com/OpenTTD/OpenSFX) (the OpenTTD sound set), edited (trimmed, looped, re-encoded) for this game and embedded in `index.html`:
+- Rail rolling loop: cut from "Train passby (tape stop)" by Metzik, edited by Wuzzy (CC BY 3.0)
+- Locomotive horn: "Locomotive 1 Distant horn" by patchen, edited by Janis Lukss (CC BY 3.0)
+- Level crossing bell: "RRCrossing" by Mark_Ian, edited by Wuzzy (CC0)
+- Car horn (also pitched for buses, trucks, CNGs and motorbikes): "claxon" by han1, edited by Janis Lukss (CC BY 3.0)
+- Cow: "Cow - Moan 2" by Jarred Gib, edited by Wuzzy (CC0)
+- Birds: "Bird Noise - 1" and "Bird Noise - 12" by SpaceJoe, edited by Wuzzy (CC0)
+
+The edited versions of these sounds are shared under the same licences. The diesel engine and wheel-on-joint thumps are synthesized in the browser.
+
+### Using your own recordings
+Put MP3 files in a `sounds/` folder next to `index.html` and they replace the built-in ones automatically:
+`sounds/engine.mp3` (seamless diesel engine loop), `sounds/rail.mp3` (seamless running-train loop), `sounds/horn.mp3` (horn), `sounds/traffic.mp3` (not used yet).
