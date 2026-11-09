@@ -47,7 +47,7 @@ button svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8
 #camMenu small{margin-left:auto;opacity:.5;display:inline}
 /* touch controls (phones and tablets) */
 #tc{display:none}body.touch #tc{display:block}
-.lev{position:absolute;bottom:calc(env(safe-area-inset-bottom,0px) + 74px);width:78px;height:min(52vh,300px);border-radius:22px;background:var(--g);border:1px solid var(--b);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);touch-action:none;z-index:4}
+.lev{position:absolute;bottom:calc(env(safe-area-inset-bottom,0px) + 74px);width:78px;height:min(calc(100vh - 250px),300px);min-height:120px;border-radius:22px;background:var(--g);border:1px solid var(--b);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);touch-action:none;z-index:4}
 .lev .tr{position:absolute;left:33px;right:33px;top:18px;bottom:30px;border-radius:6px;background:rgba(255,255,255,.12);overflow:hidden}.lev .fl{position:absolute;left:0;right:0;bottom:0;height:0}
 .lev .kn{position:absolute;left:9px;width:60px;height:34px;margin-top:-17px;border-radius:12px;box-shadow:0 3px 10px rgba(0,0,0,.45);pointer-events:none;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
 .lev .lb{position:absolute;left:0;right:0;top:-20px;text-align:center;font-size:12px;color:var(--t);text-shadow:0 1px 3px #000}
@@ -55,8 +55,8 @@ button svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8
 #levB{left:calc(var(--L) + 4px)}#levB .fl{background:var(--r)}#levB .kn{background:#f87171;color:#2a0606}
 .tb{position:absolute;width:62px;height:62px;border-radius:50%;background:var(--g);border:1px solid var(--b);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:var(--t);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;gap:2px;touch-action:none;z-index:4;padding:0}
 .tb svg{width:24px;height:24px}.tb.on,.tb:active{background:var(--a);color:#06231f}
-#tbH{right:calc(var(--R) + 96px);bottom:calc(env(safe-area-inset-bottom,0px) + 150px)}#tbD{right:calc(var(--R) + 96px);bottom:calc(env(safe-area-inset-bottom,0px) + 222px)}#tbE{left:calc(var(--L) + 96px);bottom:calc(env(safe-area-inset-bottom,0px) + 150px)}#tbE.on{background:#f87171;color:#2a0606}
-body.touch #ctl,body.touch #brand,body.touch #mm{display:none!important}body.touch #info{padding:6px 10px}body.touch #info .big{font-size:18px}body.touch #route{width:min(520px,52vw)}body.touch #msg{top:calc(var(--T) + 74px)}body.touch canvas{touch-action:none}body.touch #sp{left:auto;right:auto;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 70px);padding:2px}body.touch #sp svg{width:96px;height:96px}
+#tbH{right:calc(var(--R) + 96px);bottom:calc(env(safe-area-inset-bottom,0px) + 150px)}#tbD{right:calc(var(--R) + 96px);bottom:calc(env(safe-area-inset-bottom,0px) + 222px)}#tbE{left:calc(var(--L) + 96px);bottom:calc(env(safe-area-inset-bottom,0px) + 120px)}#tbE.on{background:#f87171;color:#2a0606}
+body.touch #ctl,body.touch #brand,body.touch #mm{display:none!important}body.touch #info{padding:6px 10px}body.touch #info .big{font-size:18px}body.touch #route{width:min(520px,50vw);left:52%}body.touch #msg{top:calc(var(--T) + 74px)}body.touch canvas{touch-action:none}body.touch #sp{left:var(--L);right:auto;top:var(--T);bottom:auto;transform:none;padding:2px}body.touch #sp svg{width:86px;height:86px}
 body.touch #bt{bottom:calc(env(safe-area-inset-bottom,0px) + 6px)}body.touch #bt .grp:nth-child(2){display:none}
 #rot{display:none;position:fixed;inset:0;z-index:20;background:rgba(4,8,16,.92);color:var(--t);align-items:center;justify-content:center;text-align:center;font-size:17px;padding:30px;line-height:1.6}
 @media (max-height:520px){.card{padding:12px 18px;max-width:640px}.card h1{font-size:26px;margin:2px 0 4px}.card p{font-size:12px;margin-bottom:8px}.keys{display:none}.pk{grid-template-columns:repeat(5,1fr);gap:6px}.pk button{padding:6px 2px;font-size:13px}.fx{flex-direction:row;flex-wrap:wrap;gap:4px 14px;font-size:12px}}
@@ -216,7 +216,7 @@ const ku=RW.filter(a=>a[3]).findIndex(a=>a[0]==='Kushtia');if(ku>=0){const i=(st
 
 /* ===== scene ===== */
 const $=id=>document.getElementById(id);
-const R=new T.WebGLRenderer({antialias:true});const DPRMAX=Math.min(devicePixelRatio||1,2),DPRMIN=Math.min(devicePixelRatio||1,1);let DPR=Math.min(DPRMAX,1.5);R.setPixelRatio(DPR);R.setSize(innerWidth,innerHeight);document.body.prepend(R.domElement);
+const R=new T.WebGLRenderer({antialias:true});const MOB=('ontouchstart' in window)||navigator.maxTouchPoints>0,DPR0=devicePixelRatio||1,DPRMAX=Math.min(DPR0,MOB?2.5:2),DPRMIN=MOB&&DPR0>=2?1.6:Math.min(DPR0,1);let DPR=Math.min(DPRMAX,MOB?2:1.5);R.setPixelRatio(DPR);R.setSize(innerWidth,innerHeight);document.body.prepend(R.domElement);
 const scene=new T.Scene(),cam=new T.PerspectiveCamera(65,innerWidth/innerHeight,.6,9000);
 const hemi=new T.HemisphereLight(0xffffff,0x4a6b3a,1),sun=new T.DirectionalLight(0xfff2d6,1.1),SUND=new T.Vector3(300,500,200).normalize();sun.position.set(300,500,200);scene.add(hemi,sun);
 const lam=c=>new T.MeshLambertMaterial({color:c}),lam2=c=>new T.MeshLambertMaterial({color:c,side:T.DoubleSide});
