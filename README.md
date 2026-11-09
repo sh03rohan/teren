@@ -37,3 +37,7 @@ The edited versions of these sounds are shared under the same licences. The dies
 ### Using your own recordings
 Put MP3 files in a `sounds/` folder next to `index.html` and they replace the built-in ones automatically:
 `sounds/engine.mp3` (seamless diesel engine loop), `sounds/rail.mp3` (seamless running-train loop), `sounds/horn.mp3` (horn), `sounds/traffic.mp3` (road traffic loop), `sounds/birds.mp3` (countryside ambience loop), `sounds/rain.mp3` (rain loop), `sounds/thunder1.mp3`–`thunder3.mp3` (thunderclaps).
+
+## Map and data credits
+- Bangladesh border, coastline and regional land outline: [Natural Earth](https://www.naturalearthdata.com/) 1:10m (public domain), via the [world-atlas](https://github.com/topojson/world-atlas) package, simplified.
+- Dhaka MRT Line-6 station names and design (elevated, standard gauge, ~180 m stations), Bhanga Junction (Padma Rail Link) and the six Bengali seasons are based on Wikipedia and Bangladeshi news reports.

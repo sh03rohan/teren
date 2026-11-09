@@ -46,7 +46,7 @@ button svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8
 #camMenu small{margin-left:auto;opacity:.5;display:inline}
 </style></head><body>
 <div id="bigmap"><canvas id="bm" width="640" height="880"></canvas><span>বাংলাদেশের ম্যাপ। বন্ধ করতে ক্লিক করুন বা M চাপুন</span></div>
-<div id="brand" class="p"><b>টুক টুক টেরেন</b><div class="s" id="vw">চেজ ভিউ</div><div class="s" id="rg" style="color:#5eead4;margin-top:2px">ঢাকা</div><div class="s" id="wxl" style="margin-top:2px">পরিষ্কার আকাশ · স্বয়ংক্রিয়</div></div>
+<div id="brand" class="p"><b>টুক টুক টেরেন</b><div class="s" id="vw">চেজ ভিউ</div><div class="s" id="rg" style="color:#5eead4;margin-top:2px">ঢাকা</div><div class="s" id="seal" style="margin-top:2px;color:#fbbf24"></div><div class="s" id="wxl" style="margin-top:2px">পরিষ্কার আকাশ · স্বয়ংক্রিয়</div></div>
 <div id="route" class="p"><div id="nx">পরের স্টেশন</div><div class="rl" id="rl"><i id="rm"></i></div></div>
 <div id="info" class="p"><div class="row"><div><div class="s">স্কোর</div><div class="big" id="sc">0</div></div><div><div class="s">স্টেশন</div><div class="big" id="dn">0</div></div></div><canvas id="mm" width="300" height="412"></canvas></div>
 <div id="sp" class="p"><svg viewBox="0 0 160 160" width="168" height="168">
@@ -61,11 +61,11 @@ button svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8
 <div id="bt"></div><div id="camMenu"></div>
 <div id="start"><div class="card"><div class="s">থ্রিডি ট্রেন সিমুলেটর</div><h1>টুক টুক টেরেন</h1><p>পদ্মা এক্সপ্রেস চালিয়ে ঘুরে আসুন সারা বাংলাদেশ: ঢাকা, চট্টগ্রাম, কক্সবাজার, সিলেটের পাহাড়, উত্তরবঙ্গ, কুষ্টিয়া আর বড় বড় নদীর সেতু। প্রতিটি স্টেশনে থামুন, সিগন্যাল আর গতিসীমা মেনে চলুন, আবহাওয়ার দিকে খেয়াল রাখুন।</p>
 <div class="keys"><span><kbd>W</kbd><kbd>S</kbd>থ্রটল</span><span><kbd>Space</kbd>ব্রেক</span><span><kbd>B</kbd>জরুরি ব্রেক</span><span><kbd>H</kbd>হর্ন</span><span><kbd>O</kbd>দরজা</span><span><kbd>R</kbd>পেছনে</span><span><kbd>1</kbd>&ndash;<kbd>9</kbd>ক্যামেরা</span><span><kbd>L</kbd>লাইট</span><span><kbd>N</kbd>রাত</span><span><kbd>E</kbd>আবহাওয়া</span><span><kbd>M</kbd>ম্যাপ</span><span><kbd>U</kbd>শব্দ</span></div>
-<div class="s" id="ld">বাংলাদেশ তৈরি হচ্ছে...</div><button id="go" class="go" style="display:none">চালানো শুরু করুন</button><div id="pick" style="display:none"><div class="s" style="margin-bottom:10px">কোন স্টেশন থেকে যাত্রা শুরু করবেন?</div><div class="pk" id="pk"></div><div class="fx"><label><input type="checkbox" id="eidc"> ঈদের যাত্রা (প্ল্যাটফর্মে ভিড়, ছাদে যাত্রী)</label><label><input type="checkbox" id="fairc"> কুষ্টিয়ায় লালন মেলা</label></div><button id="back" class="bk2">← ফিরে যান</button></div></div></div>
+<div class="s" id="ld">বাংলাদেশ তৈরি হচ্ছে...</div><button id="go" class="go" style="display:none">চালানো শুরু করুন</button><div id="pick" style="display:none"><div class="s" style="margin-bottom:10px">কোন স্টেশন থেকে যাত্রা শুরু করবেন?</div><div class="pk" id="pk"></div><div class="fx"><div>ঋতু: <select id="seas" style="font:inherit;background:#1d2a36;color:var(--t);border:1px solid var(--b);border-radius:8px;padding:3px 6px"></select></div><label><input type="checkbox" id="eidc"> ঈদের যাত্রা (প্ল্যাটফর্মে ভিড়, ছাদে যাত্রী)</label><label><input type="checkbox" id="fairc"> কুষ্টিয়ায় লালন মেলা</label></div><button id="back" class="bk2">← ফিরে যান</button></div></div></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" onerror="document.getElementById('ld').textContent='থ্রিডি ইঞ্জিন (three.js) লোড হয়নি। ইন্টারনেট সংযোগ দেখে পেজটি আবার খুলুন।'"></script>
 <script>function boot(){
 const BND='০১২৩৪৫৬৭৮৯',bnum=v=>String(v).replace(/[0-9]/g,d=>BND[d]);
-const BNN={'Dhaka':'ঢাকা','Comilla':'কুমিল্লা','Chattogram':'চট্টগ্রাম',"Cox's Bazar":'কক্সবাজার','Cox\u2019s Bazar':'কক্সবাজার','Sylhet':'সিলেট','Mymensingh':'ময়মনসিংহ','Rangpur':'রংপুর','Dinajpur':'দিনাজপুর','Rajshahi':'রাজশাহী','Kushtia':'কুষ্টিয়া','Jashore':'যশোর','Khulna':'খুলনা'},bnn=n=>BNN[n]||n;
+const BNN={'Bhanga':'ভাঙ্গা','Dhaka':'ঢাকা','Comilla':'কুমিল্লা','Chattogram':'চট্টগ্রাম',"Cox's Bazar":'কক্সবাজার','Cox\u2019s Bazar':'কক্সবাজার','Sylhet':'সিলেট','Mymensingh':'ময়মনসিংহ','Rangpur':'রংপুর','Dinajpur':'দিনাজপুর','Rajshahi':'রাজশাহী','Kushtia':'কুষ্টিয়া','Jashore':'যশোর','Khulna':'খুলনা'},bnn=n=>BNN[n]||n;
 /* ===== Bangladesh world (pure maths) ===== */
 const T=THREE;
 const ss=(a,b,x)=>{x=Math.min(1,Math.max(0,(x-a)/(b-a)));return x*x*(3-2*x);};
@@ -127,7 +127,7 @@ function trackY(x,z){let y=flood(x,z)+3+Math.min(12,.08*hillH(x,z));for(const r 
 const O=[['Comilla',91.18,23.46,1],[null,91.3,23.25],[null,91.38,23.0],[null,91.5,22.75],['Chattogram',91.86,22.56,1],[null,91.98,22.0],["Cox's Bazar",92.05,21.47,1]];
 const RW=[['Dhaka',90.41,23.79,1],[null,90.62,23.69],[null,90.9,23.58]];O.forEach(a=>RW.push(a));RW.push([null,92.095,21.4]);
 for(let i=O.length-1;i>=0;i--)RW.push([null,O[i][1]+.09,O[i][2]]);
-[[null,91.3,23.6],[null,91.2,23.97],[null,91.45,24.2],[null,91.7,24.35],[null,91.78,24.55],['Sylhet',91.87,24.84,1],[null,91.3,24.96],[null,90.9,24.88],['Mymensingh',90.4,24.76,1],[null,89.95,24.9],[null,89.4,24.86],['Rangpur',89.25,25.74,1],['Dinajpur',88.65,25.62,1],[null,88.85,25.1],['Rajshahi',88.65,24.85,1],[null,88.95,24.5],[null,89.04,24.12],[null,89.045,23.92],[null,89.02,23.75],['Kushtia',89.0,23.6,1],[null,89.06,23.42],['Jashore',89.2,23.17,1],['Khulna',89.55,22.82,1],[null,89.82,23.1],[null,89.98,23.38],[null,90.3,23.55],[null,90.36,23.66]].forEach(a=>RW.push(a));
+[[null,91.3,23.6],[null,91.2,23.97],[null,91.45,24.2],[null,91.7,24.35],[null,91.78,24.55],['Sylhet',91.87,24.84,1],[null,91.3,24.96],[null,90.9,24.88],['Mymensingh',90.4,24.76,1],[null,89.95,24.9],[null,89.4,24.86],['Rangpur',89.25,25.74,1],['Dinajpur',88.65,25.62,1],[null,88.85,25.1],['Rajshahi',88.65,24.85,1],[null,88.95,24.5],[null,89.04,24.12],[null,89.045,23.92],[null,89.02,23.75],['Kushtia',89.0,23.6,1],[null,89.06,23.42],['Jashore',89.2,23.17,1],['Khulna',89.55,22.82,1],[null,89.82,23.1],['Bhanga',89.99,23.38,1],[null,90.3,23.55],[null,90.36,23.66]].forEach(a=>RW.push(a));
 const c0=new T.CatmullRomCurve3(RW.map(a=>new T.Vector3(X(a[1]),0,Z(a[2]))),true,'catmullrom',.5);c0.arcLengthDivisions=8000;
 const N0=Math.floor(c0.getLength()/420),yy=[],q0=[];for(let i=0;i<N0;i++){const p=c0.getPointAt(i/N0);q0.push(p);yy.push(trackY(p.x,p.z));}
 {let y=yy.slice();for(let i=0;i<N0;i++)y[i]=yy[i];
@@ -248,6 +248,9 @@ vertexShader:'attribute float e;uniform float t;uniform vec3 cp;uniform vec2 wd;
 fragmentShader:'uniform float op;varying float sh;void main(){if(sh>.01)discard;gl_FragColor=vec4(.85,.88,.95,.75*op);}'}));rainM.frustumCulled=false;rainM.visible=false;scene.add(rainM);
 const bolt=new T.Line(new T.BufferGeometry().setAttribute('position',new T.BufferAttribute(new Float32Array(18*3),3)),new T.LineBasicMaterial({color:0xf2f5ff,fog:false}));bolt.frustumCulled=false;bolt.visible=false;scene.add(bolt);
 /* environment: smooth day/night and weather blending */
+/* the six Bengali seasons (Grishma, Barsha, Sharat, Hemanta, Sheet, Basanta): ground colours, weather they favour, flowering trees */
+const SEAS=[{n:'গ্রীষ্ম',m:'গ্রীষ্মকাল: রোদ, গরম আর কালবৈশাখী ঝড়',u:[0,0,1,0],wx:[0,0,1,4],k:.2},{n:'বর্ষা',m:'বর্ষাকাল: ভারী বৃষ্টি, ভরা নদী আর জলমগ্ন মাঠ',u:[0,1,0,0],wx:[3,3,4,2],k:0},{n:'শরৎ',m:'শরৎকাল: নীল আকাশে সাদা মেঘ',u:[0,.4,0,0],wx:[1,1,0],k:0},{n:'হেমন্ত',m:'হেমন্তকাল: মাঠে সোনালি পাকা ধান',u:[0,0,0,1],wx:[0,1,5],k:0},{n:'শীত',m:'শীতকাল: ঘন কুয়াশা আর হলুদ সরিষা খেত',u:[1,0,0,0],wx:[5,5,0],k:0},{n:'বসন্ত',m:'বসন্তকাল: কৃষ্ণচূড়া আর পলাশ ফুল',u:[.55,0,0,0],wx:[0,1],k:1}];
+const monthSeason=()=>{const m=new Date().getMonth();return[4,4,5,5,0,1,1,2,2,3,3,4][m];};let SEA_=monthSeason();
 const lights=[];let night=false,flash=0,envHemi=.95,envSun=1.1,WXI=0,wxAuto=true,wxT=70;
 const ENV={n:0,cov:.12,dark:0,rain:0,fog:0,wind:.15,lt:0};
 const WX=[{n:'পরিষ্কার আকাশ',cov:.12,dark:0,rain:0,fog:0,wind:.15,lt:0,m:'আকাশ পরিষ্কার'},{n:'হালকা মেঘ',cov:.5,dark:.08,rain:0,fog:0,wind:.3,lt:0,m:'মেঘ জমছে'},
@@ -259,7 +262,7 @@ function setWx(i,auto){WXI=i;wxAuto=auto;wxT=55+rnd()*65;if(started)msg(WX[i].m,
 function strike(){const d=new T.Vector3();cam.getWorldDirection(d);d.y=0;d.normalize();const dist=700+rnd()*1100,side=(rnd()-.5)*1400,bx=cam.position.x+d.x*dist-d.z*side,bz=cam.position.z+d.z*dist+d.x*side,p=bolt.geometry.attributes.position;
 let x=bx,z=bz;for(let i=0;i<18;i++){const y=640-i*(640/17);p.setXYZ(i,x,y,z);x+=(rnd()-.5)*55;z+=(rnd()-.5)*55;}p.needsUpdate=true;bolt.visible=true;flash=1;thunder(Math.min(3.2,Math.hypot(dist,side)/340),dist);}
 const C1=new T.Color(),C2=new T.Color(),C3=new T.Color();
-function envTick(dt,t){if(wxAuto&&started){wxT-=dt;if(wxT<=0){const c=WXN[WXI];setWx(c[(rnd()*c.length)|0],true);}}
+function envTick(dt,t){if(wxAuto&&started){wxT-=dt;if(wxT<=0){const c=WXN[WXI],sb=SEAS[SEA_].wx;setWx(Math.random()<.45?sb[(Math.random()*sb.length)|0]:c[(rnd()*c.length)|0],true);}}
 const W=WX[WXI],k=1-Math.exp(-dt*.3);['cov','dark','rain','fog','wind','lt'].forEach(q=>{ENV[q]+=(W[q]-ENV[q])*k;});ENV.n+=((night?1:0)-ENV.n)*(1-Math.exp(-dt*1.1));
 const n=ENV.n,dw=ENV.dark,fg=ENV.fog;
 C1.setHex(0x2f7fd0).lerp(C3.setHex(0x59636d),dw).lerp(C3.setHex(0x02040c),n).lerp(C3.setHex(n>.5?0x1c2028:0xb9c0c5),fg*.9);C2.setHex(0xcfe6f5).lerp(C3.setHex(0x8f989f),dw).lerp(C3.setHex(0x0b1630),n).lerp(C3.setHex(n>.5?0x252a33:0xc9ced2),fg*.85);
@@ -291,7 +294,11 @@ else if(h>420+n*40)c=[.95,.96,.98];else if(h>210)c=[.46+.05*n,.45+.05*n,.43+.05*
 else{if(inb){const f=(n+1)/2;c=[.3+.2*f,.56+.08*f,.2+.06*f];if(lo>91.4&&la>24.1&&la<25.1&&h>5)c=[.28+.08*Math.sin(x*.15),.6,.14];}else c=[.6+.08*n,.56+.06*n,.34];
 if(mang(x,z)>.35)c=[.1,.3,.16];if(rb<1.55&&h<3)c=[.74,.66,.46];}
 col[i*3]=c[0];col[i*3+1]=c[1];col[i*3+2]=c[2];}
-TERR=ps.array;tg.setAttribute('color',new T.BufferAttribute(col,3));tg.computeVertexNormals();scene.add(new T.Mesh(tg,new T.MeshLambertMaterial({vertexColors:true,map:fieldTex()})));
+TERR=ps.array;tg.setAttribute('color',new T.BufferAttribute(col,3));tg.computeVertexNormals();const terM=new T.MeshLambertMaterial({vertexColors:true,map:fieldTex()});window.__terM=terM;
+/* seasons recolour the farmland: x mustard yellow, y monsoon lush/wet, z dry summer, w golden paddy */
+terM.onBeforeCompile=sh=>{sh.uniforms.sea={value:new T.Vector4(...(terM.userData.pend||[0,0,0,0]))};terM.userData.sh=sh;sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>\nvarying vec3 vWP2;').replace('#include <project_vertex>','#include <project_vertex>\nvWP2=(modelMatrix*vec4(transformed,1.)).xyz;');
+sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>\nvarying vec3 vWP2;uniform vec4 sea;float h21(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}').replace('#include <color_fragment>','#include <color_fragment>\n{vec3 c=diffuseColor.rgb;float gr=step(c.r*1.15,c.g)*step(c.b*1.3,c.g)*step(vWP2.y,6.);vec2 cell=floor(vWP2.xz/34.);float r=h21(cell);\nc=mix(c,vec3(.80,.72,.20)*(.85+.25*h21(cell+7.)),sea.x*gr*step(.58,r));c=mix(c,c*vec3(.82,1.08,.86),sea.y*gr);c=mix(c,vec3(.33,.46,.42),sea.y*gr*step(.82,r)*step(vWP2.y,3.5));\nc=mix(c,c*vec3(1.1,.98,.72)+vec3(.04,.02,0.),sea.z*gr);c=mix(c,vec3(.70,.60,.27)*(.9+.2*h21(cell+3.)),sea.w*gr*step(.5,r));diffuseColor.rgb=c;}');};
+scene.add(new T.Mesh(tg,terM));
 const w=new T.Mesh(new T.PlaneGeometry(9600,15000).rotateX(-Math.PI/2).translate(0,0,-100),new T.MeshPhongMaterial({color:0x3a7489,specular:0x8fb3c4,transparent:true,opacity:.9,shininess:70}));w.position.y=.3;
 /* no water surface inside the Karnaphuli Tunnel's covered cut-and-cover boxes (they dip below the global water level) */
 w.material.onBeforeCompile=sh=>{sh.uniforms.kc={value:new T.Vector4(KT.C[0],KT.C[1],KT.n[0],KT.n[1])};sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>\nvarying vec3 vWP;').replace('#include <project_vertex>','#include <project_vertex>\nvWP=(modelMatrix*vec4(transformed,1.)).xyz;');
@@ -527,6 +534,16 @@ KU.roads=[{n:'এন.এস. রোড',p:[[120,-250],[120,330],[158,402]],hw:5.
 {p:[[52,-150],[120,-150]]},{p:[[46,-30],[120,-30]]},{p:[[52,262],[120,262]]},{p:[[120,40],[60,90],[52,180]]}];
 KU.roads.forEach(r=>{const P=kpath(r.p,r.bridge);addRoad(P,r.hw||4,r.ln||TL);RP[RP.length-1].town=1;RP[RP.length-1].jam=r.jam?1:0;r.P=P;});
 {const ring=[];for(let k=0;k<=36;k++){const a=-k/36*6.2832;ring.push([175+Math.cos(a)*23,420+Math.sin(a)*23]);}const P=kpath(ring);addRoad(P,4.2,[[0,1,0]]);RP[RP.length-1].town=1;RP[RP.length-1].jam=1;KU.ring=P;}}
+/* ===== Dhaka Metro Rail, MRT Line-6 (opened 2022-23, fully elevated, standard gauge, 1500 V DC overhead). A real-size section from
+   Kamalapur north through Motijheel, Bangladesh Secretariat and Dhaka University to Shahbagh (the whole 20 km line does not fit the compressed map) ===== */
+const MRT={};{const st=ST.find(t=>t.name==='Dhaka');if(st){const p=SP[st.i];let nx=p.nx,nz=p.nz;if(-nz<0){nx=-nx;nz=-nz;}
+let dx=nx*.45,dz=nz*.45-.9;const dl=Math.hypot(dx,dz);dx/=dl;dz/=dl;const px=-dz,pz=dx,A=[p.x+nx*120,p.z+nz*120],P=[];
+for(let u=-60;u<=1320;u+=5){const o=40*Math.sin(u/420),x=A[0]+dx*u+px*o,z=A[1]+dz*u+pz*o;if(hgt(x,z)<1.1||seaD(x,z)>-120)break;P.push({x,z,g:Math.max(hgt(x,z),1)});}
+for(let i=0;i<P.length;i++){const a=P[Math.max(0,i-1)],b=P[Math.min(P.length-1,i+1)];let tx=b.x-a.x,tz=b.z-a.z;const l=Math.hypot(tx,tz)||1;P[i].tx=tx/l;P[i].tz=tz/l;P[i].nx=tz/l;P[i].nz=-tx/l;P[i].y=P[i].g+13;}
+for(let k=1;k<P.length-1;k++)P[k].y=(P[k-1].y+P[k].y*2+P[k+1].y)/4;MRT.P=P;MRT.len=(P.length-1)*5;
+MRT.st=[['কমলাপুর',60],['মতিঝিল',340],['বাংলাদেশ সচিবালয়',620],['ঢাকা বিশ্ববিদ্যালয়',900],['শাহবাগ',1180]].filter(a=>a[1]+95<MRT.len);
+P.forEach((q,i)=>{if(i%2)return;const k=Math.floor(q.x/60)*100000+Math.floor(q.z/60);let a=RH.get(k);if(!a){a=[];RH.set(k,a);}a.push({x:q.x,z:q.z,hw:MRT.st.some(s=>Math.abs(s[1]-i*5+60)<100)?22:9});});}}
+
 /* ===== no dead ends: every loose road end is linked to the nearest road by a connector, or finishes in a village turnaround ===== */
 {RP.forEach(r=>{const a=r.P[0],b=r.P[r.P.length-1];r.closed=Math.hypot(a.x-b.x,a.z-b.z)<2;});
 const pathOK=Q=>{for(const q of Q){const h=hgt(q[0],q[1]);if(G.d<16||h<.75||!pip(q[0],q[1])||stZone(q[0],q[1],8)||noGoK(q[0],q[1]))return false;}return true;},
@@ -556,7 +573,7 @@ xcScan();
 
 /* scenery */
 {const cyl=(a,b,h)=>new T.CylinderGeometry(a,b,h,6).translate(0,h/2,0),W=lam(0xffffff),inZ=(x,z)=>pip(x,z)&&seaD(x,z)<-250;
-const pT=IMC(cyl(.25,.4,9),lam(0x7a5a3a)),pC=IMC(new T.IcosahedronGeometry(2.7,0).scale(1,.42,1).translate(0,9.4,0),W),mT=IMC(cyl(.35,.55,3.4),lam(0x5b3a22)),mC=IMC(new T.IcosahedronGeometry(3.6,1).scale(1,.8,1).translate(0,5.4,0),W);
+const pT=IMC(cyl(.25,.4,9),lam(0x7a5a3a)),pC=IMC(new T.IcosahedronGeometry(2.7,0).scale(1,.42,1).translate(0,9.4,0),W),mT=IMC(cyl(.35,.55,3.4),lam(0x5b3a22)),mC=IMC(new T.IcosahedronGeometry(3.6,1).scale(1,.8,1).translate(0,5.4,0),W);mC.geo.userData.flower=1;pC.geo.userData.flower=2;
 /* coconut palm: curved trunk + drooping fronds; banana: broad leaves; bamboo: clump of culms */
 const merge=gs=>{let n=0;gs.forEach(g=>{n+=g.attributes.position.count;});const P=new Float32Array(n*3),N=new Float32Array(n*3);let k=0;gs.forEach(g=>{P.set(g.attributes.position.array,k*3);N.set(g.attributes.normal.array,k*3);k+=g.attributes.position.count;});const r=new T.BufferGeometry();r.setAttribute('position',new T.BufferAttribute(P,3));r.setAttribute('normal',new T.BufferAttribute(N,3));return r;};
 const leaf=(len,wd,droop,seg)=>{const v=[];for(let s=0;s<seg;s++){const a=s/seg,b=(s+1)/seg,y=f=>-droop*f*f,w=f=>wd*Math.sin(Math.PI*Math.min(1,f*1.15+.05));v.push(0,y(a),a*len,w(a),y(a)-.05,a*len,0,y(b),b*len, w(a),y(a)-.05,a*len,w(b),y(b)-.05,b*len,0,y(b),b*len, 0,y(a),a*len,0,y(b),b*len,-w(a),y(a)-.05,a*len, -w(a),y(a)-.05,a*len,0,y(b),b*len,-w(b),y(b)-.05,b*len);}
@@ -602,7 +619,7 @@ function bldTex(lit){const c=document.createElement('canvas');c.width=c.height=1
 if(!lit){g.fillStyle='#cfcac0';for(let j=0;j<4;j++)g.fillRect(0,j*32+28,128,2);}const t=new T.CanvasTexture(c);t.wrapS=t.wrapT=T.RepeatWrapping;return t;}
 bldM=new T.MeshLambertMaterial({color:0xffffff,map:bldTex(false),emissiveMap:bldTex(true),emissive:0x000000});
 const HC=[14,22,32,46,64,88],CL=HC.map(h=>{const g=new T.BoxGeometry(12,h,12),uv=g.attributes.uv;for(let i=0;i<uv.count;i++)uv.setXY(i,uv.getX(i),uv.getY(i)*h/14);g.translate(0,h/2,0);return IMC(g,bldM,1e9,60);});
-[['Dhaka',420,95,520],['Chattogram',150,60,300],['Khulna',110,45,260],['Sylhet',110,40,240],['Rajshahi',100,40,240],['Rangpur',90,35,220],['Mymensingh',90,35,220],['Comilla',70,30,200],['Jashore',70,30,200],['Dinajpur',60,28,180],["Cox\u2019s Bazar",80,30,200]].forEach(c=>{const st=ST.find(s=>s.name===c[0]);if(!st)return;const p=SP[st.i];
+[['Dhaka',700,95,900],['Chattogram',150,60,300],['Khulna',110,45,260],['Sylhet',110,40,240],['Rajshahi',100,40,240],['Rangpur',90,35,220],['Mymensingh',90,35,220],['Comilla',70,30,200],['Jashore',70,30,200],['Dinajpur',60,28,180],["Cox\u2019s Bazar",80,30,200]].forEach(c=>{const st=ST.find(s=>s.name===c[0]);if(!st)return;const p=SP[st.i];
 for(let k=0;k<c[1];k++){const a=rnd()*6.28,rr=90+Math.pow(rnd(),.7)*c[3],x=p.x+Math.cos(a)*rr,z=p.z+Math.sin(a)*rr,h=hgt(x,z);if(h<1.2||G.d<48||seaD(x,z)>-80||onRoad(x,z,12))continue;const hh=10+Math.pow(rnd(),2)*c[2];let ci=0;HC.forEach((v,i)=>{if(Math.abs(v-hh)<Math.abs(HC[ci]-hh))ci=i;});
 const sx=.8+rnd()*.5,sy=hh/HC[ci];add(CL[ci],x,h-.15,z,Math.round(rnd()*3)*1.5708,sx,sy,sx*(.85+rnd()*.3),[0xffffff,0xf1e6d2,0xe3e8ee,0xf0d9c4,0xd7e0d3,0xe8c9b5][(rnd()*6)|0]);if(hh>30&&rnd()<.6)add(cy,x+(rnd()-.5)*5,h+hh+.3,z+(rnd()-.5)*5,0,1.1,1.4,1.1,0x6d7a86);}});}
 
@@ -689,6 +706,40 @@ KU.roads.forEach(r=>{if(!r.n)return;const q=r.P[Math.min(3,r.P.length-1)],sg=spr
 {const GO=RIV[8],c=KW(190,90);GO.pts.forEach((p,i)=>{if(i%2||Math.hypot(p.x-c[0],p.z-c[1])>700)return;const a=GO.pts[Math.min(i+1,GO.pts.length-1)],ry=Math.atan2(a.x-p.x,a.z-p.z),o=(rnd()-.5)*30;
 const x=p.x+Math.cos(ry)*o,z=p.z-Math.sin(ry)*o;add(kp,x,.15,z,ry,2.2,.8,9,0x6b4a2f);const hd=new T.Mesh(new T.CylinderGeometry(1.15,1.15,3.6,10,1,true,-Math.PI/2,Math.PI),lam2(0x8a6f50));hd.position.set(x,.95,z);hd.rotation.order='YXZ';hd.rotation.set(Math.PI/2,ry,0);scene.add(hd);});}}
 if(typeof _k0!=='undefined')cullGroup(_k0);
+/* MRT Line-6 structures: U-girder viaduct on single piers, rails, catenary masts and wire, stations with concourse, platforms, curved roof and stairs */
+if(MRT.P&&MRT.P.length>40){const P=MRT.P,_m0=scene.children.length,at=(u)=>{const f=Math.max(0,Math.min(P.length-1.001,(u+60)/5)),i=f|0,t=f-i,a=P[i],b=P[i+1];return{x:a.x+(b.x-a.x)*t,y:a.y+(b.y-a.y)*t,z:a.z+(b.z-a.z)*t,tx:a.tx,tz:a.tz,nx:a.nx,nz:a.nz};};MRT.at=at;
+const CON=IMC(BOX1,lam(0xd5d2ca),1e9,20),PIER=IMC(BOX1,lam(0xc9c5bc),1e9,20),RAIL=IMC(BOX1,lam(0x9aa0a6),1e9,10),SLP=IMC(BOX1,lam(0x6d6a65),1e9,10),MAST=IMC(BOX1,lam(0x8a8f94),1e9,10),va=new T.Vector3(),vb=new T.Vector3(),W_=[];
+for(let u=-60;u<MRT.len-60-5;u+=5){const a=at(u),b=at(u+5);beam(CON,va.set(a.x,a.y-.6,a.z),vb.set(b.x,b.y-.6,b.z),9.4,1.2);
+[-4.5,4.5].forEach(o=>beam(CON,va.set(a.x+a.nx*o,a.y+.5,a.z+a.nz*o),vb.set(b.x+b.nx*o,b.y+.5,b.z+b.nz*o),.4,1.6));
+[-1.9,1.9].forEach(c=>[-.72,.72].forEach(r=>beam(RAIL,va.set(a.x+a.nx*(c+r),a.y+.25,a.z+a.nz*(c+r)),vb.set(b.x+b.nx*(c+r),b.y+.25,b.z+b.nz*(c+r)),.14,.2)));
+[-1.9,1.9].forEach(c=>beam(SLP,va.set(a.x+a.nx*c,a.y+.08,a.z+a.nz*c),vb.set(b.x+b.nx*c,b.y+.08,b.z+b.nz*c),2.6,.14));
+if((Math.round(u)%30)===0){const g=hgt(a.x,a.z),h=a.y-1.2-g;if(h>2)add(PIER,a.x,g+h/2,a.z,Math.atan2(a.tx,a.tz),2.2,h,2.2);add(PIER,a.x,a.y-1.6,a.z,Math.atan2(a.tx,a.tz),7,1.4,2.6);}
+if((Math.round(u)%50)===0){add(MAST,a.x,a.y+3.6,a.z,Math.atan2(a.tx,a.tz),.25,6.4,.25);add(MAST,a.x,a.y+6.6,a.z,Math.atan2(a.tx,a.tz)+Math.PI/2,.18,.18,7.6);}
+if((Math.round(u)%10)===0)[-1.9,1.9].forEach(c=>{const b2=at(u+10);W_.push(a.x+a.nx*c,a.y+5.6,a.z+a.nz*c,b2.x+b2.nx*c,b2.y+5.6,b2.z+b2.nz*c);});}
+const wl=new T.LineSegments(new T.BufferGeometry().setAttribute('position',new T.Float32BufferAttribute(W_,3)),new T.LineBasicMaterial({color:0x2a2a2a}));wl.frustumCulled=false;scene.add(wl);
+/* stations: concourse below the tracks, side platforms, curved white roof on steel arches, glass screens, street stairs and Bangla/English name boards */
+const roofG=new T.CylinderGeometry(15,15,1,28,1,true,-Math.PI*.31,Math.PI*.62).rotateX(-Math.PI/2);
+MRT.st.forEach(sd=>{const c=at(sd[1]),g=new T.Group();g.position.set(c.x,c.y,c.z);g.rotation.y=Math.atan2(c.tx,c.tz);scene.add(g);const gy=hgt(c.x,c.z)-c.y;
+mk(g,24,4.5,150,0xe7e3da,0,-4.2,0);mk(g,25,.5,151,0xbdb9b0,0,-6.6,0);for(let z=-60;z<=60;z+=30)[-8,8].forEach(x=>{const cl=new T.Mesh(new T.CylinderGeometry(.9,.9,-gy-6.6,12),lam(0xd8d5cc));cl.position.set(x,(gy-6.6)/2,z);g.add(cl);});
+[-1,1].forEach(s=>{mk(g,6,.9,150,0xcfcac0,s*7.5,.1,0);mk(g,.3,.06,150,0xf2c230,s*4.7,.57,0);const scr=new T.Mesh(new T.BoxGeometry(.08,2.2,146),new T.MeshPhongMaterial({color:0x8fbfd0,transparent:true,opacity:.35}));scr.position.set(s*4.75,1.6,0);g.add(scr);
+for(let z=-70;z<=70;z+=14){const ar=mk(g,.3,8.6,.3,0x7d8a96,s*10.4,4.4,z);}const st_=mk(g,3,.4,16,0xbdb9b0,s*14,(gy+1)/2-2,40*s);st_.rotation.x=s*Math.atan2(-gy-1,16);st_.scale.z=Math.hypot(16,-gy)/16;});
+const rf=new T.Mesh(roofG,new T.MeshLambertMaterial({color:0xf4f3ef,emissive:0x8a8a86,side:T.DoubleSide}));rf.scale.set(.62,.85,152);rf.position.y=-6;g.add(rf);
+[-1,1].forEach(s=>{const sg=spr(sd[0]+' · মেট্রো',8,1.1,'#00704a','#ffffff');sg.position.set(s*7.5,3.4,s*30);sg.rotation.y=s>0?-Math.PI/2:Math.PI/2;g.add(sg);
+const out=spr('এমআরটি লাইন-৬ · '+sd[0],12,1.4,'#00704a','#ffffff');out.material.side=T.FrontSide;out.position.set(s*12.6,-3,0);out.rotation.y=s>0?Math.PI/2:-Math.PI/2;g.add(out);});});
+cullGroup(_m0);
+/* trains: 6-car stainless-steel sets with red and green bands, one on each track, stopping at every station */
+const car=(front)=>{const g=new T.Group(),L=19;mk(g,2.9,3.1,L,0xe9ecef,0,1.95,0);mk(g,2.94,.32,L,0xd62839,0,1.2,0);mk(g,2.94,.14,L,0x0f7a54,0,3.0,0);mk(g,2.95,.95,L-1.2,0x1d2a36,0,2.35,0);
+for(let z=-7;z<=7;z+=4.7)[-1,1].forEach(s=>mk(g,.05,2.2,1.4,0x6f7c88,s*1.48,1.95,z));mk(g,2.4,.4,L-4,0xbfc5ca,0,3.7,0);[-6.5,6.5].forEach(z=>mk(g,2.3,.7,2.6,0x2b2f33,0,.3,z));
+if(front){const n=new T.Mesh(new T.BoxGeometry(2.9,2.4,1.6),lam(0xe9ecef));n.position.set(0,2.1,L/2+.4);n.rotation.x=-.25;g.add(n);mk(g,2.2,1.1,.1,0x1d2a36,0,2.6,L/2+1.05);[-.8,.8].forEach(x=>{const hl=new T.Mesh(new T.BoxGeometry(.4,.2,.08),new T.MeshBasicMaterial({color:0xfff4c8}));hl.position.set(x,1.4,L/2+1.2);g.add(hl);});}return g;};
+MRT.trains=[1,-1].map((side,k)=>{const cars=[];for(let i=0;i<6;i++){const c=car(i===0||i===5);if(i===5)c.rotation.y=Math.PI;const w=new T.Group();w.add(c);scene.add(w);cars.push(w);}
+return{cars,side,u:k?MRT.len-260:60,dir:k?-1:1,v:0,dwell:6+k*9,next:0};});}
+function metroTick(dt){if(!MRT.trains)return;const near=Math.hypot(MRT.P[0].x-cam.position.x,MRT.P[0].z-cam.position.z)<fogFar+2600;
+MRT.trains.forEach(T_=>{T_.cars.forEach(c=>c.visible=near);if(!near)return;const stops=MRT.st.map(s=>s[1]),end0=60,end1=stops[stops.length-1];
+if(T_.dwell>0){T_.dwell-=dt;T_.v=0;if(T_.dwell<=0){if((T_.dir>0&&T_.u>=end1-1)||(T_.dir<0&&T_.u<=end0+1))T_.dir=-T_.dir;}}
+else{let tgt=null;for(const s of stops){if((s-T_.u)*T_.dir>.5){if(tgt===null||Math.abs(s-T_.u)<Math.abs(tgt-T_.u))tgt=s;}}if(tgt===null)tgt=T_.dir>0?end1:end0;const dist=Math.abs(tgt-T_.u),vmax=Math.min(22,Math.sqrt(2*1*Math.max(0,dist-.3)));
+T_.v=Math.min(vmax,T_.v+1*dt);T_.u+=T_.v*dt*T_.dir;if(Math.abs(tgt-T_.u)<.4){T_.u=tgt;T_.v=0;T_.dwell=20;}}
+T_.cars.forEach((c,i)=>{const u=T_.u-T_.dir*i*19.6,a=MRT.at(u),b=MRT.at(u+T_.dir*2),o=T_.side*1.9;c.position.set(a.x+a.nx*o,a.y+.35,a.z+a.nz*o);c.lookAt(b.x+b.nx*o,b.y+.35,b.z+b.nz*o);});});}
+
 /* river boats and ships */
 const NBt=110,bH=IM(new T.BoxGeometry(2,.8,8.5).translate(0,.4,0),lam(0xffffff),NBt),bC=IM(new T.BoxGeometry(1.8,1.3,3).translate(0,1.4,0),lam(0xd9c9a3),NBt),bS=IM(new T.PlaneGeometry(3.4,5).translate(0,4.3,.5),lam2(0xffffff),NBt),BT=[];
 for(let k=0;k<NBt;k++){const r=RIV[[0,1,1,2,2,3,4][k%7]],i=2+((rnd()*(r.pts.length-4))|0),a=r.pts[i],b=r.pts[i+1],tx=b.x-a.x,tz=b.z-a.z,n=Math.hypot(tx,tz),off=(rnd()-.5)*r.w*1.5;BT.push({x:a.x-tz/n*off,z:a.z+tx/n*off,ry:Math.atan2(tx,tz)+(rnd()<.5?0:Math.PI),ph:rnd()*6});
@@ -792,7 +843,7 @@ st.hk.forEach((h,i)=>{const p=h.p;h.t+=dt;let tx,tz,sp=.8;if(here){const d=st.D[
 const dx=tx-p.position.x,dz=tz-p.position.z,dd=Math.hypot(dx,dz),stp=sp*dt;if(dd>.15){p.position.x+=dx/dd*Math.min(stp,dd);p.position.z+=dz/dd*Math.min(stp,dd);p.rotation.y=Math.atan2(dx,dz);walkPose(p,dt,true);}else{p.rotation.y=-Math.PI/2;walkPose(p,dt,false);}
 h.b.visible=here?((h.t+i*.7)%3<2.2):((h.t+i*1.9)%9<2);});});}
 /* station buildings, each after the real station (local frame: +x = platform side, +z = direction of travel) */
-const DN={'Dhaka':'কমলাপুর','Kushtia':'কুষ্টিয়া কোর্ট'};
+const DN={'Dhaka':'কমলাপুর','Kushtia':'কুষ্টিয়া কোর্ট','Bhanga':'ভাঙ্গা জংশন'};
 const vaultG=(()=>{const g=new T.PlaneGeometry(12,12,14,14).rotateX(-Math.PI/2),p=g.attributes.position,f=t=>Math.pow(Math.max(0,1-Math.abs(2*t-1)),.55);for(let i=0;i<p.count;i++){const u=(p.getX(i)+6)/12,v=(p.getZ(i)+6)/12;p.setY(i,4.4*Math.max(f(u),f(v)));}g.computeVertexNormals();return g;})();
 const ribTex=(()=>{const c=document.createElement('canvas');c.width=256;c.height=8;const g=c.getContext('2d');for(let i=0;i<32;i++){g.fillStyle=i%2?'#efe6d2':'#fbf6ea';g.fillRect(i*8,0,8,8);}const t=new T.CanvasTexture(c);t.wrapS=T.RepeatWrapping;return t;})();
 const glassM=new T.MeshPhongMaterial({color:0x6fa8bf,transparent:true,opacity:.62,shininess:90,emissive:0x000000}),winMs=[glassM];
@@ -837,6 +888,12 @@ mk(g,14,9,26,0xdfe3e6,16,4.5,-22);const gw=new T.Mesh(new T.BoxGeometry(.1,6,24)
 'Jashore':g=>{/* rebuilt 2005: two-storey modern block */
 mk(g,11,8,30,0xf3f1ec,14.5,4,0);const gw=new T.Mesh(new T.BoxGeometry(.1,2.2,26),glassM);[2.2,5.8].forEach(y=>{const w=gw.clone();w.position.set(8.95,y,0);g.add(w);});mk(g,12,.5,31,0x2f6fb5,14.5,8.2,0);},
 'Comilla':g=>colonial(g,{wall:0xe6d3a3,roof:0x2f6b47,len:30}),
+'Bhanga':g=>{/* Bhanga Junction (Padma Rail Link, 2023): large new three-storey 'iconic' terminal, Chinese-style design with sweeping layered roofs */
+const wl=0xf1ede4,gl=new T.MeshPhongMaterial({color:0x6fa8bf,transparent:true,opacity:.62,shininess:90});mk(g,22,4,58,0xd9d4c8,19,2,0);
+for(let f=0;f<3;f++){mk(g,18-f*2.5,4,54-f*8,wl,19,4+f*4+2,0);const w=new T.Mesh(new T.BoxGeometry(.1,2.6,50-f*8),gl);w.position.set(10-f*1.25+.05,5.6+f*4,0);g.add(w);
+const rf=new T.Mesh(prism((18-f*2.5)/2+2.2,1.6,56-f*8),lam(0x9b2d24));rf.position.set(19,8+f*4,0);rf.rotation.y=0;g.add(rf);mk(g,(18-f*2.5)+4.6,.3,57-f*8,0xc9a227,19,8+f*4,0);}
+for(let z=-24;z<=24;z+=6){const c=new T.Mesh(new T.CylinderGeometry(.45,.5,8,10),lam(0xb03a2e));c.position.set(9.2,4,z);g.add(c);}
+mk(g,3,.6,24,0xc9a227,8.7,8.2,0);const nm=spr('ভাঙ্গা জংশন',12,1.6,'#9b2d24','#f2c230');nm.position.set(8.5,10,0);nm.rotation.y=-Math.PI/2;g.add(nm);},
 'Kushtia':g=>{/* Kushtia Court station (1871): colonial single-storey building, footbridge and a goods shed */
 colonial(g,{wall:0xe3c46e,roof:0x8a2f25,len:42,year:'1871'});
 const fb=new T.Group();fb.position.set(0,0,-30);g.add(fb);[-1,1].forEach(s=>{mk(fb,.4,7.2,.4,0x4f5a63,s*1.2-3.6+(s>0?11:0),3.6,0);});mk(fb,15,.5,2.4,0x6b7680,3.6,7.3,0);mk(fb,15,1.1,.12,0x8a96a0,3.6,8,1.15);mk(fb,15,1.1,.12,0x8a96a0,3.6,8,-1.15);
@@ -1182,9 +1239,10 @@ addEventListener('pointerdown',e=>{if(e.target&&e.target.closest&&!e.target.clos
 addEventListener('resize',()=>{R.setSize(innerWidth,innerHeight);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();});
 ST.forEach(st=>{const i=document.createElement('i');i.className='sd';i.style.left=st.s/L*100+'%';i.title=bnn(st.name);$('rl').appendChild(i);});
 /* choose the starting station */
-function startAt(k){EID=$('eidc').checked;FAIR=$('fairc').checked;nextI=k;S=ST[k].s-260;v=0;thr=0;brk=0;eb=false;dir=1;boarded=false;board=0;if(doors)toggleDoors();ST.forEach(t=>resetStation(t));ini=0;reg=-1;started=true;$('start').style.display='none';audio();setMode(1);
-msg('স্বাগতম! যাত্রা শুরু '+bnn(ST[k].name)+' থেকে।'+(EID?' আজ ঈদের যাত্রা, স্টেশনে প্রচণ্ড ভিড়!':'')+(FAIR?' কুষ্টিয়ায় চলছে লালন মেলা।':'')+' W দিয়ে থ্রটল বাড়ান',6000);}
+function startAt(k){EID=$('eidc').checked;FAIR=$('fairc').checked;setSeason(+$('seas').value);nextI=k;S=ST[k].s-260;v=0;thr=0;brk=0;eb=false;dir=1;boarded=false;board=0;if(doors)toggleDoors();ST.forEach(t=>resetStation(t));ini=0;reg=-1;started=true;$('start').style.display='none';audio();setMode(1);
+msg('স্বাগতম! যাত্রা শুরু '+bnn(ST[k].name)+' থেকে। '+SEAS[SEA_].m+'।'+(EID?' আজ ঈদের যাত্রা, স্টেশনে প্রচণ্ড ভিড়!':'')+(FAIR?' কুষ্টিয়ায় চলছে লালন মেলা।':'')+' W দিয়ে থ্রটল বাড়ান',6000);}
 $('eidc').checked=Math.random()<.3;$('fairc').checked=Math.random()<.4;
+SEAS.forEach((q,i)=>{const o=document.createElement('option');o.value=i;o.textContent=q.n+(i===monthSeason()?' (এখন)':'');$('seas').appendChild(o);});$('seas').value=monthSeason();
 ST.forEach((t,k)=>{const b=document.createElement('button');b.innerHTML=bnn(t.name)+(DN[t.name]?'<small>'+DN[t.name]+'</small>':'');b.onclick=()=>{audio();startAt(k);};$('pk').appendChild(b);});
 $('go').onclick=()=>{audio();$('go').style.display='none';$('pick').style.display='block';document.querySelector('.keys').style.display='none';document.querySelector('.card p').style.display='none';};
 $('back').onclick=()=>{$('go').style.display='';$('pick').style.display='none';document.querySelector('.keys').style.display='';document.querySelector('.card p').style.display='';};
@@ -1214,6 +1272,11 @@ c.t=closed?c.t+dt:0;const tgt=closed&&c.t>2?0:1.45;c.ang+=(tgt-c.ang)*Math.min(1
 const fl=closed||c.ang<1.38,ph=Math.floor(time*2.6)%2;c.lamps.forEach((l,k)=>l.material.color.setHex(fl&&(k%2===ph)?0xff2a1a:0x330000));c.lc.closed=closed||c.ang<1.2;
 if(fl&&started&&cam.position.distanceTo(c.g.position)<380){c.bell-=dt;if(c.bell<=0){bell();c.bell=.55;}}
 if(dir>=0&&started){if(ah>380&&ah<430&&!c.warn){c.warn=true;msg('সামনে লেভেল ক্রসিং: হর্ন দিন (H)',2600);}if(ah>30&&ah<380&&hornHeld&&!c.hb){c.hb=true;score+=10;msg('লেভেল ক্রসিংয়ে হর্ন দিয়েছেন +১০',1800);}if(ah<-120){c.hb=false;c.warn=false;}}});}
+/* apply a season: ground shader, flowering krishnachura (flame red) and palash (orange) in spring, a few in early summer */
+let FLW=null;window.__seaEl=document.getElementById('seal');function setSeason(k){SEA_=k;const S_=SEAS[k],sh=window.__terM.userData.sh;if(sh)sh.uniforms.sea.value.set(...S_.u);else window.__terM.userData.pend=S_.u;
+if(!FLW){FLW=CMS.filter(m=>m.geometry.userData.flower&&m.instanceColor).map(m=>({m,orig:m.instanceColor.array.slice()}));}
+const fc=[new T.Color(0xe8381e),new T.Color(0xf05a1a),new T.Color(0xd92a2a)];FLW.forEach(f=>{const a=f.m.instanceColor.array;a.set(f.orig);if(S_.k>0){for(let i=0;i<a.length/3;i++){const h=Math.sin(i*12.9898+f.m.id*78.233)*43758.5453,r=h-Math.floor(h);if(r<(f.m.geometry.userData.flower===1?.32:.12)*S_.k){const c=fc[i%3];a[i*3]=c.r;a[i*3+1]=c.g;a[i*3+2]=c.b;}}}f.m.instanceColor.needsUpdate=true;});
+if(window.__seaEl)window.__seaEl.textContent=S_.n+'কাল';}
 /* adaptive resolution: drop the render scale when frames are slow, raise it again when there is headroom */
 let pfT=0,pfN=0,pfS=0;function perfTick(dt){pfT+=dt;pfN++;pfS+=dt;if(pfT<2)return;const avg=pfS/pfN;pfT=pfN=pfS=0;let nd=DPR;if(avg>1/28)nd=Math.max(DPRMIN,DPR-.15);else if(avg<1/50)nd=Math.min(DPRMAX,DPR+.15);if(Math.abs(nd-DPR)>.01){DPR=nd;R.setPixelRatio(DPR);R.setSize(innerWidth,innerHeight);}}
 /* rain shelters: oriented boxes (centre x,z, yaw, half width, half length, bottom, top) where drops are not drawn */
@@ -1370,7 +1433,7 @@ BTNS.light.classList.toggle('on',hl);BTNS.doors.classList.toggle('on',doors);BTN
 $('sc').textContent=bnum(Math.round(score));$('dn').textContent=bnum(done);$('nx').textContent=hudN+' \u00b7 '+hudD+(nsg&&nsd<1600&&dir>0?'  \u00b7  সিগন্যাল '+['সবুজ','হলুদ','লাল'][nsg.asp]+' '+bnum(Math.round(nsd))+' মি':'');$('rm').style.left=ssv/L*100+'%';
 if((frameN&1)===0)drawMap(st);frameN++;
 ST.forEach(t=>{t.g.visible=t.g.position.distanceTo(cam.position)<fogFar+180;});{const lim=fogFar+150;for(let i=0;i<DCULL.length;i++){const d=DCULL[i],dd=d.sp.center.distanceTo(cam.position)-d.sp.radius;d.o.visible=dd<(d.near?Math.min(d.near,lim):lim);}
-ST.forEach(t=>{if(t.pg)t.pg.visible=t.g.visible&&t.g.position.distanceTo(cam.position)<(t===ST[nextI%ST.length]?650:380);});}kWalkTick(rdt);farmTick(rdt);lcTick(rdt);perfTick(rdt);vehiclesTick(rdt);wreckTick(dt);otTick(dt);cowTick(dt);festTick(rdt);KT.fs.visible=cam.position.y>1;envTick(rdt,now/1000);if(dk>.3||ktIn())rainM.visible=false;else if(rainM.visible)shelterTick();wipersTick(rdt);cullChunks();R.render(scene,cam);}
+ST.forEach(t=>{if(t.pg)t.pg.visible=t.g.visible&&t.g.position.distanceTo(cam.position)<(t===ST[nextI%ST.length]?650:380);});}kWalkTick(rdt);farmTick(rdt);lcTick(rdt);perfTick(rdt);vehiclesTick(rdt);wreckTick(dt);otTick(dt);cowTick(dt);festTick(rdt);metroTick(rdt);KT.fs.visible=cam.position.y>1;envTick(rdt,now/1000);if(dk>.3||ktIn())rainM.visible=false;else if(rainM.visible)shelterTick();wipersTick(rdt);cullChunks();R.render(scene,cam);}
 $('mm').onclick=toggleBig;$('bigmap').onclick=toggleBig;setTime(false);setMode(1);$('go').style.display='';$('ld').style.display='none';requestAnimationFrame(frame);
 
 }
