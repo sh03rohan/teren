@@ -36,7 +36,7 @@ button small{opacity:.5;margin-left:5px;font-size:10px}
 .keys{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:20px;font-size:12px;color:var(--m)}
 kbd{background:rgba(255,255,255,.12);border-radius:5px;padding:2px 6px;margin-right:3px;color:var(--t);font-family:inherit;font-size:11px}
 .go{font-size:15px;font-weight:600;padding:12px 30px;border-radius:12px;background:var(--a);color:#06231f}
-#pick{margin-top:4px}.pk{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}.pk button{background:rgba(255,255,255,.08);border:1px solid var(--b);border-radius:10px;padding:10px 4px;font-size:15px;line-height:1.2}.pk button small{display:block;opacity:.6;font-size:11px;margin:2px 0 0}.pk button:hover{background:var(--a);color:#06231f}.bk2{color:var(--m);font-size:13px}
+#pick{margin-top:4px}.pk{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}.pk button{background:rgba(255,255,255,.08);border:1px solid var(--b);border-radius:10px;padding:10px 4px;font-size:15px;line-height:1.2}.pk button small{display:block;opacity:.6;font-size:11px;margin:2px 0 0}.pk button:hover{background:var(--a);color:#06231f}.bk2{color:var(--m);font-size:13px}.fx{display:flex;flex-direction:column;gap:6px;text-align:left;margin:0 0 12px;font-size:13px;color:var(--t)}.fx input{accent-color:#5eead4;margin-right:6px}
 @media(max-width:700px){#mm{display:none}#sp svg{width:120px;height:120px}#sp,#ctl{bottom:118px}#route{left:var(--L);transform:none;width:calc(100vw - 172px)}#brand{display:none}button{padding:7px 8px;font-size:11px}small{display:none}}
 #bigmap{position:fixed;inset:0;z-index:9;display:none;align-items:center;justify-content:center;background:rgba(4,8,16,.84)}#bigmap canvas{height:94vh;max-width:96vw;border-radius:14px;border:1px solid var(--b)}#bigmap span{position:absolute;top:calc(var(--T));left:50%;transform:translateX(-50%);color:var(--m);font-size:12px}
 button.ib{width:40px;height:40px;padding:0;display:flex;align-items:center;justify-content:center;border-radius:10px}
@@ -61,7 +61,7 @@ button svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8
 <div id="bt"></div><div id="camMenu"></div>
 <div id="start"><div class="card"><div class="s">থ্রিডি ট্রেন সিমুলেটর</div><h1>টুক টুক টেরেন</h1><p>পদ্মা এক্সপ্রেস চালিয়ে ঘুরে আসুন সারা বাংলাদেশ: ঢাকা, চট্টগ্রাম, কক্সবাজার, সিলেটের পাহাড়, উত্তরবঙ্গ, কুষ্টিয়া আর বড় বড় নদীর সেতু। প্রতিটি স্টেশনে থামুন, সিগন্যাল আর গতিসীমা মেনে চলুন, আবহাওয়ার দিকে খেয়াল রাখুন।</p>
 <div class="keys"><span><kbd>W</kbd><kbd>S</kbd>থ্রটল</span><span><kbd>Space</kbd>ব্রেক</span><span><kbd>B</kbd>জরুরি ব্রেক</span><span><kbd>H</kbd>হর্ন</span><span><kbd>O</kbd>দরজা</span><span><kbd>R</kbd>পেছনে</span><span><kbd>1</kbd>&ndash;<kbd>9</kbd>ক্যামেরা</span><span><kbd>L</kbd>লাইট</span><span><kbd>N</kbd>রাত</span><span><kbd>E</kbd>আবহাওয়া</span><span><kbd>M</kbd>ম্যাপ</span><span><kbd>U</kbd>শব্দ</span></div>
-<div class="s" id="ld">বাংলাদেশ তৈরি হচ্ছে...</div><button id="go" class="go" style="display:none">চালানো শুরু করুন</button><div id="pick" style="display:none"><div class="s" style="margin-bottom:10px">কোন স্টেশন থেকে যাত্রা শুরু করবেন?</div><div class="pk" id="pk"></div><button id="back" class="bk2">← ফিরে যান</button></div></div></div>
+<div class="s" id="ld">বাংলাদেশ তৈরি হচ্ছে...</div><button id="go" class="go" style="display:none">চালানো শুরু করুন</button><div id="pick" style="display:none"><div class="s" style="margin-bottom:10px">কোন স্টেশন থেকে যাত্রা শুরু করবেন?</div><div class="pk" id="pk"></div><div class="fx"><label><input type="checkbox" id="eidc"> ঈদের যাত্রা (প্ল্যাটফর্মে ভিড়, ছাদে যাত্রী)</label><label><input type="checkbox" id="fairc"> কুষ্টিয়ায় লালন মেলা</label></div><button id="back" class="bk2">← ফিরে যান</button></div></div></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" onerror="document.getElementById('ld').textContent='থ্রিডি ইঞ্জিন (three.js) লোড হয়নি। ইন্টারনেট সংযোগ দেখে পেজটি আবার খুলুন।'"></script>
 <script>function boot(){
 const BND='০১২৩৪৫৬৭৮৯',bnum=v=>String(v).replace(/[0-9]/g,d=>BND[d]);
@@ -596,6 +596,10 @@ kr=IMC(prism(.5,1,1),lam(0xffffff),1e9,30),kc=IMC(new T.CylinderGeometry(1,1,1,1
 const PAL=[0xf3ead8,0xf2c6c2,0xcfe8d0,0xc9dcef,0xf6e3a1,0xffffff,0xe8d0b0,0xd9c2e6,0xb8e0d8,0xf0b98a],SIGN=[0xd62839,0x0f7a54,0x1f5fae,0xf2c230,0xe67e22,0x7e22ce,0x1d1d1d,0x0e7490],AWN=[0x2f7d5a,0xc0392b,0x2b5f9e,0xd4a017,0x6d4c41];
 const occ=[],free=(x,z,r)=>{for(const o of occ)if((o[0]-x)**2+(o[1]-z)**2<(o[2]+r)**2)return false;return true;};
 const LM={mazar:[330,335,44],kuthi:[430,-185,42],chour:[175,420,30],choy:[190,150,12],bazar:[168,-175,26],bus:[318,600,30],mosque:[72,212,16],gate:[120,-250,10]};
+/* Lalon Mela ground: the nearest dry, open patch beside the mazar (kept clear of houses) */
+{let best=null;for(let lx=180;lx<=470;lx+=10)for(let lz=120;lz<=540;lz+=10){const dm=Math.hypot(lx-330,lz-335);if(dm<70||(best&&dm>=best[2]))continue;let ok=true;
+for(let a=0;a<6.28&&ok;a+=.4)for(const r of[0,14,26,36]){const w=KW(lx+Math.cos(a)*r,lz+Math.sin(a)*r);if(hgt(w[0],w[1])<1.3||onRoad(w[0],w[1],5)){ok=false;break;}}if(ok)best=[lx,lz,dm];}
+LM.fair=best?[best[0],best[1],40]:[425,335,40];window.__fairC=LM.fair;}
 Object.values(LM).forEach(l=>{const w=KW(l[0],l[1]);occ.push([w[0],w[1],l[2]]);});
 function shop(x,z,yaw,w,d,fl,col){const gy=hgt(x,z)-.15,h=fl*3.3,fx=Math.sin(yaw),fz=Math.cos(yaw),F=(o,y,sx,sy,sz,c)=>add(kp,x+fx*o,gy+y,z+fz*o,yaw,sx,sy,sz,c);
 add(kb,x,gy,z,yaw,w,h,d,col);add(kp,x,gy+h,z,yaw,w+.3,.7,d+.3,0xe9e4d8);F(d/2+.04,0,w*.92,2.7,.1,0x3a3f45);F(d/2+.2,2.75,w*.9,1.05,.16,SIGN[(rnd()*SIGN.length)|0]);F(d/2+.95,2.55,w*.94,.12,1.7,AWN[(rnd()*AWN.length)|0]);
@@ -832,6 +836,7 @@ if(st.name!=='Dhaka'){[-24,-8,8,24].forEach(z=>mk(g,.3,4.3,.3,0x555a60,7.2,3,z))
 const sb=spr('এখানে থামুন',3,.9,'#b3261e','#ffffff');sb.position.set(3.1,2.5,29);sb.rotation.y=-Math.PI/2;g.add(sb);mk(g,.12,1.1,.12,0x333333,3.1,1.45,29);
 st.out=[];for(let i=0;i<14;i++){const p=person();p.position.set(4+rnd()*3.2,.9,-28+rnd()*56);p.rotation.y=rnd()*6;g.add(p);st.ppl.push(p);}
 for(let i=0;i<8;i++){const p=person();p.visible=false;g.add(p);st.out.push(p);}
+for(let i=0;i<22;i++){const p=person();p.position.set(3.8+rnd()*3.6,.9,-29+rnd()*58);p.rotation.y=rnd()*6;p.userData.eid=1;p.visible=false;g.add(p);st.ppl.push(p);if(i%4===0){const b=new T.Mesh(PG.bag,bagM[i%3]);b.scale.set(1.6,1.4,1.6);b.position.set(-.35,.95,.1);p.add(b);}}
 /* platform hawkers (tea, jhalmuri, peanuts, water) and a tea stall */
 st.hk=[];HKD.forEach((hd,k)=>{const h=person();hd.prop(h);h.position.set(4.2+rnd()*.5,.9,-24+k*15+rnd()*4);h.rotation.y=rnd()<.5?0:Math.PI;g.add(h);const b=bubble(hd.call);b.position.set(0,2.55,0);b.visible=false;h.add(b);st.hk.push({p:h,b,dir:rnd()<.5?1:-1,t:rnd()*6,k});});
 {const ts=new T.Group();ts.position.set(6.9,.9,-12);g.add(ts);mk(ts,1.6,1,2.6,0x8a5a3a,0,.5,0);mk(ts,1.8,.1,2.8,0x6b4a2f,0,1.02,0);[-1,1].forEach(s=>mk(ts,.08,1.6,.08,0x5b3a22,-.8,1.8,s*1.3));mk(ts,2.2,.08,3.2,0xc0392b,-.2,2.6,0);
@@ -904,6 +909,26 @@ FARM.kids.forEach((k,i)=>{const tgtA=k===near?B.a:B.a+(k.team?-1:1)*(4+i%3*3),tg
 if(d>.6){const st=Math.min(d,k.sp*dt);k.a+=da/d*st;k.b+=db/d*st;walkPose(k.p,dt*1.6,true);}else walkPose(k.p,dt,false);const w=k.L_(k.a,k.b);k.p.position.set(w[0],Math.max(hgt(w[0],w[1]),.4)+.12,w[1]);k.p.rotation.y=KU.ry+Math.atan2(da,db);});
 if(nd<.9){const k=near,goal=k.team?-30:30;B.va=(rnd()-.5)*10;B.vb=(goal-B.b)*.35+(rnd()-.5)*6;}B.a+=B.va*dt;B.b+=B.vb*dt;B.va*=Math.pow(.4,dt);B.vb*=Math.pow(.4,dt);
 if(Math.abs(B.a)>19){B.a=Math.sign(B.a)*19;B.va*=-.6;}if(Math.abs(B.b)>34){B.b=0;B.a=0;B.va=0;B.vb=(rnd()-.5)*8;}const w=B.L_(B.a,B.b);B.m.position.set(w[0],Math.max(hgt(w[0],w[1]),.4)+.34,w[1]);B.m.rotation.x+=B.vb*dt*2;}}
+if(KU.st){const KW=KU.W,RY=KU.ry;/* Lalon Mela at Cheuria: fair stalls with striped canopies, strings of lights, a stage with bauls (saffron/white, ektara) and a milling crowd; shown when the fair is on */
+{const FC=window.__fairC||[425,335],outer=new T.Group(),FG=new T.Group();outer.add(FG);scene.add(outer);FG.visible=false;window.__fair=FG;const FB=[];window.__fairB=FB;
+const c=KW(FC[0],FC[1]),cy=Math.max(hgt(c[0],c[1]),1),ok=(x,z)=>{const h=hgt(x,z);return h>1&&!onRoad(x,z,4);};outer.position.set(c[0],0,c[1]);outer.rotation.y=RY;
+const cols=[0xd62839,0xf2c230,0x0f7a54,0x1f5fae,0xe67e22,0xdb2777,0x7e22ce];let n=0;
+for(let i=-2;i<=2;i++)for(let j=-2;j<=2;j++){if(Math.abs(i)<2&&Math.abs(j)<2)continue;if((i+j)%2)continue;const lx=i*11,lz=j*12,w=KW(FC[0]+lx,FC[1]+lz);if(!ok(w[0],w[1]))continue;const y=hgt(w[0],w[1])-.1,g=new T.Group();g.position.set(lx,y,lz);g.rotation.y=Math.round(Math.random()*3)*Math.PI/2;FG.add(g);
+const col=cols[n++%cols.length];mk(g,4,1,2.6,0x8a5a3a,0,.5,0);[-1.9,1.9].forEach(x=>[-1.2,1.2].forEach(z=>mk(g,.1,2.6,.1,0x5b3a22,x,1.3,z)));
+for(let k=0;k<4;k++)mk(g,1.06,.12,3.2,k%2?0xffffff:col,-1.6+k*1.06,2.7,0);for(let k=0;k<6;k++){const it=mk(g,.35,.3,.35,cols[(k+n)%cols.length],-1.5+k*.6,1.15,.4);}}
+/* stage with bauls */
+{const w=KW(FC[0],FC[1]),y=hgt(w[0],w[1]),g=new T.Group();g.position.set(0,y,0);FG.add(g);mk(g,10,1.1,7,0x6b4a2f,0,.55,0);mk(g,10.4,.2,7.4,0xd62839,0,1.15,0);[-4.8,4.8].forEach(x=>[-3.3,3.3].forEach(z=>mk(g,.18,5,.18,0xf2c230,x,3.6,z)));
+for(let k=0;k<5;k++)mk(g,2.1,.1,7.6,k%2?0xffffff:0xf2c230,-4.2+k*2.1,6.1,0);[-1,1].forEach(f=>{const bn=spr('লালন স্মরণোৎসব',8,1.2,'#0b5d42','#ffffff');bn.material.side=T.FrontSide;bn.position.set(0,5.4,f*3.46);bn.rotation.y=f>0?0:Math.PI;g.add(bn);});
+for(let k=0;k<4;k++){const b=person();b.traverse(o=>{if(o.isMesh&&o.geometry===PG.body)o.material=lam(k%2?0xf2f0ea:0xe67e22);});b.position.set(-3+k*2,1.25,-.5);b.rotation.y=0;
+const ek=new T.Group();const gd=new T.Mesh(new T.SphereGeometry(.16,10,8),lam(0xc8924a));ek.add(gd);const nk=new T.Mesh(new T.CylinderGeometry(.025,.025,.95,6),lam(0x8a6f50));nk.position.y=.5;ek.add(nk);ek.position.set(.3,1.15,.25);ek.rotation.z=-.35;b.add(ek);g.add(b);FB.push({p:b,ph:k});}}
+/* strings of lights between poles around the fair */
+{const poles=[];for(let k=0;k<12;k++){const a=k/12*6.283,lx=Math.cos(a)*30,lz=Math.sin(a)*30,w=KW(FC[0]+lx,FC[1]+lz);poles.push([lx,hgt(w[0],w[1])+6,lz]);mk(FG,.12,6,.12,0x444444,lx,hgt(w[0],w[1])+3,lz);}
+const bm=[0xffd54f,0xff5252,0x69f0ae,0x40c4ff].map(c=>new T.MeshBasicMaterial({color:c})),bg=new T.SphereGeometry(.12,6,5);
+for(let k=0;k<12;k++){const a=poles[k],b=poles[(k+1)%12];for(let t=0;t<=1;t+=1/12){const m=new T.Mesh(bg,bm[(Math.round(t*12)+k)%4]);m.position.set(a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t-1.2*4*t*(1-t),a[2]+(b[2]-a[2])*t);FG.add(m);}}
+for(let k=0;k<6;k++){const a=poles[k],b=poles[k+6];for(let t=.1;t<.95;t+=1/16){const m=new T.Mesh(bg,bm[(Math.round(t*16)+k)%4]);m.position.set(a[0]+(b[0]-a[0])*t,a[1]-.3-2.2*4*t*(1-t),a[2]+(b[2]-a[2])*t);FG.add(m);}}}
+/* crowd */
+for(let k=0;k<46;k++){const lx=(Math.random()-.5)*56,lz=(Math.random()-.5)*56,w=KW(FC[0]+lx,FC[1]+lz);if(!ok(w[0],w[1]))continue;const p=person();if(k%5===0)p.traverse(o=>{if(o.isMesh&&o.geometry===PG.body)o.material=lam(0xf2f0ea);});p.position.set(lx,hgt(w[0],w[1])+.05,lz);p.rotation.y=Math.random()*6;FG.add(p);FB.push({p,ph:k,walk:k%3===0,a:Math.random()*6,r:6+Math.random()*24,c:[lx,lz]});}}
+}
 cullGroup(_f0);
 ST.forEach(st=>{const pg=new T.Group();st.g.children.filter(c=>c.userData&&c.userData.legs).forEach(c=>{st.g.remove(c);pg.add(c);});st.g.add(pg);st.pg=pg;});
 /* Kushtia pedestrians strolling on the footpaths */
@@ -1138,8 +1163,9 @@ addEventListener('pointerdown',e=>{if(e.target&&e.target.closest&&!e.target.clos
 addEventListener('resize',()=>{R.setSize(innerWidth,innerHeight);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();});
 ST.forEach(st=>{const i=document.createElement('i');i.className='sd';i.style.left=st.s/L*100+'%';i.title=bnn(st.name);$('rl').appendChild(i);});
 /* choose the starting station */
-function startAt(k){nextI=k;S=ST[k].s-260;v=0;thr=0;brk=0;eb=false;dir=1;boarded=false;board=0;if(doors)toggleDoors();ST.forEach(t=>resetStation(t));ini=0;reg=-1;started=true;$('start').style.display='none';audio();setMode(1);
-msg('স্বাগতম! যাত্রা শুরু '+bnn(ST[k].name)+' থেকে। W দিয়ে থ্রটল বাড়ান, সামনে প্ল্যাটফর্মে থামুন',5200);}
+function startAt(k){EID=$('eidc').checked;FAIR=$('fairc').checked;nextI=k;S=ST[k].s-260;v=0;thr=0;brk=0;eb=false;dir=1;boarded=false;board=0;if(doors)toggleDoors();ST.forEach(t=>resetStation(t));ini=0;reg=-1;started=true;$('start').style.display='none';audio();setMode(1);
+msg('স্বাগতম! যাত্রা শুরু '+bnn(ST[k].name)+' থেকে।'+(EID?' আজ ঈদের যাত্রা, স্টেশনে প্রচণ্ড ভিড়!':'')+(FAIR?' কুষ্টিয়ায় চলছে লালন মেলা।':'')+' W দিয়ে থ্রটল বাড়ান',6000);}
+$('eidc').checked=Math.random()<.3;$('fairc').checked=Math.random()<.4;
 ST.forEach((t,k)=>{const b=document.createElement('button');b.innerHTML=bnn(t.name)+(DN[t.name]?'<small>'+DN[t.name]+'</small>':'');b.onclick=()=>{audio();startAt(k);};$('pk').appendChild(b);});
 $('go').onclick=()=>{audio();$('go').style.display='none';$('pick').style.display='block';document.querySelector('.keys').style.display='none';document.querySelector('.card p').style.display='none';};
 $('back').onclick=()=>{$('go').style.display='';$('pick').style.display='none';document.querySelector('.keys').style.display='';document.querySelector('.card p').style.display='';};
@@ -1150,12 +1176,13 @@ const A=[],nOut=3+((rnd()*5)|0);st.out.forEach((p,i)=>{if(i>=nOut)return;const d
 st.ppl.forEach((p,i)=>{if(!p.visible)return;let d=D[0],bd=1e9;D.forEach(q=>{const e=Math.abs(q.z-p.position.z);if(e<bd){bd=e;d=q;}});A.push({p,w:[{x:3.5,z:d.z+(rnd()-.5)*.6},{x:d.x+.15,z:d.z}],t:-1.1-i*.12,b:1});});
 st.flow={A,prog:0,done:false,nb:A.filter(a=>a.b).length};st.D=D;}
 function flowTick(st,dt,act){const F=st.flow;let fin=0,bd=0;F.A.forEach(a=>{if(a.end){fin++;if(a.b)bd++;return;}const p=a.p;if(!act){walkPose(p,dt,false);return;}a.t+=dt;if(a.t<0){walkPose(p,dt,false);return;}
-const w=a.w[0],dx=w.x-p.position.x,dz=w.z-p.position.z,d=Math.hypot(dx,dz),stp=(a.b?2.6:1.9)*dt;
+const w=a.w[0],dx=w.x-p.position.x,dz=w.z-p.position.z,d=Math.hypot(dx,dz),stp=(a.b?(EID?1.5:2.6):1.9)*dt;
 if(d<=stp){p.position.x=w.x;p.position.z=w.z;a.w.shift();if(!a.w.length){a.end=1;p.visible=false;}}else{p.position.x+=dx/d*stp;p.position.z+=dz/d*stp;p.rotation.y=Math.atan2(dx,dz);}walkPose(p,dt,!a.end);});
 F.prog=F.nb?bd/F.nb:1;F.done=bd===F.nb&&F.A.every(a=>a.end||a.w.length<2);}
 const WALK=[];
+let EID=false,FAIR=false;
 function resetStation(st){const keep=new Set();if(st.flow)st.flow.A.forEach(a=>{if(!a.end&&!a.b&&a.t>=0){WALK.push(a);keep.add(a.p);}});st.flow=null;
-st.ppl.forEach(p=>{p.visible=true;p.position.set(4+rnd()*3.2,.9,-28+rnd()*56);p.rotation.y=rnd()*6;walkPose(p,0,false);});st.out.forEach(p=>{if(!keep.has(p))p.visible=false;});}
+st.ppl.forEach(p=>{p.visible=!p.userData.eid||EID;p.position.set(4+rnd()*3.2,.9,-28+rnd()*56);p.rotation.y=rnd()*6;walkPose(p,0,false);});st.out.forEach(p=>{if(!keep.has(p))p.visible=false;});}
 function walkTick(dt){for(let i=WALK.length-1;i>=0;i--){const a=WALK[i],p=a.p,w=a.w[0],dx=w.x-p.position.x,dz=w.z-p.position.z,d=Math.hypot(dx,dz),stp=1.9*dt;
 if(d<=stp){a.w.shift();if(!a.w.length){p.visible=false;WALK.splice(i,1);continue;}}else{p.position.x+=dx/d*stp;p.position.z+=dz/d*stp;p.rotation.y=Math.atan2(dx,dz);}walkPose(p,dt,true);}}
 const sTA=SP[TA].s,sTB=SP[TB].s;let tcam=null,pcam=null;const PCA=new T.Vector3(),PCB=new T.Vector3();
@@ -1256,6 +1283,11 @@ let ds=((s-S)%L+L)%L;if(ds>L/2)ds-=L;if(v>1&&dir>0&&Math.abs(c.lat)<2.3&&ds>-3&&
 WRECK.push({o:c.o,vel,spin:new T.Vector3((Math.random()-.5)*5,(Math.random()-.5)*6,(Math.random()-.5)*5),t:0,landed:0,b:0,animal:1,col:0,L:2});score=Math.max(0,score-150);eb=true;thr=0;msg('দুর্ঘটনা! '+(c.goat?'ছাগলের':'গরুর')+' সাথে ধাক্কা: -১৫০',4000);playS('crash2',.9,.8);}});
 if(d<-140||COW.t>120){COW.list.forEach(c=>{if(!c.hit)scene.remove(c.o);});COW=null;cowT=80+Math.random()*100;}}
 
+/* Eid journey: people ride on the coach roofs */
+const ROOF=[];for(let c=1;c<cars.length;c++)for(let k=0;k<7;k++){const p=person();p.scale.setScalar(.95);p.position.set((k%2?.55:-.55)+(Math.random()-.5)*.3,4.35,-6+k*2+(Math.random()-.5));p.rotation.y=Math.random()<.5?Math.PI/2:-Math.PI/2;
+p.userData.legs.forEach(l=>l.rotation.x=-1.4);p.position.y=4.55;p.visible=false;cars[c].add(p);ROOF.push(p);}
+function festTick(dt){if(window.__fair){window.__fair.visible=FAIR;if(FAIR&&window.__fair.parent.visible)window.__fairB.forEach(b=>{if(b.walk){b.a+=dt*.06;b.p.position.x=b.c[0]+Math.cos(b.a)*b.r*.2;b.p.position.z=b.c[1]+Math.sin(b.a)*b.r*.2;b.p.rotation.y=b.a+Math.PI/2;walkPose(b.p,dt*.5,true);}else{b.p.rotation.z=Math.sin(time*2+b.ph)*.08;}});}
+ROOF.forEach((p,i)=>{p.visible=EID;if(EID){p.rotation.z=Math.sin(time*3+i)*.04*Math.min(1,v/10);const a=p.userData.arms;if(i%5===0)a[0].rotation.x=-2.6+Math.sin(time*4+i)*.3;}});}
 const lv=new T.Vector3();let last=performance.now();
 function frame(now){requestAnimationFrame(frame);const rdt=Math.min(.05,(now-last)/1000),dt=started?rdt:0;last=now;time+=dt;
 if(K.KeyW||K.ArrowUp)thr=Math.min(1,thr+dt*.45);if(K.KeyS||K.ArrowDown)thr=Math.max(0,thr-dt*.6);if(K.KeyX)thr=0;
@@ -1319,7 +1351,7 @@ BTNS.light.classList.toggle('on',hl);BTNS.doors.classList.toggle('on',doors);BTN
 $('sc').textContent=bnum(Math.round(score));$('dn').textContent=bnum(done);$('nx').textContent=hudN+' \u00b7 '+hudD+(nsg&&nsd<1600&&dir>0?'  \u00b7  সিগন্যাল '+['সবুজ','হলুদ','লাল'][nsg.asp]+' '+bnum(Math.round(nsd))+' মি':'');$('rm').style.left=ssv/L*100+'%';
 if((frameN&1)===0)drawMap(st);frameN++;
 ST.forEach(t=>{t.g.visible=t.g.position.distanceTo(cam.position)<fogFar+180;});{const lim=fogFar+150;for(let i=0;i<DCULL.length;i++){const d=DCULL[i],dd=d.sp.center.distanceTo(cam.position)-d.sp.radius;d.o.visible=dd<(d.near?Math.min(d.near,lim):lim);}
-ST.forEach(t=>{if(t.pg)t.pg.visible=t.g.visible&&t.g.position.distanceTo(cam.position)<(t===ST[nextI%ST.length]?650:380);});}kWalkTick(rdt);farmTick(rdt);lcTick(rdt);perfTick(rdt);vehiclesTick(rdt);wreckTick(dt);otTick(dt);cowTick(dt);KT.fs.visible=cam.position.y>1;envTick(rdt,now/1000);if(dk>.3||ktIn())rainM.visible=false;else if(rainM.visible)shelterTick();wipersTick(rdt);cullChunks();R.render(scene,cam);}
+ST.forEach(t=>{if(t.pg)t.pg.visible=t.g.visible&&t.g.position.distanceTo(cam.position)<(t===ST[nextI%ST.length]?650:380);});}kWalkTick(rdt);farmTick(rdt);lcTick(rdt);perfTick(rdt);vehiclesTick(rdt);wreckTick(dt);otTick(dt);cowTick(dt);festTick(rdt);KT.fs.visible=cam.position.y>1;envTick(rdt,now/1000);if(dk>.3||ktIn())rainM.visible=false;else if(rainM.visible)shelterTick();wipersTick(rdt);cullChunks();R.render(scene,cam);}
 $('mm').onclick=toggleBig;$('bigmap').onclick=toggleBig;setTime(false);setMode(1);$('go').style.display='';$('ld').style.display='none';requestAnimationFrame(frame);
 
 }
