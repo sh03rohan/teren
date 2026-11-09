@@ -216,10 +216,10 @@ for(let i=0;i<CLN;i++){const a=rnd()*6.28,r=300+rnd()*7500,cx=Math.cos(a)*r,cz=M
 for(let k=0;k<5;k++){const ox=(k-2)*70*s+(rnd()-.5)*30,oz=(rnd()-.5)*60*s,sz=(k===2?120:70+rnd()*50)*s;add(cl,cx+ox*Math.cos(ry)+oz*Math.sin(ry),cy+(k===2?18:0)*s,cz-ox*Math.sin(ry)+oz*Math.cos(ry),rnd()*3,sz,sz*.42,sz*.8);}}
 /* rain streaks that wrap around the camera, and a lightning bolt */
 const RN=7000,rpos=new Float32Array(RN*6),re=new Float32Array(RN*2);for(let i=0;i<RN;i++){const x=(rnd()-.5)*140,y=rnd()*60,z=(rnd()-.5)*140;rpos.set([x,y,z,x,y,z],i*6);re[i*2+1]=1;}
-const rainU={t:{value:0},cp:{value:new T.Vector3()},op:{value:0},wd:{value:new T.Vector2(.12,.04)}};
+const rainU={t:{value:0},cp:{value:new T.Vector3()},op:{value:0},wd:{value:new T.Vector2(.12,.04)},bA:{value:[...Array(24)].map(()=>new T.Vector4())},bB:{value:[...Array(24)].map(()=>new T.Vector4(0,0,1,0))},bN:{value:0}};
 const rainM=new T.LineSegments(new T.BufferGeometry().setAttribute('position',new T.BufferAttribute(rpos,3)).setAttribute('e',new T.BufferAttribute(re,1)),new T.ShaderMaterial({uniforms:rainU,transparent:true,depthWrite:false,fog:false,
-vertexShader:'attribute float e;uniform float t;uniform vec3 cp;uniform vec2 wd;void main(){vec3 p=position;p.y=mod(p.y-t*24.,60.);p.xz+=wd*p.y;p.x=mod(p.x-cp.x+70.,140.)-70.+cp.x;p.z=mod(p.z-cp.z+70.,140.)-70.+cp.z;p.y+=cp.y-24.;p+=e*vec3(wd.x*2.2,2.2,wd.y*2.2);gl_Position=projectionMatrix*viewMatrix*vec4(p,1.);}',
-fragmentShader:'uniform float op;void main(){gl_FragColor=vec4(.85,.88,.95,.75*op);}'}));rainM.frustumCulled=false;rainM.visible=false;scene.add(rainM);
+vertexShader:'attribute float e;uniform float t;uniform vec3 cp;uniform vec2 wd;uniform vec4 bA[24];uniform vec4 bB[24];uniform int bN;varying float sh;void main(){vec3 p=position;p.y=mod(p.y-t*24.,60.);p.xz+=wd*p.y;p.x=mod(p.x-cp.x+70.,140.)-70.+cp.x;p.z=mod(p.z-cp.z+70.,140.)-70.+cp.z;p.y+=cp.y-24.;vec3 q=p;p+=e*vec3(wd.x*2.2,2.2,wd.y*2.2);sh=0.;for(int i=0;i<24;i++){if(i>=bN)break;vec2 d=q.xz-bA[i].xy;float lx=d.x*bA[i].z-d.y*bA[i].w,lz=d.x*bA[i].w+d.y*bA[i].z;if(abs(lx)<bB[i].x&&abs(lz)<bB[i].y&&q.y>bB[i].z&&q.y<bB[i].w)sh=1.;}gl_Position=projectionMatrix*viewMatrix*vec4(p,1.);}',
+fragmentShader:'uniform float op;varying float sh;void main(){if(sh>.01)discard;gl_FragColor=vec4(.85,.88,.95,.75*op);}'}));rainM.frustumCulled=false;rainM.visible=false;scene.add(rainM);
 const bolt=new T.Line(new T.BufferGeometry().setAttribute('position',new T.BufferAttribute(new Float32Array(18*3),3)),new T.LineBasicMaterial({color:0xf2f5ff,fog:false}));bolt.frustumCulled=false;bolt.visible=false;scene.add(bolt);
 /* environment: smooth day/night and weather blending */
 const lights=[];let night=false,flash=0,envHemi=.95,envSun=1.1,WXI=0,wxAuto=true,wxT=70;
@@ -1031,7 +1031,7 @@ const cab=mode===0?1.15:1,re=LP.engine?0:1;EN.g.gain.setTargetAtTime((.05+.1*not
 EN.tb.frequency.setTargetAtTime(1500+1900*notch,t,1.2);EN.tg.gain.setTargetAtTime(0,t,.8);
 EN.rg.gain.setTargetAtTime(.1*sp*inT,t,.3);if(LP.rail){LP.rail.g.gain.setTargetAtTime(v<.3?0:Math.min(.85,.12+.75*Math.pow(sp,.7))*inT,t,.25);LP.rail.s.playbackRate.setTargetAtTime(SB.rail_file?.7+.4*sp:.55+.75*sp,t,.3);}EN.rf.frequency.setTargetAtTime(110+90*sp,t,.4);
 EN.sg.gain.setTargetAtTime(brk>.35&&v>1&&v<14?.02*brk:0,t,.12);EN.sq.frequency.setTargetAtTime(2200+200*Math.sin(t*7),t,.05);
-if(rnG){const ins=dk>.5?.15:1;if(LP.rain){LP.rain.g.gain.setTargetAtTime(Math.min(1,.15+.85*ENV.rain)*(ENV.rain>.03?1:0)*ins*(mode===0?.75:1),t,.6);LP.rain.s.playbackRate.setTargetAtTime(.9+.15*ENV.rain,t,1);rnG.gain.setTargetAtTime(0,t,.3);}else rnG.gain.setTargetAtTime(.3*ENV.rain*ins,t,.4);wdG.gain.setTargetAtTime(.04*ENV.wind*ENV.wind*ins,t,.6);}
+if(rnG){const ins=dk>.5||ktIn()?.15:1;if(LP.rain){LP.rain.g.gain.setTargetAtTime(Math.min(1,.15+.85*ENV.rain)*(ENV.rain>.03?1:0)*ins*(mode===0?.75:1),t,.6);LP.rain.s.playbackRate.setTargetAtTime(.9+.15*ENV.rain,t,1);rnG.gain.setTargetAtTime(0,t,.3);}else rnG.gain.setTargetAtTime(.3*ENV.rain*ins,t,.4);wdG.gain.setTargetAtTime(.04*ENV.wind*ENV.wind*ins,t,.6);}
 trafficAudio(t);}
 /* one axle crossing one rail joint: heavy "dhak" thump plus a short metallic ring */
 function axleHit(g,pan){if(!AC||muted||g<.015)return;const t=AC.currentTime,p=AC.createStereoPanner?AC.createStereoPanner():null,out=p||master;if(p){p.pan.value=Math.max(-1,Math.min(1,pan));p.connect(master);}
@@ -1131,6 +1131,15 @@ if(fl&&started&&cam.position.distanceTo(c.g.position)<380){c.bell-=dt;if(c.bell<
 if(dir>=0&&started){if(ah>380&&ah<430&&!c.warn){c.warn=true;msg('সামনে লেভেল ক্রসিং: হর্ন দিন (H)',2600);}if(ah>30&&ah<380&&hornHeld&&!c.hb){c.hb=true;score+=10;msg('লেভেল ক্রসিংয়ে হর্ন দিয়েছেন +১০',1800);}if(ah<-120){c.hb=false;c.warn=false;}}});}
 /* adaptive resolution: drop the render scale when frames are slow, raise it again when there is headroom */
 let pfT=0,pfN=0,pfS=0;function perfTick(dt){pfT+=dt;pfN++;pfS+=dt;if(pfT<2)return;const avg=pfS/pfN;pfT=pfN=pfS=0;let nd=DPR;if(avg>1/28)nd=Math.max(DPRMIN,DPR-.15);else if(avg<1/50)nd=Math.min(DPRMAX,DPR+.15);if(Math.abs(nd-DPR)>.01){DPR=nd;R.setPixelRatio(DPR);R.setSize(innerWidth,innerHeight);}}
+/* rain shelters: oriented boxes (centre x,z, yaw, half width, half length, bottom, top) where drops are not drawn */
+const SHL=[],_sv=new T.Vector3();const shBox=(x,z,yaw,hx,hz,y0,y1)=>({x,z,c:Math.cos(yaw),s:Math.sin(yaw),hx,hz,y0,y1});
+ST.forEach(st=>{const g=st.g,q_=SP[Math.max(0,st.i-2)],yaw=Math.atan2(q_.tx,q_.tz),L_=(lx,lz)=>[g.position.x+Math.cos(yaw)*lx+Math.sin(yaw)*lz,g.position.z-Math.sin(yaw)*lx+Math.cos(yaw)*lz],y=g.position.y;
+if(st.name==='Dhaka'){const c=L_(24,0);SHL.push(shBox(c[0],c[1],yaw,22,37,y-2,y+11.6));}else{const c=L_(5.6,0);SHL.push(shBox(c[0],c[1],yaw,3.1,28.5,y-2,y+5.1));}});
+BG.filter(b=>b.id===2).forEach(b=>{for(let k=b.s;k<b.e;k+=10){const a=SP[k],e=SP[Math.min(b.e,k+10)],yaw=Math.atan2(e.x-a.x,e.z-a.z),L_=Math.hypot(e.x-a.x,e.z-a.z);SHL.push(shBox((a.x+e.x)/2,(a.z+e.z)/2,yaw,6.3,L_/2+1.5,Math.min(a.y,e.y)-2,Math.max(a.y,e.y)+11.8));}});
+function ktIn(){if(!KT.R)return false;const ex=cam.position.x-KT.C[0],ez=cam.position.z-KT.C[1],u=ex*KT.n[0]+ez*KT.n[1],w=Math.abs(ex*KT.n[1]-ez*KT.n[0]);return w<13&&u>KT.PA+2&&u<KT.PB-2&&cam.position.y<kty(u)+7.5;}
+function shelterTick(){const cp=cam.position,L_=[];cars.forEach((c,i)=>{c.getWorldDirection(_sv);const yaw=Math.atan2(_sv.x,_sv.z);L_.push([0,shBox(c.position.x+_sv.x*(i?0:.1),c.position.z+_sv.z*(i?0:.1),yaw,1.75,i?7.7:5.4,c.position.y+.8,c.position.y+(i?5.1:4.9))]);});
+for(const b of SHL){const d=Math.hypot(b.x-cp.x,b.z-cp.z)-Math.max(b.hx,b.hz);if(d<120)L_.push([d,b]);}L_.sort((a,b)=>a[0]-b[0]);const n=Math.min(24,L_.length);
+for(let i=0;i<n;i++){const b=L_[i][1];rainU.bA.value[i].set(b.x,b.z,b.c,b.s);rainU.bB.value[i].set(b.hx,b.hz,b.y0,b.y1);}rainU.bN.value=n;}
 const lv=new T.Vector3();let last=performance.now();
 function frame(now){requestAnimationFrame(frame);const rdt=Math.min(.05,(now-last)/1000),dt=started?rdt:0;last=now;time+=dt;
 if(K.KeyW||K.ArrowUp)thr=Math.min(1,thr+dt*.45);if(K.KeyS||K.ArrowDown)thr=Math.max(0,thr-dt*.6);if(K.KeyX)thr=0;
@@ -1192,7 +1201,7 @@ BTNS.light.classList.toggle('on',hl);BTNS.doors.classList.toggle('on',doors);BTN
 $('sc').textContent=bnum(Math.round(score));$('dn').textContent=bnum(done);$('nx').textContent=hudN+' \u00b7 '+hudD;$('rm').style.left=ssv/L*100+'%';
 if((frameN&1)===0)drawMap(st);frameN++;
 ST.forEach(t=>{t.g.visible=t.g.position.distanceTo(cam.position)<fogFar+180;});{const lim=fogFar+150;for(let i=0;i<DCULL.length;i++){const d=DCULL[i],dd=d.sp.center.distanceTo(cam.position)-d.sp.radius;d.o.visible=dd<(d.near?Math.min(d.near,lim):lim);}
-ST.forEach(t=>{if(t.pg)t.pg.visible=t.g.visible&&t.g.position.distanceTo(cam.position)<(t===ST[nextI%ST.length]?650:380);});}kWalkTick(rdt);farmTick(rdt);lcTick(rdt);perfTick(rdt);vehiclesTick(rdt);KT.fs.visible=cam.position.y>1;envTick(rdt,now/1000);if(dk>.3)rainM.visible=false;wipersTick(rdt);cullChunks();R.render(scene,cam);}
+ST.forEach(t=>{if(t.pg)t.pg.visible=t.g.visible&&t.g.position.distanceTo(cam.position)<(t===ST[nextI%ST.length]?650:380);});}kWalkTick(rdt);farmTick(rdt);lcTick(rdt);perfTick(rdt);vehiclesTick(rdt);KT.fs.visible=cam.position.y>1;envTick(rdt,now/1000);if(dk>.3||ktIn())rainM.visible=false;else if(rainM.visible)shelterTick();wipersTick(rdt);cullChunks();R.render(scene,cam);}
 $('mm').onclick=toggleBig;$('bigmap').onclick=toggleBig;setTime(false);setMode(1);$('go').style.display='';$('ld').style.display='none';requestAnimationFrame(frame);
 
 }
