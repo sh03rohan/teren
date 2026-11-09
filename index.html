@@ -1016,13 +1016,13 @@ wdF=flt('lowpass',380);wdG=gn(0);src(noiseB,wdF);wdF.connect(wdG);wdG.connect(ma
 /* road traffic: tyre/engine rumble bed and CNG two-stroke putter */
 TR.rf=flt('lowpass',260,.7);TR.rg=gn(0);src(noiseB,TR.rf);TR.rf.connect(TR.rg);TR.rg.connect(master);
 /* recorded samples (embedded); real recordings in sounds/*.mp3 on the server replace them if present */
-SB={};const SBP={},load=(k,u,pr)=>fetch(u).then(r=>{if(!r.ok)throw 0;return r.arrayBuffer();}).then(b=>new Promise((ok,no)=>AC.decodeAudioData(b,ok,no))).then(buf=>{if((SBP[k]||0)>pr)return;SBP[k]=pr;SB[k]=buf;SB[k+'_file']=pr>1;if(k==='rail'||k==='engine'||k==='traffic'||k==='birds')startLoop(k);});
-Object.keys(SNDDATA).forEach(k=>load(k,SNDDATA[k],1).catch(()=>{}));['engine','rail','horn','traffic','birds'].forEach(k=>load(k,'sounds/'+k+'.mp3',2).catch(()=>{}));
+SB={};const SBP={},load=(k,u,pr)=>fetch(u).then(r=>{if(!r.ok)throw 0;return r.arrayBuffer();}).then(b=>new Promise((ok,no)=>AC.decodeAudioData(b,ok,no))).then(buf=>{if((SBP[k]||0)>pr)return;SBP[k]=pr;SB[k]=buf;SB[k+'_file']=pr>1;if(k==='rail'||k==='engine'||k==='traffic'||k==='birds'||k==='rain')startLoop(k);});
+Object.keys(SNDDATA).forEach(k=>load(k,SNDDATA[k],1).catch(()=>{}));['engine','rail','horn','traffic','birds','rain','thunder1','thunder2','thunder3'].forEach(k=>load(k,'sounds/'+k+'.mp3',2).catch(()=>{}));
 TR.co=AC.createOscillator();TR.co.type='square';TR.co.frequency.value=26;TR.cf=flt('lowpass',520,1.4);TR.cg=gn(0);TR.co.connect(TR.cf);TR.cf.connect(TR.cg);TR.cg.connect(master);TR.co.start();
 }catch(e){AC=null;}}
 function startLoop(k){if(!AC||!SB[k])return;if(LP[k])try{LP[k].s.stop();}catch(e){}const s=AC.createBufferSource(),g=AC.createGain();s.buffer=SB[k];s.loop=true;g.gain.value=0;s.connect(g);g.connect(master);s.start(0,Math.random()*SB[k].duration*.9);LP[k]={s,g};}
 function playS(k,g,rate,pan,when){if(!AC||muted||!SB[k])return null;const s=AC.createBufferSource(),e=AC.createGain();s.buffer=SB[k];s.playbackRate.value=rate||1;e.gain.value=g;let out=master;if(pan!==undefined&&AC.createStereoPanner){const p=AC.createStereoPanner();p.pan.value=Math.max(-1,Math.min(1,pan));p.connect(master);out=p;}s.connect(e);e.connect(out);s.start(AC.currentTime+(when||0));return{s,e};}
-function thunder(delay,dist){if(!AC||muted||!noiseB)return;const t=AC.currentTime+delay,s=AC.createBufferSource();s.buffer=noiseB;const f=AC.createBiquadFilter();f.type='lowpass';f.frequency.value=dist<1000?260:150;const e=AC.createGain(),a=Math.max(.35,1.4-dist/1500);
+function thunder(delay,dist){if(!AC||muted||!noiseB)return;{const ks=['thunder1','thunder2','thunder3'].filter(k=>SB[k]);if(ks.length){const k=dist<900?ks[(Math.random()*Math.min(2,ks.length))|0]:ks[ks.length-1],g=Math.max(.35,1.3-dist/1600)*(dk>.5?.35:1);playS(k,g,.92+Math.random()*.14,(Math.random()-.5)*.8,delay);return;}}const t=AC.currentTime+delay,s=AC.createBufferSource();s.buffer=noiseB;const f=AC.createBiquadFilter();f.type='lowpass';f.frequency.value=dist<1000?260:150;const e=AC.createGain(),a=Math.max(.35,1.4-dist/1500);
 e.gain.setValueAtTime(0,t);e.gain.linearRampToValueAtTime(a,t+.08);e.gain.setTargetAtTime(a*.5,t+.3,.25);e.gain.setTargetAtTime(0,t+.9,.9);s.connect(f);f.connect(e);e.connect(master);s.start(t,Math.random());s.stop(t+5);}
 function audioTick(){if(!AC||!EN.g)return;const t=AC.currentTime,sp=Math.min(1,v/30),inT=dk>.5?1.6:1;
 /* engine notch follows the throttle; firing frequency ~ 8 cylinders, 4-stroke: idle ~ 22 Hz, full ~ 62 Hz */
@@ -1031,7 +1031,7 @@ const cab=mode===0?1.15:1,re=LP.engine?0:1;EN.g.gain.setTargetAtTime((.05+.1*not
 EN.tb.frequency.setTargetAtTime(1500+1900*notch,t,1.2);EN.tg.gain.setTargetAtTime(0,t,.8);
 EN.rg.gain.setTargetAtTime(.1*sp*inT,t,.3);if(LP.rail){LP.rail.g.gain.setTargetAtTime(v<.3?0:Math.min(.85,.12+.75*Math.pow(sp,.7))*inT,t,.25);LP.rail.s.playbackRate.setTargetAtTime(SB.rail_file?.7+.4*sp:.55+.75*sp,t,.3);}EN.rf.frequency.setTargetAtTime(110+90*sp,t,.4);
 EN.sg.gain.setTargetAtTime(brk>.35&&v>1&&v<14?.02*brk:0,t,.12);EN.sq.frequency.setTargetAtTime(2200+200*Math.sin(t*7),t,.05);
-if(rnG){const ins=dk>.5?.15:1;rnG.gain.setTargetAtTime(.3*ENV.rain*ins,t,.4);wdG.gain.setTargetAtTime(.04*ENV.wind*ENV.wind*ins,t,.6);}
+if(rnG){const ins=dk>.5?.15:1;if(LP.rain){LP.rain.g.gain.setTargetAtTime(Math.min(1,.15+.85*ENV.rain)*(ENV.rain>.03?1:0)*ins*(mode===0?.75:1),t,.6);LP.rain.s.playbackRate.setTargetAtTime(.9+.15*ENV.rain,t,1);rnG.gain.setTargetAtTime(0,t,.3);}else rnG.gain.setTargetAtTime(.3*ENV.rain*ins,t,.4);wdG.gain.setTargetAtTime(.04*ENV.wind*ENV.wind*ins,t,.6);}
 trafficAudio(t);}
 /* one axle crossing one rail joint: heavy "dhak" thump plus a short metallic ring */
 function axleHit(g,pan){if(!AC||muted||g<.015)return;const t=AC.currentTime,p=AC.createStereoPanner?AC.createStereoPanner():null,out=p||master;if(p){p.pan.value=Math.max(-1,Math.min(1,pan));p.connect(master);}
