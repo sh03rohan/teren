@@ -913,7 +913,12 @@ KWK.forEach(w=>{const R_=w.R,cl=R_.cl;w.s+=w.sp*dt*w.dir;if(w.s>R_.len){w.s=R_.l
 const p=R_.P[a],q=R_.P[b],f=(w.s-cl[a])/Math.max(.01,cl[b]-cl[a]),x=p.x+(q.x-p.x)*f+p.nx*w.off,z=p.z+(q.z-p.z)*f+p.nz*w.off;w.p.visible=true;w.p.position.set(x,p.y+(q.y-p.y)*f+.12,z);w.p.rotation.y=Math.atan2((q.x-p.x)*w.dir,(q.z-p.z)*w.dir);walkPose(w.p,dt,true);});}
 const okS=j=>{const p=SP[j];if(p.br||p.ap||p.vi||p.tn)return false;for(const c of LCI)if(Math.abs(j-c)<14)return false;for(const t of ST)if(Math.abs(j-t.i)<30)return false;return true;};
 const SG=[];for(let k=0;k<16;k++){let i=Math.floor((k+.5)*NS/16),tr=0;while(!okS(i%NS)&&tr++<90)i++;i%=NS;const g=new T.Group();place(g,SP[i].s,-3.6-4.4*W2[i]);scene.add(g);mk(g,.2,5.5,.2,0x333333,0,2.75,0);mk(g,.7,1.7,.4,0x111111,0,5.5,0);
-const r=new T.Mesh(new T.SphereGeometry(.24,10,8),new T.MeshBasicMaterial({color:0x330000})),gr=new T.Mesh(new T.SphereGeometry(.24,10,8),new T.MeshBasicMaterial({color:0x003311}));r.position.set(0,5.95,-.22);gr.position.set(0,5.1,-.22);g.add(r,gr);SG.push({s:SP[i].s,r,g:gr,off:k*13,red:false});}
+const r=new T.Mesh(new T.SphereGeometry(.24,10,8),new T.MeshBasicMaterial({color:0x330000})),gr=new T.Mesh(new T.SphereGeometry(.24,10,8),new T.MeshBasicMaterial({color:0x003311}));r.position.set(0,5.95,-.22);gr.position.set(0,5.1,-.22);g.add(r,gr);const yl=new T.Mesh(new T.SphereGeometry(.24,10,8),new T.MeshBasicMaterial({color:0x332200}));yl.position.set(0,5.52,-.22);g.add(yl);
+/* distant (warning) signal 1 km before: yellow when the main signal ahead is at caution or danger */
+const ds=SP[i].s-1000,di=Math.floor((((ds%L)+L)%L)/L*NS)%NS,dg=new T.Group();place(dg,ds,-3.6-4.4*W2[di]);scene.add(dg);mk(dg,.16,4.2,.16,0x333333,0,2.1,0);mk(dg,.6,1.2,.36,0x111111,0,4.3,0);
+const dp=new T.Mesh(new T.PlaneGeometry(.9,.9),new T.MeshBasicMaterial({color:0xffffff,side:T.DoubleSide}));dp.position.set(0,3.3,-.2);dp.rotation.z=Math.PI/4;dg.add(dp);
+const dy=new T.Mesh(new T.SphereGeometry(.2,10,8),new T.MeshBasicMaterial({color:0x332200})),dgr=new T.Mesh(new T.SphereGeometry(.2,10,8),new T.MeshBasicMaterial({color:0x003311}));dy.position.set(0,4.6,-.2);dgr.position.set(0,4.0,-.2);dg.add(dy,dgr);
+SG.push({s:SP[i].s,r,g:gr,y:yl,dy,dgr,off:k*13,red:false,asp:0});}
 function sgn(s,t){const g=new T.Group();place(g,s,3.4);scene.add(g);mk(g,.12,2.6,.12,0x444444,0,1.3,0);const b=spr(t,1.1,1.1,'#ffffff','#cc0000');b.position.y=3;b.rotation.y=Math.PI;g.add(b);}
 
 const REG=['বাংলাদেশের সমতল','সেতু','চট্টগ্রামের পাহাড়','পাহাড়ি টানেল','পাহাড়ের পাদদেশে ভায়াডাক্ট','সিলেটের চা-বাগান','খুলনা · সুন্দরবনের ধারে','কক্সবাজার উপকূল','রংপুর · উত্তরের সমতল','রাজশাহী · বরেন্দ্র','ঢাকা','কুষ্টিয়া · লালন ও রবীন্দ্রনাথের দেশ'];
@@ -1252,7 +1257,9 @@ const lim=limAt(S),ssv=((S%L)+L)%L,si=Math.floor(ssv/L*NS)%NS,P=SP[si],gr=(SP[(s
 const acc=thr*2*Math.max(0,1-v/50),res=.04+.00045*v*v,bk=(brk+(eb?1.2:0))*(v>0?1:0)*(1-.28*ENV.rain*(1-dk));
 v=Math.max(0,v+(acc-res-bk-5.9*dir*gr)*dt);if(v<.3&&thr<.02)v=0;if(eb&&v===0)eb=false;
 const pS=S;S+=dir*v*dt;
-SG.forEach(g=>{const want=((time+g.off)%36)<12,ah=((g.s-ssv)%L+L)%L;if(!(want&&!g.red&&dir>0&&ah<900))g.red=want;g.r.material.color.setHex(g.red?0xff2a1a:0x330000);g.g.material.color.setHex(g.red?0x003311:0x22ff55);
+let nsg=null,nsd=1e9;SG.forEach(g=>{const ph=(time+g.off)%36,want=ph<12?2:ph<30?0:1,ah=((g.s-ssv)%L+L)%L;if(!(dir>0&&ah<1100&&want>g.asp))g.asp=want;g.red=g.asp===2;
+g.r.material.color.setHex(g.asp===2?0xff2a1a:0x330000);g.y.material.color.setHex(g.asp===1?0xffb300:0x332200);g.g.material.color.setHex(g.asp===0?0x22ff55:0x003311);g.dy.material.color.setHex(g.asp>0?0xffb300:0x332200);g.dgr.material.color.setHex(g.asp===0?0x22ff55:0x003311);if(ah<nsd){nsd=ah;nsg=g;}
+if(dir>0&&g.asp===1&&v*3.6>66&&Math.floor((S-g.s)/L)!==Math.floor((pS-g.s)/L)){score=Math.max(0,score-20);msg('হলুদ সিগন্যালে বেশি গতি: -২০ (হলুদ মানে সামনে লাল, গতি কমান)',3200);}
 if(dir>0&&g.red&&Math.floor((S-g.s)/L)!==Math.floor((pS-g.s)/L)){score=Math.max(0,score-50);msg('লাল সিগন্যাল পার হয়েছেন: -৫০');}});
 over=v>lim+1.4;if(over)score=Math.max(0,score-dt*6);
 const rk=P.reg*100+(P.br||P.ap);if(rk!==reg){reg=rk;const nm=regName(P);$('rg').textContent=nm;if(started)msg(nm,2600);}
@@ -1301,7 +1308,7 @@ $('gv').setAttribute('stroke-dasharray',Math.min(1,sk/140)*AR+' 402');$('gv').se
 $('gl').setAttribute('stroke-dasharray','0 '+(Math.min(1,lk/140)*AR-1.5)+' 3 402');
 $('th').style.height=thr*100+'%';$('bk').style.height=Math.max(brk,eb?1:0)*100+'%';
 BTNS.light.classList.toggle('on',hl);BTNS.doors.classList.toggle('on',doors);BTNS.night.classList.toggle('on',night);BTNS.snd.classList.toggle('on',!muted);$('c1').classList.toggle('on',doors);$('c2').classList.toggle('on',hl);$('c3').classList.toggle('on',dir<0);
-$('sc').textContent=bnum(Math.round(score));$('dn').textContent=bnum(done);$('nx').textContent=hudN+' \u00b7 '+hudD;$('rm').style.left=ssv/L*100+'%';
+$('sc').textContent=bnum(Math.round(score));$('dn').textContent=bnum(done);$('nx').textContent=hudN+' \u00b7 '+hudD+(nsg&&nsd<1600&&dir>0?'  \u00b7  সিগন্যাল '+['সবুজ','হলুদ','লাল'][nsg.asp]+' '+bnum(Math.round(nsd))+' মি':'');$('rm').style.left=ssv/L*100+'%';
 if((frameN&1)===0)drawMap(st);frameN++;
 ST.forEach(t=>{t.g.visible=t.g.position.distanceTo(cam.position)<fogFar+180;});{const lim=fogFar+150;for(let i=0;i<DCULL.length;i++){const d=DCULL[i],dd=d.sp.center.distanceTo(cam.position)-d.sp.radius;d.o.visible=dd<(d.near?Math.min(d.near,lim):lim);}
 ST.forEach(t=>{if(t.pg)t.pg.visible=t.g.visible&&t.g.position.distanceTo(cam.position)<(t===ST[nextI%ST.length]?650:380);});}kWalkTick(rdt);farmTick(rdt);lcTick(rdt);perfTick(rdt);vehiclesTick(rdt);wreckTick(dt);otTick(dt);cowTick(dt);KT.fs.visible=cam.position.y>1;envTick(rdt,now/1000);if(dk>.3||ktIn())rainM.visible=false;else if(rainM.visible)shelterTick();wipersTick(rdt);cullChunks();R.render(scene,cam);}
