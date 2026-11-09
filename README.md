@@ -20,6 +20,8 @@ Running-train sound: `sounds/rail.mp3`, a seamless 64-second loop made from "A T
 
 Road traffic sound: `sounds/traffic.mp3`, a seamless 65-second loop made from "Traffic Sound" by timvenu1 (Pixabay, Pixabay Content License), supplied by the project owner. Its volume follows how many vehicles are near the camera; when it is loaded the synthesized traffic sounds are switched off.
 
+Countryside birds: `sounds/birds.mp3`, a seamless 104-second loop made from "Birds" by soundreality (Pixabay, Pixabay Content License), supplied by the project owner. It plays by day, fades at dusk, in rain, inside tunnels and beside busy roads.
+
 Other recorded sounds come from [OpenSFX](https://github.com/OpenTTD/OpenSFX) (the OpenTTD sound set), edited (trimmed, looped, re-encoded) for this game and embedded in `index.html`:
 - Built-in rail rolling loop (fallback when `sounds/rail.mp3` cannot be loaded, e.g. opening the file directly): cut from "Train passby (tape stop)" by Metzik, edited by Wuzzy (CC BY 3.0)
 - Locomotive horn: "Locomotive 1 Distant horn" by patchen, edited by Janis Lukss (CC BY 3.0)
@@ -32,4 +34,4 @@ The edited versions of these sounds are shared under the same licences. The dies
 
 ### Using your own recordings
 Put MP3 files in a `sounds/` folder next to `index.html` and they replace the built-in ones automatically:
-`sounds/engine.mp3` (seamless diesel engine loop), `sounds/rail.mp3` (seamless running-train loop), `sounds/horn.mp3` (horn), `sounds/traffic.mp3` (road traffic loop).
+`sounds/engine.mp3` (seamless diesel engine loop), `sounds/rail.mp3` (seamless running-train loop), `sounds/horn.mp3` (horn), `sounds/traffic.mp3` (road traffic loop), `sounds/birds.mp3` (countryside ambience loop).
