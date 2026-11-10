@@ -243,14 +243,14 @@ function cullGroup(from){const kids=scene.children.slice(from);kids.forEach(o=>{
 function IM(geo,mat,max){const m=new T.InstancedMesh(geo,mat,max);m.frustumCulled=false;m.userData.n=0;IMS.push(m);scene.add(m);return m;}
 /* chunked instancing: static scenery is split into 1.2 km tiles that are culled against the view and the fog distance */
 const CHS=1200,CHK=[],CMS=[],BOX1=new T.BoxGeometry(1,1,1),o3=new T.Object3D();o3.rotation.order='YXZ';
-function IMC(geo,mat,cap,rad){const m={isC:1,geo,mat,ch:new Map(),n:0,cap:cap||1e9,rad:rad||20};CHK.push(m);return m;}
+function IMC(geo,mat,cap,rad){const m={isC:1,geo,mat,ch:new Map(),n:0,cap:cap||1e9,rad:rad||20,far:0,nc:0};CHK.push(m);return m;}
 function cpush(m,mx,col){if(m.n>=m.cap)return;m.n++;const e=mx.elements,x=e[12],z=e[14],k=Math.floor(x/CHS)*4096+Math.floor(z/CHS);let c=m.ch.get(k);if(!c){c={a:[],c:[],hc:false,b:new T.Box3()};m.ch.set(k,c);}
 for(let i=0;i<16;i++)c.a.push(e[i]);c.c.push(col===undefined?0xffffff:col);if(col!==undefined)c.hc=true;c.b.expandByPoint(o3.position.set(x,e[13],z));}
 function finalizeChunks(){const cc=new T.Color();CHK.forEach(m=>{m.ch.forEach(c=>{const n=c.a.length/16,im=new T.InstancedMesh(m.geo,m.mat,n);im.instanceMatrix.array.set(c.a);
-if(c.hc)for(let i=0;i<n;i++)im.setColorAt(i,cc.setHex(c.c[i]));im.frustumCulled=false;const s=new T.Sphere();c.b.getBoundingSphere(s);s.radius+=m.rad;im.userData.sph=s;scene.add(im);CMS.push(im);});m.ch=null;});}
-const FRU=new T.Frustum(),PMX=new T.Matrix4();let fogFar=2700;
+if(c.hc)for(let i=0;i<n;i++)im.setColorAt(i,cc.setHex(c.c[i]));im.frustumCulled=false;const s=new T.Sphere();c.b.getBoundingSphere(s);s.radius+=m.rad;im.userData.sph=s;im.userData.far=m.far;im.userData.nc=m.nc;scene.add(im);CMS.push(im);});m.ch=null;});}
+const FRU=new T.Frustum(),PMX=new T.Matrix4();let fogFar=2700,QS=1;
 function cullChunks(){cam.updateMatrixWorld();PMX.multiplyMatrices(cam.projectionMatrix,cam.matrixWorldInverse);FRU.setFromProjectionMatrix(PMX);const lim=fogFar+60;
-for(let i=0;i<CMS.length;i++){const m=CMS[i],s=m.userData.sph;m.visible=s.center.distanceTo(cam.position)-s.radius<lim&&FRU.intersectsSphere(s);}}
+for(let i=0;i<CMS.length;i++){const m=CMS[i],s=m.userData.sph,f=m.userData.far,d=s.center.distanceTo(cam.position)-s.radius;m.visible=d<(f?Math.min(lim,f*QS):lim)&&(!m.userData.nc||d>=m.userData.nc*QS)&&FRU.intersectsSphere(s);}}
 /* beam between two world points (used for trusses, towers, ramps) */
 function beam(m,a,b,w,h,col,ry){const dx=b.x-a.x,dy=b.y-a.y,dz=b.z-a.z,hz=Math.hypot(dx,dz),len=Math.hypot(hz,dy);o3.position.set((a.x+b.x)/2,(a.y+b.y)/2,(a.z+b.z)/2);o3.rotation.set(-Math.atan2(dy,hz),hz>1e-3?Math.atan2(dx,dz):(ry||0),0);o3.scale.set(w,h,len+w*.5);o3.updateMatrix();cpush(m,o3.matrix,col);}
 const PW=(i,x,y,v)=>{const p=SP[((i%NS)+NS)%NS];return(v||new T.Vector3()).set(p.x+p.nx*x,p.y+y,p.z+p.nz*x);};
@@ -348,10 +348,10 @@ const fs=new T.Mesh(new T.PlaneGeometry(60000,30000).rotateX(-Math.PI/2),new T.M
 const lampM=new T.MeshBasicMaterial({color:0x8a8a8a}),tnM=new T.MeshBasicMaterial({color:0xfff0c0});
 {const NR=Math.floor(L/2.2),NSL=Math.floor(L/1.6),rl=[0,1].map(()=>IMC(new T.BoxGeometry(.14,.22,2.4),lam(0x9aa0a6))),sl=IMC(new T.BoxGeometry(2.7,.14,.4),lam(0x4a3b2e));
 const put=(m,u,off,dy)=>{o.position.copy(curve.getPointAt(u));o.lookAt(curve.getPointAt((u+.0002)%1));o.scale.set(1,1,1);o.translateX(off);o.position.y+=dy;o.updateMatrix();cpush(m,o.matrix);};
-for(let i=0;i<NR;i++){put(rl[0],i/NR,-.72,.31);put(rl[1],i/NR,.72,.31);}for(let i=0;i<NSL;i++)put(sl,i/NSL,0,.1);
+rl.forEach(m=>m.far=1000);sl.far=480;for(let i=0;i<NR;i++){put(rl[0],i/NR,-.72,.31);put(rl[1],i/NR,.72,.31);}for(let i=0;i<NSL;i++)put(sl,i/NSL,0,.1);
 ribbon(0,NS,2.4,.05,0x6b6760);
 {const rl2=[0,1].map(()=>IMC(new T.BoxGeometry(.14,.22,2.4),lam(0x9aa0a6))),sl2=IMC(new T.BoxGeometry(2.7,.14,.4),lam(0x4a3b2e)),A=new T.Vector3(),B=new T.Vector3();
-const put2=(m,s,off,dy,step)=>{tr2(s,A);tr2(s+step,B);o.position.copy(A);o.lookAt(B);o.scale.set(1,1,1);o.translateX(off);o.position.y+=dy;o.updateMatrix();cpush(m,o.matrix);};
+rl2.forEach(m=>m.far=1000);sl2.far=480;const put2=(m,s,off,dy,step)=>{tr2(s,A);tr2(s+step,B);o.position.copy(A);o.lookAt(B);o.scale.set(1,1,1);o.translateX(off);o.position.y+=dy;o.updateMatrix();cpush(m,o.matrix);};
 for(let s=0;s<L;s+=2.2){if(w2At(s)<.06)continue;put2(rl2[0],s,-.72,.31,.5);put2(rl2[1],s,.72,.31,.5);}for(let s=0;s<L;s+=1.6){if(w2At(s)<.06)continue;put2(sl2,s,0,.1,.5);}
 let run=null;const runs=[];for(let i=0;i<=NS;i++){const k=i%NS;if(W2[k]>.06){if(!run){run=[];runs.push(run);}run.push(k);}else run=null;}
 runs.forEach(R_=>{if(R_.length<2)return;const v=[],ix=[];R_.forEach(k=>{const p=SP[k],c=OFF2*W2[k];v.push(p.x+p.nx*(c-2.4),p.y+.045,p.z+p.nz*(c-2.4),p.x+p.nx*(c+2.4),p.y+.045,p.z+p.nz*(c+2.4));});for(let i=0;i<R_.length-1;i++){const k=2*i;ix.push(k,k+2,k+1,k+1,k+2,k+3);}
@@ -666,7 +666,52 @@ bldM=new T.MeshLambertMaterial({color:0xffffff,map:bldTex(false),emissiveMap:bld
 const HC=[14,22,32,46,64,88],CL=HC.map(h=>{const g=new T.BoxGeometry(12,h,12),uv=g.attributes.uv;for(let i=0;i<uv.count;i++)uv.setXY(i,uv.getX(i),uv.getY(i)*h/14);g.translate(0,h/2,0);return IMC(g,bldM,1e9,60);});
 [['Dhaka',700,95,900],['Chattogram',150,60,300],['Khulna',110,45,260],['Sylhet',110,40,240],['Rajshahi',100,40,240],['Rangpur',90,35,220],['Mymensingh',90,35,220],['Comilla',70,30,200],['Jashore',70,30,200],['Dinajpur',60,28,180],["Cox\u2019s Bazar",80,30,200]].forEach(c=>{const st=ST.find(s=>s.name===c[0]);if(!st)return;const p=SP[st.i];
 for(let k=0;k<c[1];k++){const a=rnd()*6.28,rr=90+Math.pow(rnd(),.7)*c[3],x=p.x+Math.cos(a)*rr,z=p.z+Math.sin(a)*rr,h=hgt(x,z);if(h<1.2||G.d<48||seaD(x,z)>-80||onRoad(x,z,12))continue;const hh=10+Math.pow(rnd(),2)*c[2];let ci=0;HC.forEach((v,i)=>{if(Math.abs(v-hh)<Math.abs(HC[ci]-hh))ci=i;});
-const sx=.8+rnd()*.5,sy=hh/HC[ci];add(CL[ci],x,h-.15,z,Math.round(rnd()*3)*1.5708,sx,sy,sx*(.85+rnd()*.3),[0xffffff,0xf1e6d2,0xe3e8ee,0xf0d9c4,0xd7e0d3,0xe8c9b5][(rnd()*6)|0]);if(hh>30&&rnd()<.6)add(cy,x+(rnd()-.5)*5,h+hh+.3,z+(rnd()-.5)*5,0,1.1,1.4,1.1,0x6d7a86);}});}
+const sx=.8+rnd()*.5,sy=hh/HC[ci];add(CL[ci],x,h-.15,z,Math.round(rnd()*3)*1.5708,sx,sy,sx*(.85+rnd()*.3),[0xffffff,0xf1e6d2,0xe3e8ee,0xf0d9c4,0xd7e0d3,0xe8c9b5][(rnd()*6)|0]);if(hh>30&&rnd()<.6)add(cy,x+(rnd()-.5)*5,h+hh+.3,z+(rnd()-.5)*5,0,1.1,1.4,1.1,0x6d7a86);}});
+/* ===== filling the countryside: village groves (bagan) on the horizon, homesteads (bari) on raised plinths with a pond, haystacks and banana,
+   field ponds and lone shade trees on the field ridges. Separate seed so nothing placed after this moves. Far objects have a draw distance (LOD). ===== */
+{const sd0=seed;seed=4242;const FQ=MOB?.6:1,tc=new T.Color();
+const CZ=[['Dhaka',600],['Chattogram',260],['Khulna',240],['Sylhet',230],['Rajshahi',225],['Rangpur',215],['Mymensingh',215],['Comilla',200],['Jashore',200],['Dinajpur',190],["Cox\u2019s Bazar",200],['Kushtia',420]].map(c=>{const st=ST.find(s=>s.name===c[0]);if(!st)return null;const p=SP[st.i!==undefined?st.i:Math.floor(((st.s%L)+L)%L/L*NS)];return[p.x,p.z,c[1]];}).filter(Boolean);
+const inCity=(x,z)=>CZ.some(c=>(x-c[0])**2+(z-c[1])**2<c[2]*c[2]);
+const ok=(x,z,dT,pad)=>{const h=hgt(x,z);if(h<.7||h>28||G.d<dT||(seaD(x,z)>-35&&pip(x,z))||hillH(x,z)>=30||noGo(x,z)||stZone(x,z,pad)||inCity(x,z)||onRoad(x,z,pad))return null;return h;};
+const flat=(x,z,r,h)=>{for(const q of [[r,0],[-r,0],[0,r],[0,-r]])if(Math.abs(hgt(x+q[0],z+q[1])-h)>.5)return false;return true;};
+const mc=gs=>{gs=gs.map(g=>g.index?g.toNonIndexed():g);let n=0;gs.forEach(g=>n+=g.attributes.position.count);const P=new Float32Array(n*3),N=new Float32Array(n*3),C=new Float32Array(n*3);let o=0;gs.forEach(g=>{P.set(g.attributes.position.array,o*3);N.set(g.attributes.normal.array,o*3);C.set(g.attributes.color.array,o*3);o+=g.attributes.position.count;});
+const r=new T.BufferGeometry();r.setAttribute('position',new T.BufferAttribute(P,3));r.setAttribute('normal',new T.BufferAttribute(N,3));r.setAttribute('color',new T.BufferAttribute(C,3));return r;};
+const col=(g,h)=>{tc.setHex(h);const n=g.attributes.position.count,c=new Float32Array(n*3);for(let i=0;i<n;i++){c[i*3]=tc.r;c[i*3+1]=tc.g;c[i*3+2]=tc.b;}g.setAttribute('color',new T.BufferAttribute(c,3));return g;};
+const R2=()=>rnd(),G_=(h,s,l)=>tc.setHSL(h,s,l).getHex(),ico=(r,sy,x,y,z,c)=>{const g=col(new T.IcosahedronGeometry(r,0).scale(1,sy,1).rotateY(R2()*6).translate(x,y,z),c);g.userData.cr=r;return g;},tr=(r,h,x,z,c,lean)=>{const g=col(new T.CylinderGeometry(r*.7,r,h,4,1,true).translate(0,h/2,0).rotateZ(lean||0).translate(x,0,z),c||0x5d4632);g.userData.tk=1;return g;};
+const VM=new T.MeshLambertMaterial({vertexColors:true}),GV=[];
+/* grove 0: mixed broadleaf (mango, jackfruit, rain tree) */
+for(let v=0;v<3;v++){const gs=[];for(let k=0;k<7;k++){const a=R2()*6.28,rr=Math.sqrt(R2())*9,x=Math.cos(a)*rr,z=Math.sin(a)*rr,hh=4+R2()*5,cr=2.4+R2()*2;if(k<4)gs.push(tr(.3+R2()*.15,hh,x,z));gs.push(ico(cr,.78,x,hh+cr*.45,z,G_(.25+R2()*.07,.42+R2()*.15,.17+R2()*.1)));}GV.push(gs);}
+/* grove 1: betel-nut and coconut palms rising over a low thicket */
+{const gs=[];for(let k=0;k<6;k++){const a=R2()*6.28,rr=Math.sqrt(R2())*8,x=Math.cos(a)*rr,z=Math.sin(a)*rr,hh=9+R2()*6,ln=(R2()-.5)*.12;gs.push(tr(.14,hh,x,z,0x7d6a52,ln));gs.push(ico(1.5+R2()*.6,.45,x-Math.sin(ln)*hh,hh+.2,z,G_(.26,.5,.2+R2()*.06)));}
+for(let k=0;k<3;k++){const a=R2()*6.28,rr=R2()*7;gs.push(ico(2.6+R2()*1.2,.62,Math.cos(a)*rr,2+R2(),Math.sin(a)*rr,G_(.24+R2()*.05,.5,.22+R2()*.08)));}GV.push(gs);}
+/* grove 2: bamboo clump beside a big tree */
+{const gs=[];for(let k=0;k<4;k++){const a=k*1.6,x=Math.cos(a)*2.5,z=Math.sin(a)*2.5;gs.push(ico(2.2+R2()*.6,2.1,x,7+R2()*2,z,G_(.2+R2()*.03,.48,.33+R2()*.06)));}gs.push(tr(.45,6,8,2),ico(4.4,.75,8,8.4,2,G_(.28,.45,.17)));GV.push(gs);}
+const GN=GV.map(gs=>{const m=IMC(mc(gs.map(g=>g.clone())),VM,1e9,14);m.far=650;return m;}),GF=GV.map(gs=>{const cr=[...gs.filter(g=>g.userData.cr).sort((a,b)=>b.userData.cr-a.userData.cr).slice(0,2),...gs.filter(g=>g.userData.tk).slice(0,1)];const m=IMC(mc(cr),VM,1e9,14);m.far=1900;m.nc=650;return m;}),GR=GN.map((m,k)=>k);
+const addG=(k,x,y,z,ry,sx,sy,sz,c)=>{add(GN[k],x,y,z,ry,sx,sy,sz,c);add(GF[k],x,y,z,ry,sx,sy,sz,c);};
+/* homestead parts */
+const plinth=IMC(col(new T.CylinderGeometry(1,1.12,1,14).translate(0,.5,0),0x8f7a52),VM,1e9,12),pond=IMC(new T.CircleGeometry(1,22).rotateX(-Math.PI/2),new T.MeshPhongMaterial({color:0x4d6c73,shininess:80,specular:0x7f97a0,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2}),1e9,8),
+bank=IMC(new T.CircleGeometry(1,22).rotateX(-Math.PI/2),new T.MeshLambertMaterial({color:0x6b6a3a,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1}),1e9,8),
+hay=IMC(mc([col(new T.CylinderGeometry(1,1,1.4,10).translate(0,.7,0),0xc9a447),col(new T.ConeGeometry(1.08,1.3,10).translate(0,2.05,0),0xb8923c),col(new T.CylinderGeometry(.05,.05,1,4).translate(0,3,0),0x5b4630)]),VM,1e9,4),
+banana=IMC(mc([col(new T.CylinderGeometry(.18,.24,2.2,5).translate(0,1.1,0),0x7d8f45),...[0,1,2,3,4].map(k=>col(new T.BoxGeometry(.5,.04,2.4).translate(0,0,1.1).rotateX(-.5).rotateY(k*1.25).translate(0,2.2,0),G_(.23,.6,.33)))]),VM,1e9,4),
+shade=IMC(mc([tr(.55,4,0,0,0x4f3b2a),ico(5,.62,0,6.2,0,G_(.27,.45,.19)),ico(3.6,.7,2.5,7.4,1,G_(.26,.45,.22)),ico(3.4,.7,-2.4,7,-1.4,G_(.28,.45,.17))]),VM,1e9,12);
+pond.far=1700;bank.far=1700;hay.far=800;banana.far=900;shade.far=1400;bx.far=rf.far=cn.far=cy.far=1500;plinth.far=1600;
+let nG=0,nB=0,nP=0,nS=0;const used=[];const clear=(x,z,r)=>{const k=Math.floor(x/60)*100000+Math.floor(z/60);for(const u of used)if((u[0]-x)**2+(u[1]-z)**2<(u[2]+r)**2)return false;return true;};
+/* homesteads: plinth, 2-3 huts facing a yard, pond in front, haystacks, banana and a grove behind */
+for(let t=0;t<14000&&nB<420*FQ;t++){const p=SP[(R2()*NS)|0],sd=R2()<.5?-1:1,of=70+Math.pow(R2(),1.2)*1500,x=p.x+p.nx*of*sd,z=p.z+p.nz*of*sd,h=ok(x,z,60,26);if(h===null||!flat(x,z,30,h)||!clear(x,z,40))continue;
+used.push([x,z,40]);const ry=R2()*6.28,co=Math.cos(ry),si=Math.sin(ry),W_=(lx,lz)=>[x+lx*co+lz*si,z-lx*si+lz*co];add(plinth,x,h-.6,z,0,15,.95,15,0xffffff);
+const nh=2+(R2()<.45?1:0);for(let k=0;k<nh;k++){const a=ry+Math.PI*(.6+k*.55),hx=x+Math.sin(a)*8,hz=z+Math.cos(a)*8;house(hx,h+.3,hz,Math.atan2(x-hx,z-hz),.62+R2()*.12,R2()<.3?2:0);}
+const pp=W_(0,24),pr=7+R2()*5;add(bank,pp[0],h+.07,pp[1],0,pr+2.2,1,pr*.8+2.2);add(pond,pp[0],h+.09,pp[1],0,pr,1,pr*.8);nP++;
+for(let k=0;k<1+((R2()*3)|0);k++){const q=W_(-10+R2()*4+k*3.2,-3+R2()*6);add(hay,q[0],h+.3,q[1],R2()*6,.9+R2()*.4,.9+R2()*.3,.9+R2()*.4,0xffffff);}
+for(let k=0;k<3;k++){const q=W_(12+R2()*4,-4+k*3.5);add(banana,q[0],h+.3,q[1],R2()*6,.8+R2()*.4,.8+R2()*.4,.8+R2()*.4,0xffffff);}
+const gq=W_(0,-20);addG((R2()*GR.length)|0,gq[0],h-.2,gq[1],R2()*6,1.1,1+R2()*.3,1.1,G_(.25,.2,.85+R2()*.15));nB++;}
+/* village groves across the fields, often in lines along field ridges */
+for(let t=0;t<80000&&nG<15000*FQ;t++){const p=SP[(R2()*NS)|0],sd=R2()<.5?-1:1,of=40+Math.pow(R2(),1.7)*1900,x=p.x+p.nx*of*sd,z=p.z+p.nz*of*sd,h=ok(x,z,40,14);if(h===null||!clear(x,z,9))continue;
+const n=R2()<.45?3+((R2()*5)|0):1+((R2()*2)|0),dir=R2()*6.28;for(let k=0;k<n;k++){const gx=x+Math.cos(dir)*k*17,gz=z+Math.sin(dir)*k*17,gh=k?ok(gx,gz,40,14):h;if(gh===null)break;const s=.85+R2()*.45;addG((R2()*GR.length)|0,gx,gh-.2,gz,R2()*6,s,s*(.85+R2()*.35),s,G_(.24+R2()*.04,.25,.8+R2()*.2));nG++;}}
+/* lone shade trees on the field ridges and ponds in the open */
+for(let t=0;t<14000&&nS<2600*FQ;t++){const p=SP[(R2()*NS)|0],sd=R2()<.5?-1:1,of=28+Math.pow(R2(),1.8)*1400,x=p.x+p.nx*of*sd,z=p.z+p.nz*of*sd,h=ok(x,z,24,10);if(h===null||!clear(x,z,6))continue;const s=.75+R2()*.55;add(shade,x,h-.15,z,R2()*6,s,s*(.85+R2()*.3),s,G_(.25,.2,.82+R2()*.18));nS++;}
+for(let t=0,k=0;t<5000&&k<260*FQ;t++){const p=SP[(R2()*NS)|0],sd=R2()<.5?-1:1,of=50+R2()*1400,x=p.x+p.nx*of*sd,z=p.z+p.nz*of*sd,h=ok(x,z,45,16);if(h===null||!flat(x,z,16,h)||!clear(x,z,16))continue;used.push([x,z,16]);const r=6+R2()*8;add(bank,x,h+.07,z,R2()*3,r+2,1,r*.75+2);add(pond,x,h+.09,z,R2()*3,r,1,r*.75);k++;nP++;}
+window.__fill={nG,nB,nP,nS};seed=sd0;}
+}
 
 const wireL=new T.LineSegments(new T.BufferGeometry().setAttribute('position',new T.Float32BufferAttribute(WIRE,3)),new T.LineBasicMaterial({color:0x2a2a2a}));wireL.frustumCulled=false;scene.add(wireL);
 /* ===== Kushtia town: shop-houses along the streets, homes, trees and landmarks ===== */
@@ -1582,7 +1627,7 @@ if(!FLW){FLW=CMS.filter(m=>m.geometry.userData.flower&&m.instanceColor).map(m=>(
 const fc=[new T.Color(0xe8381e),new T.Color(0xf05a1a),new T.Color(0xd92a2a)];FLW.forEach(f=>{const a=f.m.instanceColor.array;a.set(f.orig);if(S_.k>0){for(let i=0;i<a.length/3;i++){const h=Math.sin(i*12.9898+f.m.id*78.233)*43758.5453,r=h-Math.floor(h);if(r<(f.m.geometry.userData.flower===1?.32:.12)*S_.k){const c=fc[i%3];a[i*3]=c.r;a[i*3+1]=c.g;a[i*3+2]=c.b;}}}f.m.instanceColor.needsUpdate=true;});
 if(window.__seaEl)window.__seaEl.textContent=S_.n+'কাল';}
 /* adaptive resolution: drop the render scale when frames are slow, raise it again when there is headroom */
-let pfT=0,pfN=0,pfS=0;function perfTick(dt){pfT+=dt;pfN++;pfS+=dt;if(pfT<2)return;const avg=pfS/pfN;pfT=pfN=pfS=0;let nd=DPR;if(avg>1/28)nd=Math.max(DPRMIN,DPR-.15);else if(avg<1/50)nd=Math.min(DPRMAX,DPR+.15);if(Math.abs(nd-DPR)>.01){DPR=nd;R.setPixelRatio(DPR);R.setSize(innerWidth,innerHeight);}}
+let pfT=0,pfN=0,pfS=0;function perfTick(dt){pfT+=dt;pfN++;pfS+=dt;if(pfT<2)return;const avg=pfS/pfN;pfT=pfN=pfS=0;let nd=DPR;if(avg>1/28){nd=Math.max(DPRMIN,DPR-.15);if(DPR<=DPRMIN+.01)QS=Math.max(.45,QS-.12);}else if(avg<1/45){QS=Math.min(1,QS+.06);if(avg<1/50)nd=Math.min(DPRMAX,DPR+.15);}if(Math.abs(nd-DPR)>.01){DPR=nd;R.setPixelRatio(DPR);R.setSize(innerWidth,innerHeight);}}
 /* rain shelters: oriented boxes (centre x,z, yaw, half width, half length, bottom, top) where drops are not drawn */
 const SHL=[],_sv=new T.Vector3();const shBox=(x,z,yaw,hx,hz,y0,y1)=>({x,z,c:Math.cos(yaw),s:Math.sin(yaw),hx,hz,y0,y1});
 ST.forEach(st=>{const g=st.g,q_=SP[Math.max(0,st.i-2)],yaw=Math.atan2(q_.tx,q_.tz),L_=(lx,lz)=>[g.position.x+Math.cos(yaw)*lx+Math.sin(yaw)*lz,g.position.z-Math.sin(yaw)*lx+Math.cos(yaw)*lz],y=g.position.y;
