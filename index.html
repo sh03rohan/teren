@@ -306,7 +306,7 @@ const n=ENV.n,dw=ENV.dark,fg=ENV.fog;
 C1.setHex(0x2f7fd0).lerp(C3.setHex(0x59636d),dw).lerp(C3.setHex(0x02040c),n).lerp(C3.setHex(n>.5?0x1c2028:0xb9c0c5),fg*.9);C2.setHex(0xcfe6f5).lerp(C3.setHex(0x8f989f),dw).lerp(C3.setHex(0x0b1630),n).lerp(C3.setHex(n>.5?0x252a33:0xc9ced2),fg*.85);
 if(flash>0){flash=Math.max(0,flash-dt*(2.5+rnd()*6));if(flash<.05)bolt.visible=false;}
 skyU.top.value.copy(C1);skyU.hor.value.copy(C2);skyU.glow.value=(1-n)*Math.max(0,1-dw*1.5)*(1-fg*.7);skyU.fl.value=flash*.9;scene.fog.color.copy(C2);
-fogFar=(2700-1100*n)*(1-.88*fg)*(1-.3*ENV.rain);scene.fog.far=fogFar;scene.fog.near=Math.max(15,200*(1-fg*.9)*(1-.5*ENV.rain));
+fogFar=(2700-1100*n)*(1-.88*fg)*(1-.3*ENV.rain)*(1-.55*fk);scene.fog.far=fogFar;scene.fog.near=Math.max(15,200*(1-fg*.9)*(1-.5*ENV.rain)*(1-.6*fk));if(fk>.01)scene.fog.color.lerp(C3.setHex(n>.5?0x0d140e:0x6f8a66),fk*.6);
 envHemi=(.95-.7*n)*(1-.42*dw)*(1-.15*fg)+flash*2.2;envSun=(1.1-n)*(1-.85*dw);
 stU.t.value=t;stU.op.value=n*(1-ENV.cov*.9);stars.visible=stU.op.value>.02;
 sunS.material.opacity=(1-n)*Math.max(0,1-dw*1.6)*(1-fg*.6);sunS.visible=sunS.material.opacity>.01;moonS.material.opacity=n*Math.max(.15,1-ENV.cov*.8);moonS.visible=n>.02;
@@ -862,6 +862,78 @@ RNPL.plumes.forEach(P=>{for(let k=0;k<9;k++){const m=new T.Sprite(new T.SpriteMa
 function rnppTick(dt){if(!RNPL.g)return;{const nt=ENV.n>.35||ENV.fog>.5||ENV.dark>.6,bl=Math.floor(time*1.2)%2===0;RNPL.avM.color.setHex(nt&&bl?0xff2a1a:0x550000);RNPL.av.forEach(sp=>sp.material.opacity=nt&&bl?.95:0);RNPL.winM.emissive.setRGB(.75*ENV.n,.62*ENV.n,.3*ENV.n);if(RNPL.gcM)RNPL.gcM.forEach(m=>m.emissive.setScalar(Math.max(ENV.n,ENV.dark>.6?.35:0)));}const near=RNPL.g.position.distanceTo(cam.position)<fogFar+900;RNPL.plumes.forEach(P=>P.s.forEach(q=>{q.m.visible=near;if(!near)return;q.t+=dt*.06;if(q.t>1)q.t-=1;const t=q.t,w=ENV.wind;
 q.m.position.set(P.x+t*(40+80*w),P.top+t*120,P.z+t*20);const sz=50+t*130;q.m.scale.set(sz,sz*.8,1);q.m.material.opacity=Math.min(1,t*6)*(1-t)*.85;}));}
 
+/* ===== Sundarbans forest along the forest line: tall sundari and gewa trees whose crowns meet over the track, golpata (nipa) palms on the creeks,
+   pneumatophore roots in the mud, undergrowth, hanging creepers; Royal Bengal tigers, spotted deer, rhesus monkeys, crocodiles, egrets and kingfishers ===== */
+const FOR={deer:[],tig:[],mon:[],croc:[],birds:[],seen:{}};
+{const FI=[];SP.forEach((p,i)=>{if(p.fr)FI.push(i);});FOR.FI=FI;
+if(FI.length){let sd=777;const R_=()=>(sd=(sd*16807)%2147483647)/2147483647;
+const W=new T.MeshLambertMaterial({color:0xffffff}),trunk=IMC(new T.CylinderGeometry(.7,1,1,7).translate(0,.5,0),lam(0x5a4634),1e9,30),crown=IMC(new T.IcosahedronGeometry(1,0),W,1e9,30),
+bush=IMC(new T.IcosahedronGeometry(1,0),W,1e9,8),pneu=IMC(new T.ConeGeometry(.06,1,4).translate(0,.5,0),lam(0x6b5a44),1e9,5),vine=IMC(new T.CylinderGeometry(.035,.035,1,4).translate(0,-.5,0),lam(0x3d5a2a),1e9,10),
+moss=IMC(new T.CircleGeometry(1,9).rotateX(-Math.PI/2),lam(0x34442a),1e9,10),
+leafG=(()=>{const v=[];for(let k=0;k<7;k++){const a=k/7*6.283,c=Math.cos(a),s=Math.sin(a),L=1,w=.12;for(let j=0;j<4;j++){const f0=j/4,f1=(j+1)/4,y0=f0*.9-f0*f0*.5,y1=f1*.9-f1*f1*.5;
+const P=(f,y,o)=>[c*f*L-s*o,y,s*f*L+c*o];v.push(...P(f0,y0,-w),...P(f1,y1,-w),...P(f1,y1,w),...P(f0,y0,-w),...P(f1,y1,w),...P(f0,y0,w));}}const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(v,3));g.computeVertexNormals();return g;})(),
+nipa=IMC(leafG,new T.MeshLambertMaterial({color:0xffffff,side:T.DoubleSide}),1e9,8),G_=(h,s,l)=>tcol.setHSL(h,s,l).getHex();
+FI.forEach(i=>{const p=SP[i];
+/* the outer forest: a lighter belt out to ~260 m so the jungle has no edge in view */
+for(let k=0;k<9;k++){const side=R_()<.5?-1:1,o=72+R_()*190,t=(R_()-.5)*12,x=p.x+p.nx*o*side+p.tx*t,z=p.z+p.nz*o*side+p.tz*t,h=hgt(x,z);if(h<.35||stZone(x,z,6)||G.d<60)continue;const H=11+R_()*14,r=.35+R_()*.3,y=h-.2;add(trunk,x,y,z,0,r,H,r);for(let b=0;b<2;b++){const cs=3.2+R_()*2;add(crown,x+(R_()-.5)*2,y+H*.84+b*cs*.5,z+(R_()-.5)*2,R_()*6,cs*1.2,cs*.75,cs*1.2,G_(.27+R_()*.07,.45+R_()*.15,.13+R_()*.1));}}
+for(let k=0;k<30;k++){const side=R_()<.5?-1:1,o=4.4+Math.pow(R_(),1.45)*68,t=(R_()-.5)*12,x=p.x+p.nx*o*side+p.tx*t,z=p.z+p.nz*o*side+p.tz*t,h=hgt(x,z);if(stZone(x,z,4)||G.d<4.2)continue;
+if(h<.35){if(R_()<.6){const s=4+R_()*2.5;add(nipa,x,Math.max(h,.2),z,R_()*6,s,s*1.1,s,G_(.24+R_()*.04,.55,.25+R_()*.08));}continue;}
+const sund=R_()<.62,H=sund?14+R_()*13:8+R_()*5,r=sund?.32+R_()*.3:.28+R_()*.15,y=h-.2;add(trunk,x,y,z,0,r,H,r);
+const nb=sund?3+((R_()*2)|0):2,cs=sund?2.6+R_()*1.8:3+R_()*1.6;for(let b=0;b<nb;b++){const a=R_()*6.28,rr=R_()*cs*.7,cy=y+H*(sund?.82:.75)+R_()*cs*.6;add(crown,x+Math.cos(a)*rr,cy,z+Math.sin(a)*rr,R_()*6,cs*(.9+R_()*.4),cs*.7,cs*(.9+R_()*.4),G_(.27+R_()*.07,.45+R_()*.15,.14+R_()*.1));}
+/* crowns lean over the line and meet: a green roof above the train */
+if(o<10&&H>12){const lx=x-p.nx*side*(o-1.2),lz=z-p.nz*side*(o-1.2),cy=y+H*.9;add(crown,lx,cy,lz,R_()*6,4+R_()*1.5,2.4,4+R_()*1.5,G_(.29+R_()*.05,.5,.16+R_()*.07));
+for(let v=0;v<3;v++){const vx=lx+(R_()-.5)*5,vz=lz+(R_()-.5)*5;hgt(vx,vz);const tlat=G.d,len=Math.min(2+R_()*5,tlat<2.6?Math.max(.5,cy-1.6-(p.y+7.2)):8);add(vine,vx,cy-1.4,vz,0,1,len,1);}}
+for(let q=0;q<3;q++){const a=R_()*6.28,rr=.8+R_()*2.5;add(pneu,x+Math.cos(a)*rr,y,z+Math.sin(a)*rr,0,1,.2+R_()*.35,1);}}
+for(let k=0;k<26;k++){const side=R_()<.5?-1:1,o=3.4+Math.pow(R_(),1.3)*42,t=(R_()-.5)*12,x=p.x+p.nx*o*side+p.tx*t,z=p.z+p.nz*o*side+p.tz*t,h=hgt(x,z);if(h<.3||stZone(x,z,2)||G.d<3.3)continue;const s=.6+R_()*1.1;add(bush,x,h-.1+s*.4,z,R_()*6,s*1.3,s,s*1.3,G_(.26+R_()*.08,.5,.16+R_()*.12));}
+for(let k=0;k<70;k++){const side=R_()<.5?-1:1,o=3.6+R_()*24,t=(R_()-.5)*12,x=p.x+p.nx*o*side+p.tx*t,z=p.z+p.nz*o*side+p.tz*t,h=hgt(x,z);if(h<.3||G.d<3.5)continue;add(pneu,x,h-.15,z,0,1,.18+R_()*.4,1);}
+[-1,1].forEach(side=>{const o=8+R_()*20,x=p.x+p.nx*o*side,z=p.z+p.nz*o*side,h=hgt(x,z);if(h>.3&&!stZone(x,z,0))add(moss,x,h+.04,z,R_()*6,6+R_()*6,1,4+R_()*5);});});
+/* --- animals --- */
+const tex=(f)=>{const c=document.createElement('canvas');c.width=128;c.height=64;const g=c.getContext('2d');f(g);const t=new T.CanvasTexture(c);return new T.MeshLambertMaterial({map:t});};
+const tigM=tex(g=>{g.fillStyle='#d9822b';g.fillRect(0,0,128,64);g.fillStyle='#f3ead8';g.fillRect(0,50,128,14);g.fillStyle='#1b1410';for(let k=0;k<14;k++){const x=4+k*9+Math.sin(k)*2;g.beginPath();g.moveTo(x,0);g.quadraticCurveTo(x+5,22,x-2,44);g.lineTo(x+2,44);g.quadraticCurveTo(x+8,22,x+3,0);g.fill();}}),
+deerM=tex(g=>{g.fillStyle='#a8673a';g.fillRect(0,0,128,64);g.fillStyle='#e8d2b0';g.fillRect(0,52,128,12);g.fillStyle='#fbf3e4';for(let k=0;k<60;k++){g.beginPath();g.arc(Math.random()*128,4+Math.random()*44,1.6,0,6.3);g.fill();}}),
+dark=lam(0x2a1d14),white=lam(0xf1ebe0);
+const quad=o=>{const g=new T.Group(),m=o.mat;const b=new T.Mesh(new T.BoxGeometry(o.w,o.h,o.l),m);b.position.y=o.leg+o.h/2;g.add(b);const legs=[];
+[[-1,1],[1,1],[-1,-1],[1,-1]].forEach(a=>{const l=new T.Mesh(new T.BoxGeometry(o.lw,o.leg,o.lw).translate(0,-o.leg/2,0),o.legM||m);l.position.set(a[0]*(o.w/2-o.lw/2),o.leg+.04,a[1]*(o.l/2-o.lw));g.add(l);legs.push(l);});
+const hd=new T.Group();hd.position.set(0,o.leg+o.h*.8,o.l/2);g.add(hd);if(o.neck){const n=new T.Mesh(new T.BoxGeometry(o.w*.42,o.neck,o.w*.42).translate(0,o.neck/2,0),m);n.rotation.x=.45;hd.add(n);}
+const he=new T.Mesh(new T.BoxGeometry(o.hw,o.hh,o.hl),o.headM||m);he.position.set(0,(o.neck||0)*.85,o.hl*.35+(o.neck?o.neck*.35:.05));hd.add(he);
+const tl=new T.Mesh(new T.BoxGeometry(o.tw,o.tw,o.tl).translate(0,0,-o.tl/2),o.tailM||m);tl.position.set(0,o.leg+o.h*.75,-o.l/2);tl.rotation.x=o.td||.6;g.add(tl);g.userData={legs,hd,tl,he};return g;};
+const deer=male=>{const g=quad({mat:deerM,w:.42,h:.55,l:1.15,leg:.82,lw:.1,neck:.55,hw:.2,hh:.24,hl:.42,tw:.1,tl:.22,headM:lam(0x9a5d34),legM:lam(0x8a5530)});if(male){const he=g.userData.he;[-1,1].forEach(s=>{const a=new T.Mesh(new T.BoxGeometry(.04,.55,.04),lam(0x5b4630));a.position.set(s*.1,.35,-.05);a.rotation.z=-s*.35;he.add(a);const b=new T.Mesh(new T.BoxGeometry(.03,.25,.03),lam(0x5b4630));b.position.set(s*.2,.45,.08);b.rotation.x=.6;he.add(b);});}return g;};
+const tiger=()=>{const g=quad({mat:tigM,w:.78,h:.72,l:1.95,leg:.62,lw:.22,hw:.55,hh:.5,hl:.55,tw:.11,tl:1.05,td:1.0,headM:tigM});const he=g.userData.he;[-1,1].forEach(s=>{const e=new T.Mesh(new T.BoxGeometry(.13,.14,.06),dark);e.position.set(s*.2,.3,-.1);he.add(e);});const mz=new T.Mesh(new T.BoxGeometry(.32,.2,.15),white);mz.position.set(0,-.1,.32);he.add(mz);g.scale.setScalar(1.15);return g;};
+const monkey=()=>{const g=new T.Group(),m=lam(0x8d6e52),b=new T.Mesh(new T.BoxGeometry(.3,.42,.26),m);b.position.y=.32;g.add(b);const h=new T.Mesh(new T.SphereGeometry(.15,8,6),m);h.position.y=.64;g.add(h);const f=new T.Mesh(new T.BoxGeometry(.16,.12,.05),lam(0xd9a08a));f.position.set(0,.63,.13);g.add(f);
+const tl=new T.Mesh(new T.CylinderGeometry(.03,.02,.6,5).translate(0,.3,0),m);tl.position.set(0,.18,-.13);tl.rotation.x=-1.9;g.add(tl);[-1,1].forEach(s=>{const a=new T.Mesh(new T.BoxGeometry(.07,.32,.07).translate(0,-.16,0),m);a.position.set(s*.18,.48,.04);a.rotation.x=-.5;g.add(a);});g.userData={tl,h};return g;};
+const croc=()=>{const g=new T.Group(),m=lam(0x4a5236),b=new T.Mesh(new T.BoxGeometry(.6,.28,1.5),m);b.position.y=.14;g.add(b);const h=new T.Mesh(new T.BoxGeometry(.32,.18,.85),m);h.position.set(0,.1,1.1);g.add(h);
+const tl=new T.Group();tl.position.set(0,.12,-.75);g.add(tl);const tm=new T.Mesh(new T.BoxGeometry(.3,.2,1.6).translate(0,0,-.8),m);tl.add(tm);[[-1,.4],[1,.4],[-1,-.45],[1,-.45]].forEach(a=>{const l=new T.Mesh(new T.BoxGeometry(.16,.1,.3),m);l.position.set(a[0]*.38,.05,a[1]);g.add(l);});g.userData={tl};return g;};
+const near=(i,o1,o2)=>{const p=SP[i],side=R_()<.5?-1:1,o=o1+R_()*(o2-o1),t=(R_()-.5)*10;return[p.x+p.nx*o*side+p.tx*t,p.z+p.nz*o*side+p.tz*t,side,i];};
+for(let k=0;k<12;k++){const c=near(FI[Math.floor((k+.5)/12*FI.length)],14,40);const herd=[];for(let n=0;n<3+((R_()*4)|0);n++){const d=deer(n===0);const x=c[0]+(R_()-.5)*10,z=c[1]+(R_()-.5)*10;d.position.set(x,hgt(x,z)-.05,z);d.rotation.y=R_()*6;scene.add(d);herd.push({o:d,ph:R_()*6,fl:0,vx:0,vz:0});}FOR.deer.push({herd,i:c[3],side:c[2]});}
+for(let k=0;k<4;k++){const i=FI[Math.floor((k+.3)/4*FI.length)],c=near(i,18,30),t=tiger();t.position.set(c[0],hgt(c[0],c[1]),c[1]);scene.add(t);FOR.tig.push({o:t,i,side:c[2],lat:Math.abs(Math.hypot(c[0]-SP[i].x,c[1]-SP[i].z)),u:0,dir:1,seen:0,ph:R_()*6});}
+for(let k=0;k<30;k++){const c=near(FI[(R_()*FI.length)|0],4.5,14),m=monkey(),h=hgt(c[0],c[1]);if(h<.3)continue;m.position.set(c[0],h-.05,c[1]);m.rotation.y=Math.atan2(SP[c[3]].x-c[0],SP[c[3]].z-c[1]);scene.add(m);FOR.mon.push({o:m,y0:h-.05,ph:R_()*6,j:0});}
+/* tidal pools (khal) in the forest floor, crocodiles basking on their mud banks */
+{const wM=new T.MeshPhongMaterial({color:0x3c4a36,shininess:60,specular:0x445544,transparent:true,opacity:.92}),mM=lam(0x4a3d2c);for(let k=0;k<9;k++){const c=near(FI[Math.floor((k+.5)/9*FI.length)],26,46),h=hgt(c[0],c[1]),r=7+R_()*6;if(stZone(c[0],c[1],r+4))continue;
+const mud=new T.Mesh(new T.CircleGeometry(r+2.4,18).rotateX(-Math.PI/2),mM);mud.position.set(c[0],h+.04,c[1]);mud.scale.z=.6+R_()*.5;scene.add(mud);dcAdd(mud);
+const w=new T.Mesh(new T.CircleGeometry(r,18).rotateX(-Math.PI/2),wM);w.position.set(0,.05,0);mud.add(w);
+for(let n=0;n<1+(R_()<.5?1:0);n++){const a=R_()*6.28,cr=croc(),x=c[0]+Math.cos(a)*(r+.8),z=c[1]+Math.sin(a)*(r+.8)*mud.scale.z;cr.position.set(x,h+.06,z);cr.rotation.y=a+Math.PI+(R_()-.5);scene.add(cr);FOR.croc.push({o:cr,ph:R_()*6});}}}
+const wingG=new T.PlaneGeometry(.55,.22).translate(.28,0,0);for(let k=0;k<26;k++){const eg=k%3!==0,g=new T.Group(),bm=lam(eg?0xf6f6f2:0x1f6fb5),b=new T.Mesh(new T.SphereGeometry(eg?.16:.1,8,6),bm);b.scale.set(1,1,eg?2.4:2);g.add(b);
+if(!eg){const be=new T.Mesh(new T.SphereGeometry(.09,6,5),lam(0xe67e22));be.position.set(0,-.04,.05);g.add(be);}const wm=new T.MeshLambertMaterial({color:eg?0xffffff:0x2a7fd0,side:T.DoubleSide});const w1=new T.Mesh(wingG,wm),w2=new T.Mesh(wingG,wm);w2.scale.x=-1;g.add(w1,w2);g.scale.setScalar(eg?1.6:1);
+const p=SP[FI[(R_()*FI.length)|0]];scene.add(g);FOR.birds.push({o:g,w1,w2,cx:p.x+(R_()-.5)*40,cz:p.z+(R_()-.5)*40,r:12+R_()*40,h:p.y+(eg?14+R_()*14:5+R_()*6),sp:(eg?.25:.5)*(R_()<.5?1:-1),a:R_()*6,ph:R_()*6});}
+const c0=SP[FI[FI.length>>1]];FOR.c=new T.Vector3(c0.x,c0.y,c0.z);}}
+{const n=320,g=new T.BufferGeometry(),P=new Float32Array(n*3);FOR.ffB=[];for(let k=0;k<n;k++){FOR.ffB.push([(Math.random()-.5)*90,.6+Math.random()*7,(Math.random()-.5)*90,Math.random()*6.3]);}g.setAttribute('position',new T.BufferAttribute(P,3));
+FOR.ff=new T.Points(g,new T.PointsMaterial({color:0xd8ff6a,size:.32,transparent:true,opacity:0,blending:T.AdditiveBlending,depthWrite:false,fog:false}));FOR.ff.frustumCulled=false;FOR.ff.visible=false;scene.add(FOR.ff);}
+function fireflyTick(){const F=FOR.ff;if(!F)return;const on=fk>.3&&ENV.n>.5&&ENV.rain<.3;F.visible=on;if(!on)return;F.material.opacity=Math.min(1,(fk-.3)*2)*(ENV.n-.5)*2*(.75+.25*Math.sin(time*7));
+const a=F.geometry.attributes.position,cx=Math.round(cam.position.x/90)*90,cz=Math.round(cam.position.z/90)*90,gy=Math.max(.3,hgt(cam.position.x,cam.position.z));FOR.ffB.forEach((b,k)=>{let x=b[0]+cx+Math.sin(time*.3+b[3])*3,z=b[2]+cz+Math.cos(time*.25+b[3]*1.3)*3;if(x-cam.position.x>45)x-=90;if(cam.position.x-x>45)x+=90;if(z-cam.position.z>45)z-=90;if(cam.position.z-z>45)z+=90;const blink=Math.sin(time*2.2+b[3]*9)>.2;a.setXYZ(k,x,blink?gy+b[1]+Math.sin(time+b[3])*.4:-999,z);});a.needsUpdate=true;}
+function forestTick(dt){fireflyTick();if(!FOR.c)return;const near=FOR.c.distanceTo(cam.position)<fogFar+1400,all=[...FOR.tig.map(t=>t.o),...FOR.mon.map(m=>m.o),...FOR.croc.map(c=>c.o),...FOR.birds.map(b=>b.o)];FOR.deer.forEach(h=>h.herd.forEach(d=>all.push(d.o)));
+all.forEach(o=>o.visible=near);if(!near)return;const L0=loco.position,tm=time;
+FOR.deer.forEach(H=>{H.herd.forEach(d=>{const o=d.o,u=o.userData,dl=o.position.distanceTo(L0);if(!d.fl&&dl<70&&v>2){const p=SP[H.i];d.fl=4+Math.random()*2;d.vx=p.nx*H.side*7+(Math.random()-.5)*3;d.vz=p.nz*H.side*7+(Math.random()-.5)*3;
+if(!FOR.seen.deer||tm-FOR.seen.deer>120){FOR.seen.deer=tm;msg('চিত্রা হরিণের পাল! ট্রেনের শব্দে দৌড়ে পালাচ্ছে 🦌',3000);}}
+if(d.fl>0){d.fl-=dt;o.position.x+=d.vx*dt;o.position.z+=d.vz*dt;o.rotation.y=Math.atan2(d.vx,d.vz);u.legs.forEach((l,k)=>l.rotation.x=Math.sin(tm*14+(k%2?Math.PI:0)+(k>1?Math.PI:0))*.7);u.hd.rotation.x=-.2;if(d.fl<=0)d.fl=-1;}
+else{u.legs.forEach(l=>l.rotation.x*=.85);u.hd.rotation.x=.9+.15*Math.sin(tm*2.5+d.ph);if(d.fl<0&&dl>220)d.fl=0;}o.position.y=hgt(o.position.x,o.position.z)-.05;u.tl.rotation.x=.6+.3*Math.sin(tm*6+d.ph);});});
+FOR.tig.forEach(T_=>{const o=T_.o,u=o.userData,p0=SP[T_.i];T_.u+=T_.dir*1.25*dt;if(Math.abs(T_.u)>70)T_.dir*=-1;const f=(((p0.s+T_.u)%L)+L)%L,j=Math.floor(f/L*NS)%NS,p=SP[j];
+o.position.set(p.x+p.nx*T_.lat*T_.side,0,p.z+p.nz*T_.lat*T_.side);o.position.y=hgt(o.position.x,o.position.z);o.rotation.y=Math.atan2(p.tx*T_.dir,p.tz*T_.dir);u.legs.forEach((l,k)=>l.rotation.x=Math.sin(tm*4+(k%2?Math.PI:0)+(k>1?Math.PI:0))*.4);u.tl.rotation.y=.4*Math.sin(tm*1.5+T_.ph);
+const dl=o.position.distanceTo(L0);if(dl<60){u.hd.rotation.y=Math.atan2(L0.x-o.position.x,L0.z-o.position.z)-o.rotation.y;}else u.hd.rotation.y*=.9;
+if(!T_.seen&&dl<140&&started){T_.seen=1;score+=50;msg('🐯 রয়েল বেঙ্গল টাইগার! বনের ভেতর হাঁটছে · দেখতে পেয়েছেন +৫০',4200);playS('cow',.55,.42,0);}if(T_.seen&&dl>600)T_.seen=0;});
+FOR.mon.forEach(m=>{const o=m.o,dl=o.position.distanceTo(L0);if(dl<22&&v>2&&!m.j)m.j=1.2;if(m.j>0){m.j-=dt;o.position.y=m.y0+Math.max(0,Math.sin((1.2-m.j)/1.2*Math.PI))*1.4;}else{m.j=dl>60?0:m.j;o.position.y=m.y0;}o.userData.h.rotation.y=Math.sin(tm*1.3+m.ph)*.6;o.userData.tl.rotation.z=Math.sin(tm*2+m.ph)*.3;});
+FOR.croc.forEach(c=>{c.o.userData.tl.rotation.y=Math.sin(tm*.7+c.ph)*.25;});
+FOR.birds.forEach(b=>{b.a+=b.sp*dt;const x=b.cx+Math.cos(b.a)*b.r,z=b.cz+Math.sin(b.a)*b.r;b.o.position.set(x,b.h+Math.sin(tm*.8+b.ph)*1.5,z);b.o.rotation.y=b.a+(b.sp>0?Math.PI:0);const fl=Math.sin(tm*(b.sp>.3||b.sp<-.3?18:9)+b.ph)*.7;b.w1.rotation.z=fl;b.w2.rotation.z=-fl;});}
+
 /* river boats and ships */
 const NBt=110,bH=IM(new T.BoxGeometry(2,.8,8.5).translate(0,.4,0),lam(0xffffff),NBt),bC=IM(new T.BoxGeometry(1.8,1.3,3).translate(0,1.4,0),lam(0xd9c9a3),NBt),bS=IM(new T.PlaneGeometry(3.4,5).translate(0,4.3,.5),lam2(0xffffff),NBt),BT=[];
 for(let k=0;k<NBt;k++){const r=RIV[[0,1,1,2,2,3,4][k%7]],i=2+((rnd()*(r.pts.length-4))|0),a=r.pts[i],b=r.pts[i+1],tx=b.x-a.x,tz=b.z-a.z,n=Math.hypot(tx,tz),off=(rnd()-.5)*r.ws[i]*1.5;BT.push({x:a.x-tz/n*off,z:a.z+tx/n*off,ry:Math.atan2(tx,tz)+(rnd()<.5?0:Math.PI),ph:rnd()*6});
@@ -1286,6 +1358,9 @@ TR.rf=flt('lowpass',260,.7);TR.rg=gn(0);src(noiseB,TR.rf);TR.rf.connect(TR.rg);T
 SB={};const SBP={},load=(k,u,pr)=>fetch(u).then(r=>{if(!r.ok)throw 0;return r.arrayBuffer();}).then(b=>new Promise((ok,no)=>AC.decodeAudioData(b,ok,no))).then(buf=>{if((SBP[k]||0)>pr)return;SBP[k]=pr;SB[k]=buf;SB[k+'_file']=pr>1;if(k==='rail'||k==='engine'||k==='traffic'||k==='birds'||k==='rain')startLoop(k);});
 Object.keys(SNDDATA).forEach(k=>load(k,SNDDATA[k],1).catch(()=>{}));['engine','rail','horn','traffic','birds','rain','thunder1','thunder2','thunder3'].forEach(k=>load(k,'sounds/'+k+'.mp3',2).catch(()=>{}));
 TR.co=AC.createOscillator();TR.co.type='square';TR.co.frequency.value=26;TR.cf=flt('lowpass',520,1.4);TR.cg=gn(0);TR.co.connect(TR.cf);TR.cf.connect(TR.cg);TR.cg.connect(master);TR.co.start();
+/* forest: cicada / cricket drone, a bandpassed buzz pulsed by a fast LFO, heard only in the Sundarbans */
+{const o=AC.createOscillator();o.type='square';o.frequency.value=4300;const bp=flt('bandpass',4300,6),pg=gn(0),lf=AC.createOscillator(),lg=gn(.5);lf.frequency.value=26;lf.connect(lg);lg.connect(pg.gain);const dc=AC.createConstantSource?AC.createConstantSource():null;if(dc){dc.offset.value=.5;dc.connect(pg.gain);dc.start();}TR.ig=gn(0);o.connect(bp);bp.connect(pg);pg.connect(TR.ig);TR.ig.connect(master);o.start();lf.start();TR.il=lf;
+const o2=AC.createOscillator();o2.type='sawtooth';o2.frequency.value=3150;const b2=flt('bandpass',3150,9),g2=gn(.6),l2=AC.createOscillator(),lg2=gn(.6);l2.frequency.value=7.3;l2.connect(lg2);lg2.connect(g2.gain);o2.connect(b2);b2.connect(g2);g2.connect(TR.ig);o2.start();l2.start();}
 }catch(e){AC=null;}}
 function startLoop(k){if(!AC||!SB[k])return;if(LP[k])try{LP[k].s.stop();}catch(e){}const s=AC.createBufferSource(),g=AC.createGain();s.buffer=SB[k];s.loop=true;g.gain.value=0;s.connect(g);g.connect(master);s.start(0,Math.random()*SB[k].duration*.9);LP[k]={s,g};}
 function playS(k,g,rate,pan,when){if(!AC||muted||!SB[k])return null;const s=AC.createBufferSource(),e=AC.createGain();s.buffer=SB[k];s.playbackRate.value=rate||1;e.gain.value=g;let out=master;if(pan!==undefined&&AC.createStereoPanner){const p=AC.createStereoPanner();p.pan.value=Math.max(-1,Math.min(1,pan));p.connect(master);out=p;}s.connect(e);e.connect(out);s.start(AC.currentTime+(when||0));return{s,e};}
@@ -1332,13 +1407,14 @@ rum+=(q.k===2||q.k===3||q.k===6?2.2:q.k===4?.15:1)*w*(.3+Math.min(1,q.cv/10));if
 const ins=mode===0?.6:1,real=!!(LP.traffic&&SB.traffic_file);if(LP.traffic)LP.traffic.g.gain.setTargetAtTime(real?Math.min(.95,.07*rum+.04*jam)*ins*(dk>.5?.2:1):0,t,.6);
 if(real){TR.rg.gain.setTargetAtTime(0,t,.3);TR.cg.gain.setTargetAtTime(0,t,.3);}else{TR.rg.gain.setTargetAtTime(Math.min(.32,.05*rum)*ins,t,.5);TR.cg.gain.setTargetAtTime(.05*cng*ins,t,.3);}TR.co.frequency.setTargetAtTime(24+6*Math.sin(t*.9),t,.3);
 /* countryside birds: recorded ambience by day, fading at dusk, in rain, in tunnels and beside busy roads */
-if(LP.birds){const day=Math.max(0,1-ENV.n*1.6),wet=1-Math.min(1,ENV.rain*1.4),busy=1/(1+.12*rum);LP.birds.g.gain.setTargetAtTime(.42*day*wet*busy*(dk>.3?0:1)*(mode===0?.6:1),t,1.2);}
+if(LP.birds){const day=Math.max(0,1-ENV.n*1.6),wet=1-Math.min(1,ENV.rain*1.4),busy=1/(1+.12*rum);LP.birds.g.gain.setTargetAtTime(.42*day*wet*busy*(dk>.3?0:1)*(mode===0?.6:1)*(1+1.3*fk),t,1.2);}
+if(TR.ig){const wet=1-Math.min(1,ENV.rain*1.2);TR.ig.gain.setTargetAtTime(fk*(.05+.07*ENV.n)*wet*(dk>.3?.25:1)*(mode===0?.55:1),t,1.5);TR.il.frequency.setTargetAtTime(22+8*ENV.n,t,2);}
 if(!LP.birds&&SB.bird1&&ENV.n<.4&&ENV.rain<.2&&dk<.2&&Math.random()<.004)playS(Math.random()<.5?'bird1':'bird2',.18,.9+Math.random()*.3,(Math.random()-.5)*1.6);
 if(SB.cow&&KU.st&&cp.distanceTo(KU.p)<700&&Math.random()<.0025)playS('cow',.35,.9+Math.random()*.2,(Math.random()-.5)*1.4);
 trT-=1/60;if(!real&&cand.length&&trT<=0){const rate=.04*cand.length+.05*jam;if(Math.random()<rate){const c=cand[(Math.random()*cand.length)|0];vHorn(c[0].k,Math.min(.5,1.6/(1+c[1]/12))*ins,Math.max(-1,Math.min(1,c[2])));trT=.25;}}}
 
 /* ===== game ===== */
-let started=false,ini=0,frameN=0,hudN='',hudD='',reg=-1,dk=0;
+let fk=0,started=false,ini=0,frameN=0,hudN='',hudD='',reg=-1,dk=0;
 let S=ST[nextI0].s-260,v=0,thr=0,brk=0,eb=false,dir=1,doors=false,board=0,boarded=false,nextI=nextI0,score=0,done=0,hl=true,mode=1,time=0,over=false,mt=0;
 const K={};
 function msg(t,ms){const m=$('msg');m.textContent=t;m.style.opacity=1;clearTimeout(mt);mt=setTimeout(()=>m.style.opacity=0,ms||2600);}
@@ -1569,7 +1645,7 @@ if(dir>0&&g.asp===1&&v*3.6>66&&Math.floor((S-g.s)/L)!==Math.floor((pS-g.s)/L)){s
 if(dir>0&&g.red&&Math.floor((S-g.s)/L)!==Math.floor((pS-g.s)/L)){score=Math.max(0,score-50);satHit(8,'red');msg('লাল সিগন্যাল পার হয়েছেন: -৫০');}});
 over=v>lim+1.4;if(over)score=Math.max(0,score-dt*6);
 const rk=P.reg*100+(P.br||P.ap);if(rk!==reg){reg=rk;const nm=regName(P);$('rg').textContent=nm;if(started)msg(nm,2600);}
-dk+=((P.reg===3?1:0)-dk)*Math.min(1,rdt*2.5);hemi.intensity=envHemi*(1-.88*dk);sun.intensity=envSun*(1-.95*dk);
+dk+=((P.reg===3?1:0)-dk)*Math.min(1,rdt*2.5);fk+=((P.fr?1:0)-fk)*Math.min(1,rdt*.8);hemi.intensity=envHemi*(1-.88*dk)*(1-.32*fk);sun.intensity=envSun*(1-.95*dk)*(1-.55*fk);
 const st=ST[nextI%ST.length],dist=((st.s-ssv+1.5*L)%L)-L*.5,inZ=Math.abs(dist)<8&&v<.4;
 if(inZ&&!doors&&!boarded&&time%4<.05)msg('দরজা খুলতে O চাপুন');
 if(doors&&inZ&&!boarded&&!st.flow){onArrive(st,dist);startFlow(st);}
@@ -1595,7 +1671,7 @@ else if(mode===0){const sh=Math.sin(time*23)*.01*Math.min(1,v/15);
 cam.position.copy(loco.localToWorld(lv.set(0,4.1+sh,2.2)));cam.lookAt(loco.localToWorld(lv.set(0,-1.5,60)));
 levT.rotation.x=-.5+thr;levB.rotation.x=.5-Math.max(brk,eb?1:0);ebM.color.setHex(eb?0xff3b30:0x6b1511);if((frameN&1)===0)drawDash(lim);}
 else{const tp=V1,lk=V2;
-if(mode===1){loco.localToWorld(tp.set(-7,16,-58));loco.localToWorld(lk.set(0,2,18));}
+if(mode===1){loco.localToWorld(tp.set(-7*(1-.6*fk),16-9.6*fk,-58+28*fk));loco.localToWorld(lk.set(0,2,18));}
 else if(mode===2||mode===3){loco.localToWorld(tp.set(mode===2?-30:30,6.5,-22));loco.localToWorld(lk.set(0,3,-22));}
 else if(mode===4){loco.localToWorld(tp.set(0,2.4,6.4));loco.localToWorld(lk.set(0,2,60));}
 else if(mode===5){tp.set(loco.position.x+70,loco.position.y+90,loco.position.z+70);lk.copy(loco.position);}
@@ -1617,7 +1693,7 @@ BTNS.light.classList.toggle('on',hl);BTNS.doors.classList.toggle('on',doors);BTN
 $('sc').textContent=bnum(Math.round(score));$('dn').textContent=bnum(done);$('nx').textContent=hudN+' \u00b7 '+hudD+(nsg&&nsd<1600&&dir>0?'  \u00b7  সিগন্যাল '+['সবুজ','হলুদ','লাল'][nsg.asp]+' '+bnum(Math.round(nsd))+' মি':'');$('rm').style.left=ssv/L*100+'%';
 if((frameN&1)===0)drawMap(st);frameN++;
 ST.forEach(t=>{t.g.visible=t.g.position.distanceTo(cam.position)<fogFar+180;});{const lim=fogFar+150;for(let i=0;i<DCULL.length;i++){const d=DCULL[i],dd=d.sp.center.distanceTo(cam.position)-d.sp.radius;d.o.visible=dd<(d.near?Math.min(d.near,lim):lim);}
-ST.forEach(t=>{if(t.pg)t.pg.visible=t.g.visible&&t.g.position.distanceTo(cam.position)<(t===ST[nextI%ST.length]?650:380);});}kWalkTick(rdt);farmTick(rdt);lcTick(rdt);perfTick(rdt);touchTick();satTick(dt);vehiclesTick(rdt);wreckTick(dt);otTick(dt);cowTick(dt);festTick(rdt);metroTick(rdt);rnppTick(rdt);KT.fs.visible=cam.position.y>1;envTick(rdt,now/1000);if(dk>.3||ktIn())rainM.visible=false;else if(rainM.visible)shelterTick();wipersTick(rdt);cullChunks();R.render(scene,cam);}
+ST.forEach(t=>{if(t.pg)t.pg.visible=t.g.visible&&t.g.position.distanceTo(cam.position)<(t===ST[nextI%ST.length]?650:380);});}kWalkTick(rdt);farmTick(rdt);lcTick(rdt);perfTick(rdt);touchTick();satTick(dt);vehiclesTick(rdt);wreckTick(dt);otTick(dt);cowTick(dt);festTick(rdt);metroTick(rdt);rnppTick(rdt);forestTick(rdt);KT.fs.visible=cam.position.y>1;envTick(rdt,now/1000);if(dk>.3||ktIn())rainM.visible=false;else if(rainM.visible)shelterTick();wipersTick(rdt);cullChunks();R.render(scene,cam);}
 $('mm').onclick=toggleBig;$('bigmap').onclick=toggleBig;setTime(false);setMode(1);$('go').style.display='';$('ld').style.display='none';requestAnimationFrame(frame);
 
 }
