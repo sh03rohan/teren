@@ -91,7 +91,7 @@ body.touch #bt{bottom:calc(env(safe-area-inset-bottom,0px) + 6px)}body.touch #bt
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" onerror="document.getElementById('ld').textContent='থ্রিডি ইঞ্জিন (three.js) লোড হয়নি। ইন্টারনেট সংযোগ দেখে পেজটি আবার খুলুন।'"></script>
 <script>function boot(){
 const BND='০১২৩৪৫৬৭৮৯',bnum=v=>String(v).replace(/[0-9]/g,d=>BND[d]);
-const BNN={'Bhanga':'ভাঙ্গা','Dhaka':'ঢাকা','Comilla':'কুমিল্লা','Chattogram':'চট্টগ্রাম',"Cox's Bazar":'কক্সবাজার','Cox\u2019s Bazar':'কক্সবাজার','Sylhet':'সিলেট','Mymensingh':'ময়মনসিংহ','Rangpur':'রংপুর','Dinajpur':'দিনাজপুর','Rajshahi':'রাজশাহী','Kushtia':'কুষ্টিয়া','Jashore':'যশোর','Khulna':'খুলনা'},bnn=n=>BNN[n]||n;
+const BNN={'Karamjal':'করমজল','Bhanga':'ভাঙ্গা','Dhaka':'ঢাকা','Comilla':'কুমিল্লা','Chattogram':'চট্টগ্রাম',"Cox's Bazar":'কক্সবাজার','Cox\u2019s Bazar':'কক্সবাজার','Sylhet':'সিলেট','Mymensingh':'ময়মনসিংহ','Rangpur':'রংপুর','Dinajpur':'দিনাজপুর','Rajshahi':'রাজশাহী','Kushtia':'কুষ্টিয়া','Jashore':'যশোর','Khulna':'খুলনা'},bnn=n=>BNN[n]||n;
 /* ===== Bangladesh world (pure maths) ===== */
 const T=THREE;
 const ss=(a,b,x)=>{x=Math.min(1,Math.max(0,(x-a)/(b-a)));return x*x*(3-2*x);};
@@ -155,7 +155,7 @@ function trackY(x,z){let y=flood(x,z)+3+Math.min(12,.08*hillH(x,z));for(const r 
 const O=[['Comilla',91.18,23.46,1],[null,91.3,23.25],[null,91.38,23.0],[null,91.5,22.75],['Chattogram',91.86,22.56,1],[null,91.98,22.0],["Cox's Bazar",92.05,21.47,1]];
 const RW=[['Dhaka',90.41,23.79,1],[null,90.62,23.69],[null,90.9,23.58]];O.forEach(a=>RW.push(a));RW.push([null,92.095,21.4]);
 for(let i=O.length-1;i>=0;i--)RW.push([null,O[i][1]+.09,O[i][2]]);
-[[null,91.3,23.6],[null,91.2,23.97],[null,91.45,24.2],[null,91.7,24.35],[null,91.78,24.55],['Sylhet',91.87,24.84,1],[null,91.3,24.96],[null,90.9,24.88],['Mymensingh',90.4,24.76,1],[null,89.95,24.9],[null,89.4,24.86],['Rangpur',89.25,25.74,1],['Dinajpur',88.65,25.62,1],[null,88.85,25.1],['Rajshahi',88.65,24.85,1],[null,88.95,24.5],[null,89.04,24.12],[null,89.045,23.92],[null,89.02,23.75],['Kushtia',89.0,23.6,1],[null,89.06,23.42],['Jashore',89.2,23.17,1],['Khulna',89.55,22.82,1],[null,89.82,23.1],['Bhanga',89.99,23.38,1],[null,90.3,23.55],[null,90.36,23.66]].forEach(a=>RW.push(a));
+[[null,91.3,23.6],[null,91.2,23.97],[null,91.45,24.2],[null,91.7,24.35],[null,91.78,24.55],['Sylhet',91.87,24.84,1],[null,91.3,24.96],[null,90.9,24.88],['Mymensingh',90.4,24.76,1],[null,89.95,24.9],[null,89.4,24.86],['Rangpur',89.25,25.74,1],['Dinajpur',88.65,25.62,1],[null,88.85,25.1],['Rajshahi',88.65,24.85,1],[null,88.95,24.5],[null,89.04,24.12],[null,89.045,23.92],[null,89.02,23.75],['Kushtia',89.0,23.6,1],[null,89.06,23.42],['Jashore',89.2,23.17,1],['Khulna',89.55,22.82,1],[null,89.5,22.62],[null,89.53,22.5],['Karamjal',89.585,22.42,1],[null,89.63,22.27],[null,89.74,22.2],[null,89.86,22.28],[null,89.9,22.48],[null,89.88,22.72],[null,89.82,23.1],['Bhanga',89.99,23.38,1],[null,90.3,23.55],[null,90.36,23.66]].forEach(a=>RW.push(a));
 const c0=new T.CatmullRomCurve3(RW.map(a=>new T.Vector3(X(a[1]),0,Z(a[2]))),true,'catmullrom',.5);c0.arcLengthDivisions=8000;
 const N0=Math.floor(c0.getLength()/420),yy=[],q0=[];for(let i=0;i<N0;i++){const p=c0.getPointAt(i/N0);q0.push(p);yy.push(trackY(p.x,p.z));}
 {let y=yy.slice();for(let i=0;i<N0;i++)y[i]=yy[i];
@@ -198,9 +198,9 @@ const t=ss(-260,60,sea);h=h*(1-t)+(-(2+38*ss(0,2400,Math.max(0,sea))))*t;
 let fl=ty+(h-ty)*ss(55,150,d),r=fl*(1-nf)+h*nf;G.d=d;
 {const P_=window.__RNP;if(P_){const ex=x-P_.x,ez=z-P_.z,c=Math.cos(P_.ry),sn=Math.sin(P_.ry),lx=ex*c-ez*sn,lz=ex*sn+ez*c,m=(1-ss(262,300,Math.abs(lx)))*(1-ss(212,250,Math.abs(lz)));if(m>0)r=Math.max(r,r*(1-m)+2.4*m);}}return r;}
 /* flags */
-SP.forEach((p,i)=>{let b=0,a=0;RIV.forEach((r,k)=>{if(r.x)return;const d=rdist(r,p.x,p.z);if(d<r.w*1.7&&p.y>r.by*.6)b=k+1;else if(d<r.w*3.05&&p.y-flood(p.x,p.z)>2&&!a)a=k+1;});p.br=b;p.ap=b?0:a;p.vi=Math.abs(i-gI)<=11;p.tn=i>=TA&&i<=TB;});
+SP.forEach((p,i)=>{let b=0,a=0;RIV.forEach((r,k)=>{if(r.x)return;const d=rdist(r,p.x,p.z);if(d<r.w*1.7&&(p.y>r.by*.6||d<r.w*1.05))b=k+1;else if(d<r.w*3.05&&p.y-flood(p.x,p.z)>2&&!a)a=k+1;});p.br=b;p.ap=b?0:a;p.vi=Math.abs(i-gI)<=11;p.tn=i>=TA&&i<=TB;});
 function regOf(p){const lo=p.lo,la=p.la;if(p.tn)return 3;if(p.br||p.ap)return 1;if(p.vi)return 4;if(Math.hypot(lo-90.41,la-23.79)<.3)return 10;if(Math.hypot(lo-89.0,la-23.6)<.1)return 11;if(la<21.9&&lo>91.8)return 7;if(lo>91.7&&la<23&&la>21.9)return 2;if(lo>91.4&&la>24.1&&la<25.2)return 5;if(la<23.2&&lo<90.2)return 6;if(la>25.3)return 8;if(lo<89.3&&la>24&&la<25.3)return 9;return 0;}
-SP.forEach(p=>{p.reg=regOf(p);});
+SP.forEach(p=>{p.fr=p.la<22.66&&p.la>22.1&&p.lo>89.45&&p.lo<90.0&&!p.br&&!p.ap;if(p.fr)p.reg=12;else p.reg=regOf(p);});
 /* Rooppur Nuclear Power Plant site: east (Pabna) bank of the Ganges/Padma a little upstream of Hardinge Bridge */
 const findRNP=(UPS,OK_,OC,RR,TD)=>{const bi1=[];SP.forEach((p,i)=>{if(p.br===1)bi1.push(i);});if(!bi1.length)return null;const r=RIV[0],mid=SP[bi1[bi1.length>>1]];let bi=0,bd=1e18;r.pts.forEach((p,i)=>{const d=(p.x-mid.x)**2+(p.z-mid.z)**2;if(d<bd){bd=d;bi=i;}});
 for(const up of UPS){const i=Math.max(1,bi-up),p=r.pts[i],q=r.pts[i+1],tx=q.x-p.x,tz=q.z-p.z,l=Math.hypot(tx,tz);for(const sd of[1,-1]){const nx=-tz/l*sd,nz=tx/l*sd,off=r.ws[i]*OK_+OC,cx=p.x+nx*off,cz=p.z+nz*off;
@@ -212,7 +212,7 @@ const RNP=findRNP([2,3,4,5,6,7,8,9,10],1.05,225,[0,90,180],45)||RNP0;window.__RN
 
 /* second (down) line: double track on the open route, single line over bridges, approach viaducts, the gorge viaduct and through the hill tunnel.
    W2[i] = 0..1 blends the second line out to OFF2 metres on the -n side; the blends act as junction points. */
-const OFF2=-4.6,W2=new Float32Array(NS);{const blk=new Uint8Array(NS),wr=d=>Math.min(Math.abs(d),NS-Math.abs(d));SP.forEach((p,i)=>{if(p.br||p.ap||p.vi||p.tn||wr(i-TA)<48||wr(i-TB)<48)blk[i]=1;});
+const OFF2=-4.6,W2=new Float32Array(NS);{const blk=new Uint8Array(NS),wr=d=>Math.min(Math.abs(d),NS-Math.abs(d));SP.forEach((p,i)=>{if(p.br||p.ap||p.vi||p.tn||p.fr||wr(i-TA)<48||wr(i-TB)<48)blk[i]=1;});
 const dist=new Float32Array(NS).fill(1e9);for(let pass=0;pass<2;pass++){let d=1e9;for(let k=0;k<NS*2;k++){const i=k%NS;d=blk[i]?0:d+1;if(d<dist[i])dist[i]=d;}d=1e9;for(let k=NS*2-1;k>=0;k--){const i=k%NS;d=blk[i]?0:d+1;if(d<dist[i])dist[i]=d;}}
 for(let i=0;i<NS;i++)W2[i]=ss(5,30,dist[i]);}
 const w2At=s=>{const f=(((s%L)+L)%L)/L*NS,i=Math.floor(f)%NS,j=(i+1)%NS,t=f-Math.floor(f);return W2[i]*(1-t)+W2[j]*t;};
@@ -223,7 +223,7 @@ const STZ=RW.filter(a=>a[3]).map(a=>nearest(a[1],a[2]));
 /* station area: the platform, buildings and forecourt on the building side, plus the tracks; roads must not pass through it */
 function stZone(x,z,pad){pad=pad||0;for(const si of STZ){const q=SP[Math.max(0,si-2)],dx=x-q.x,dz=z-q.z,lx=dx*q.nx+dz*q.nz,lz=dx*q.tx+dz*q.tz;if(Math.abs(lz)<80+pad&&lx>-18-pad&&lx<85+pad)return true;}return false;}
 const LCI=[];{const sti=RW.filter(a=>a[3]).map(a=>nearest(a[1],a[2])),TI_=nearest(91.78,24.55),GI_=nearest(88.95,25.62),wrap=d=>Math.min(Math.abs(d),NS-Math.abs(d));
-const bad=i=>{const p=SP[((i%NS)+NS)%NS];if(p.br||p.ap||p.vi||p.tn||sti.some(s=>wrap(s-i)<34)||wrap(i-TI_)<95||wrap(i-GI_)<30)return true;for(const o of[-200,-140,-70,-30,0,30,70,140,200]){const x=p.x+p.nx*o,z=p.z+p.nz*o;if(!pip(x,z)||seaD(x,z)>-160||hgt(x,z)<1||stZone(x,z,25))return true;}return false;};
+const bad=i=>{const p=SP[((i%NS)+NS)%NS];if(p.br||p.ap||p.vi||p.tn||p.fr||sti.some(s=>wrap(s-i)<34)||wrap(i-TI_)<95||wrap(i-GI_)<30)return true;for(const o of[-200,-140,-70,-30,0,30,70,140,200]){const x=p.x+p.nx*o,z=p.z+p.nz*o;if(!pip(x,z)||seaD(x,z)>-160||hgt(x,z)<1||stZone(x,z,25))return true;}return false;};
 for(let k=0;k<12;k++){let i=Math.floor((k+.4)*NS/12),t=0;while(bad(i)&&t++<80)i=(i+3)%NS;if(!bad(i)&&!LCI.some(c=>wrap(c-i)<60))LCI.push(i);}
 const ku=RW.filter(a=>a[3]).findIndex(a=>a[0]==='Kushtia');if(ku>=0){const i=(sti[ku]+36)%NS;if(!bad(i)&&!LCI.some(c=>wrap(c-i)<40))LCI.push(i);}}
 
@@ -360,7 +360,7 @@ const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttr
 const WIRE=[];
 {const pl=IMC(new T.CylinderGeometry(.12,.17,8.2,6).translate(0,4.1,0),lam(0x5b3a22)),ca=IMC(new T.BoxGeometry(2.6,.16,.16),lam(0x3f2c1c)),ins=IMC(new T.CylinderGeometry(.07,.07,.3,5),lam(0xd8dde2));
 const OF=-6.2,XS=[-1.1,0,1.1];let prev=null;
-for(let i=3;i<NS;i+=5){const p=SP[i];if(p.br||p.ap||p.vi||p.tn||Math.abs(i-TA)<40||Math.abs(i-TB)<40||LCI.some(c=>Math.abs(c-i)<3)){prev=null;continue;}
+for(let i=3;i<NS;i+=5){const p=SP[i];if(p.br||p.ap||p.vi||p.tn||p.fr||Math.abs(i-TA)<40||Math.abs(i-TB)<40||LCI.some(c=>Math.abs(c-i)<3)){prev=null;continue;}
 const OFp=OF-3.8*W2[i],x=p.x+p.nx*OFp,z=p.z+p.nz*OFp,ry=Math.atan2(p.tx,p.tz)+Math.PI/2;add(pl,x,p.y,z,0,1,1,1);add(ca,x,p.y+7.7,z,ry,1,1,1);
 const tops=XS.map(l=>[x+p.nx*l,p.y+7.95,z+p.nz*l]);tops.forEach(t=>add(ins,t[0],t[1]-.1,t[2],0,1,1,1));
 if(prev)for(let w=0;w<3;w++){const a=prev[w],b=tops[w];for(let k=0;k<6;k++){const f0=k/6,f1=(k+1)/6,sg=f=>-.75*4*f*(1-f);WIRE.push(a[0]+(b[0]-a[0])*f0,a[1]+(b[1]-a[1])*f0+sg(f0),a[2]+(b[2]-a[2])*f0,a[0]+(b[0]-a[0])*f1,a[1]+(b[1]-a[1])*f1+sg(f1),a[2]+(b[2]-a[2])*f1);}}
@@ -467,7 +467,7 @@ addRoad(trackRoad(g.s-E,g.e+E,(j,n,i)=>{const d=i<g.s?g.s-i:i>g.e?i-g.e:0;return
 (x,z,gy,p,i)=>{const d=i<g.s?g.s-i:i>g.e?i-g.e:0;return Math.max(gy+.3,1.2,H-.6*d);}),7.2,L4);
 if(q.nm){const p=SP[g.s-6],sg=spr(q.nm,10,1.3,'#0b5d42','#ffffff');sg.position.set(p.x+p.nx*q.off,H+5.5,p.z+p.nz*q.off);sg.rotation.y=Math.atan2(p.tx,p.tz)+Math.PI;scene.add(sg);}});
 /* two-lane district roads alongside the line */
-{const bad=i=>{const p=SP[((i%NS)+NS)%NS];if(p.br||p.ap||p.vi||p.tn||Math.abs(i-TA)<50||Math.abs(i-TB)<50||Math.abs(i-gI)<25)return true;const x=p.x-p.nx*26,z=p.z-p.nz*26,h=hgt(x,z);return h<.9||!pip(x,z)||seaD(x,z)>-200||onRoad(x,z,20)||gcHit(x,z,40)||stZone(x,z,20)||stZone(p.x-p.nx*186,p.z-p.nz*186,20);};
+{const bad=i=>{const p=SP[((i%NS)+NS)%NS];if(p.br||p.ap||p.vi||p.tn||p.fr||Math.abs(i-TA)<50||Math.abs(i-TB)<50||Math.abs(i-gI)<25)return true;const x=p.x-p.nx*26,z=p.z-p.nz*26,h=hgt(x,z);return h<.9||!pip(x,z)||seaD(x,z)>-200||onRoad(x,z,20)||gcHit(x,z,40)||stZone(x,z,20)||stZone(p.x-p.nx*186,p.z-p.nz*186,20);};
 for(let k=0;k<14;k++){const len=110+((rnd()*70)|0);let i0=Math.floor((k+.2+rnd()*.5)*NS/14),ok=false;for(let t=0;t<60&&!ok;t++,i0+=7){ok=true;for(let i=i0;i<=i0+len;i+=2)if(bad(i)){ok=false;break;}}if(!ok)continue;
 addRoad(trackRoad(i0,i0+len,(j,n)=>-26-160*(1-ss(0,22,j))-160*ss(n-22,n,j),(x,z,gy)=>Math.max(gy,1)+.75),4.4,L2);}}
 
@@ -568,7 +568,7 @@ for(let a=0;a<6.28&&ok;a+=.4)for(const rr of[0,80,170]){const x=cx+Math.cos(a)*r
 if(ok)return{x:cx,z:cz,ry:Math.atan2(dx,dz)};}return null;})();window.__RGC=RGC;
 const NOGO=[],noGo=(x,z)=>{for(const c of NOGO)if((x-c[0])**2+(z-c[1])**2<c[2]*c[2])return true;return false;},KU={st:ST.find(t=>t.name==='Kushtia')};
 if(KU.st){const p=SP[KU.st.i];KU.p=p;KU.W=(lx,lz)=>[p.x+p.nx*lx+p.tx*lz,p.z+p.nz*lx+p.tz*lz];KU.ry=Math.atan2(p.tx,p.tz);
-const c0=KU.W(190,90);NOGO.push([c0[0],c0[1],440]);if(RNP)NOGO.push([RNP.x,RNP.z,320]);if(RGC){NOGO.push([RGC.x,RGC.z,230]);const P_=[RNP.x,RNP.z],Q_=[RGC.x,RGC.z];for(let t=0;t<=1;t+=.08)NOGO.push([P_[0]+(Q_[0]-P_[0])*t,P_[1]+(Q_[1]-P_[1])*t,40]);}{const c1=KU.W(-250,20);NOGO.push([c1[0],c1[1],330]);}const GO=RIV[8];
+const c0=KU.W(190,90);NOGO.push([c0[0],c0[1],440]);if(RNP)NOGO.push([RNP.x,RNP.z,320]);SP.forEach((p,i)=>{if(p.fr&&i%3===0)NOGO.push([p.x,p.z,160]);});if(RGC){NOGO.push([RGC.x,RGC.z,230]);const P_=[RNP.x,RNP.z],Q_=[RGC.x,RGC.z];for(let t=0;t<=1;t+=.08)NOGO.push([P_[0]+(Q_[0]-P_[0])*t,P_[1]+(Q_[1]-P_[1])*t,40]);}{const c1=KU.W(-250,20);NOGO.push([c1[0],c1[1],330]);}const GO=RIV[8];
 const kpath=(pts,bridge)=>{const Q=[];for(let k=0;k<pts.length-1;k++){const a=pts[k],b=pts[k+1],n=Math.max(1,Math.round(Math.hypot(b[0]-a[0],b[1]-a[1])/8));for(let j=0;j<n;j++){const f=j/n;Q.push([a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f]);}}Q.push(pts[pts.length-1]);
 return Q.map(q=>{const w=KU.W(q[0],q[1]),g=hgt(w[0],w[1]),td=G.d;let y=Math.max(g,1)+.6;if(bridge){const rd=rdistF(GO,w[0],w[1]);y=Math.max(y,1.6+6.4*(1-ss(GO.w*.95,GO.w*2.5,rd)));}return{x:w[0],y,z:w[1],g,td,deck:false};});};
 const TL=[[2.2,1,0],[-2.2,-1,1]];
@@ -603,7 +603,7 @@ if((dx*E.t[0]+dz*E.t[1])/d<-.2)continue;const a=o.P[Math.max(0,k-1)],b=o.P[Math.
 const side=[-tz,tx];const s_=(side[0]*dx+side[1]*dz)>0?-1:1,T1=[(tx*.4+side[0]*s_*-.0)*0+(dx/d),(dz/d)];const Q=bez([E.e.x,E.e.z],E.t,[q.x,q.z],[dx/d,dz/d],d);if(pathOK(Q.slice(0,-2)))best={d,Q,q};}});
 const inTown=KU.st&&(()=>{const c=KU.W(190,90);return Math.hypot(E.e.x-c[0],E.e.z-c[1])<520;})();if(!best&&inTown)return;
 if(best){const P=[{x:E.e.x,z:E.e.z,g:hgt(E.e.x,E.e.z),td:G.d,y:E.e.y,deck:false}];best.Q.forEach((c,i)=>{const g=hgt(c[0],c[1]),td=G.d;P.push({x:c[0],z:c[1],g,td,y:i===best.Q.length-1?best.q.y:Math.max(g,1)+.7,deck:false});});
-addRoad(P,4.2,L2);RP[RP.length-1].conn=1;}else{const c=[E.e.x+E.t[0]*16,E.e.z+E.t[1]*16];let ok=true;for(let a=0;a<6.28&&ok;a+=.5)for(const rr of[0,15,30]){hgt(c[0]+Math.cos(a)*rr,c[1]+Math.sin(a)*rr);if(G.d<30||stZone(c[0]+Math.cos(a)*rr,c[1]+Math.sin(a)*rr,10)){ok=false;break;}}if(ok)vill.push(E);}});
+addRoad(P,4.2,L2);RP[RP.length-1].conn=1;}else{const c=[E.e.x+E.t[0]*16,E.e.z+E.t[1]*16];let ok=true;for(let a=0;a<6.28&&ok;a+=.5)for(const rr of[0,15,30]){hgt(c[0]+Math.cos(a)*rr,c[1]+Math.sin(a)*rr);if(G.d<30||stZone(c[0]+Math.cos(a)*rr,c[1]+Math.sin(a)*rr,10)){ok=false;break;}}if(ok&&!SP.some((p,i)=>p.fr&&i%4===0&&Math.hypot(p.x-c[0],p.z-c[1])<260))vill.push(E);}});
 /* village turnaround: an asphalt loop with a tea stall, shops and trees, so the road clearly ends somewhere */
 const _v0=scene.children.length;KT.vill=vill.map(E=>{const c=[E.e.x+E.t[0]*16,E.e.z+E.t[1]*16],y=Math.max(meshH(c[0],c[1]),hgt(c[0],c[1]),E.e.y-.4)+.32,g=new T.Group();g.position.set(c[0],y,c[1]);g.rotation.y=Math.atan2(E.t[0],E.t[1]);scene.add(g);
 const pad=new T.Mesh(new T.CircleGeometry(15,28).rotateX(-Math.PI/2),roadMat);pad.position.y=-.02;g.add(pad);const isl=new T.Mesh(new T.CylinderGeometry(5,5.3,.5,20),lam(0x6aa84f));isl.position.y=.2;g.add(isl);
@@ -638,7 +638,7 @@ const sT=IMC(cyl(.4,.5,3),lam(0x5b3a22)),s1=IMC(new T.ConeGeometry(3.4,9,7).tran
 for(let t=0;t<60000&&sT.n<3600;t++){const x=X(91.0+rnd()*1.7),z=Z(21.2+rnd()*4.4);if(!pip(x,z))continue;const h=hgt(x,z);if(hillH(x,z)<30||h<25||h>330||G.d<30)continue;
 let sc=.9+rnd()*1.3;if(h>130)sc*=.75;tcol.setHSL(.33+rnd()*.06,.45,.13+rnd()*.08);if(h>220)tcol.lerp(sn,Math.min(.7,(h-220)/100));const hx=tcol.getHex();add(sT,x,h-.15,z,0,sc,sc,sc);add(s1,x,h-.15,z,0,sc,sc,sc,hx);add(s2,x,h-.15,z,0,sc,sc,sc,hx);}
 const mgC=IMC(new T.IcosahedronGeometry(2.6,1).scale(1,.85,1).translate(0,2.2,0),W);
-for(let t=0;t<60000&&mgC.n<4200;t++){const x=X(88.85+rnd()*1.25),z=Z(21.6+rnd()*1.0);if(mang(x,z)<.5)continue;const h=hgt(x,z);if(h<.35)continue;const sc=.8+rnd()*.9;add(mgC,x,h-.1,z,rnd()*6,sc,sc,sc,tcol.setHSL(.3+rnd()*.05,.55,.12+rnd()*.07).getHex());}
+for(let t=0;t<60000&&mgC.n<4200;t++){const x=X(88.85+rnd()*1.25),z=Z(21.6+rnd()*1.0);if(mang(x,z)<.5)continue;const h=hgt(x,z);if(h<.35||G.d<12||noGo(x,z))continue;const sc=.8+rnd()*.9;add(mgC,x,h-.1,z,rnd()*6,sc,sc,sc,tcol.setHSL(.3+rnd()*.05,.55,.12+rnd()*.07).getHex());}
 const bx=IMC(new T.BoxGeometry(1,1,1),W),rf=IMC(prism(1,1,1),W),cn=IMC(new T.ConeGeometry(1,1,10).translate(0,.5,0),W),cy=IMC(new T.CylinderGeometry(1,1,1,10).translate(0,.5,0),W),vc=[];
 function house(x,y,z,ry,sc,type){const co=Math.cos(ry),si=Math.sin(ry),P=(m,lx,ly,lz,sx,sy,sz,c)=>add(m,x+(lx*co+lz*si)*sc,y+ly*sc,z+(-lx*si+lz*co)*sc,ry,sx*sc,sy*sc,sz*sc,c);
 if(type===0){const wc=[0xc8ad84,0xb5835a,0xd9c9a3,0x9fb7a0][(rnd()*4)|0],rc=[0x8a96a0,0x6d7b86,0xa05a40,0x5f7f6d][(rnd()*4)|0],sh=[0x2f6f4f,0x2a5f9a,0x8a3a2c][(rnd()*3)|0];
@@ -965,7 +965,7 @@ st.hk.forEach((h,i)=>{const p=h.p;h.t+=dt;let tx,tz,sp=.8;if(here){const d=st.D[
 const dx=tx-p.position.x,dz=tz-p.position.z,dd=Math.hypot(dx,dz),stp=sp*dt;if(dd>.15){p.position.x+=dx/dd*Math.min(stp,dd);p.position.z+=dz/dd*Math.min(stp,dd);p.rotation.y=Math.atan2(dx,dz);walkPose(p,dt,true);}else{p.rotation.y=-Math.PI/2;walkPose(p,dt,false);}
 h.b.visible=here?((h.t+i*.7)%3<2.2):((h.t+i*1.9)%9<2);});});}
 /* station buildings, each after the real station (local frame: +x = platform side, +z = direction of travel) */
-const DN={'Dhaka':'কমলাপুর','Kushtia':'কুষ্টিয়া কোর্ট','Bhanga':'ভাঙ্গা জংশন'};
+const DN={'Dhaka':'কমলাপুর','Kushtia':'কুষ্টিয়া কোর্ট','Bhanga':'ভাঙ্গা জংশন','Karamjal':'করমজল বন্যপ্রাণী কেন্দ্র'};
 const vaultG=(()=>{const g=new T.PlaneGeometry(12,12,14,14).rotateX(-Math.PI/2),p=g.attributes.position,f=t=>Math.pow(Math.max(0,1-Math.abs(2*t-1)),.55);for(let i=0;i<p.count;i++){const u=(p.getX(i)+6)/12,v=(p.getZ(i)+6)/12;p.setY(i,4.4*Math.max(f(u),f(v)));}g.computeVertexNormals();return g;})();
 const ribTex=(()=>{const c=document.createElement('canvas');c.width=256;c.height=8;const g=c.getContext('2d');for(let i=0;i<32;i++){g.fillStyle=i%2?'#efe6d2':'#fbf6ea';g.fillRect(i*8,0,8,8);}const t=new T.CanvasTexture(c);t.wrapS=T.RepeatWrapping;return t;})();
 const glassM=new T.MeshPhongMaterial({color:0x6fa8bf,transparent:true,opacity:.62,shininess:90,emissive:0x000000}),winMs=[glassM];
@@ -1010,6 +1010,13 @@ mk(g,14,9,26,0xdfe3e6,16,4.5,-22);const gw=new T.Mesh(new T.BoxGeometry(.1,6,24)
 'Jashore':g=>{/* rebuilt 2005: two-storey modern block */
 mk(g,11,8,30,0xf3f1ec,14.5,4,0);const gw=new T.Mesh(new T.BoxGeometry(.1,2.2,26),glassM);[2.2,5.8].forEach(y=>{const w=gw.clone();w.position.set(8.95,y,0);g.add(w);});mk(g,12,.5,31,0x2f6fb5,14.5,8.2,0);},
 'Comilla':g=>colonial(g,{wall:0xe6d3a3,roof:0x2f6b47,len:30}),
+'Karamjal':g=>{/* Karamjal (Forest Department wildlife centre on the Pashur): timber station on stilts, golpata-thatched roofs, a wooden watchtower and a crocodile/deer centre sign */
+const wd=0x7a5534,th=0x9a7b45;mk(g,14,.5,30,wd,14,2.6,0);for(let z=-14;z<=14;z+=3.5)[9,19].forEach(x=>mk(g,.35,2.6,.35,0x5b3a22,x,1.3,z));mk(g,10,4,16,0xa77b4f,14,4.85,0);
+const r1=new T.Mesh(prism(7,3.4,19),lam(th));r1.position.set(14,6.85,0);g.add(r1);for(let z=-6;z<=6;z+=3)mk(g,.1,1.4,1.2,0x2f2418,8.95,4.6,z);
+const tw=new T.Group();tw.position.set(22,0,-22);g.add(tw);[[-2,-2],[2,-2],[-2,2],[2,2]].forEach(a=>mk(tw,.4,16,.4,0x5b3a22,a[0],8,a[1]));mk(tw,5.6,.4,5.6,wd,0,16,0);mk(tw,5.6,1,.15,wd,0,16.7,2.8);mk(tw,5.6,1,.15,wd,0,16.7,-2.8);const r2=new T.Mesh(new T.ConeGeometry(4.4,2.4,4),lam(th));r2.position.y=18.6;r2.rotation.y=Math.PI/4;tw.add(r2);
+for(let k=0;k<6;k++){const st=mk(tw,1.2,.15,.5,wd,2.6,1+k*2.5,-1.5+k*.5);}
+const sg=spr('করমজল · সুন্দরবন',9,1.3,'#3d5a2a','#f3ead8');sg.position.set(8.7,8.2,0);sg.rotation.y=-Math.PI/2;g.add(sg);
+const sg2=spr('বন্যপ্রাণী প্রজনন কেন্দ্র',8,1,'#5b3a22','#ffffff');sg2.position.set(19.3,2.4,10);sg2.rotation.y=Math.PI/2;g.add(sg2);},
 'Bhanga':g=>{/* Bhanga Junction (Padma Rail Link, 2023): large new three-storey 'iconic' terminal, Chinese-style design with sweeping layered roofs */
 const wl=0xf1ede4,gl=new T.MeshPhongMaterial({color:0x6fa8bf,transparent:true,opacity:.62,shininess:90});mk(g,22,4,58,0xd9d4c8,19,2,0);
 for(let f=0;f<3;f++){mk(g,18-f*2.5,4,54-f*8,wl,19,4+f*4+2,0);const w=new T.Mesh(new T.BoxGeometry(.1,2.6,50-f*8),gl);w.position.set(10-f*1.25+.05,5.6+f*4,0);g.add(w);
@@ -1143,12 +1150,12 @@ const dy=new T.Mesh(new T.SphereGeometry(.2,10,8),new T.MeshBasicMaterial({color
 SG.push({s:SP[i].s,r,g:gr,y:yl,dy,dgr,off:k*13,red:false,asp:0});}
 function sgn(s,t){const g=new T.Group();place(g,s,3.4);scene.add(g);mk(g,.12,2.6,.12,0x444444,0,1.3,0);const b=spr(t,1.1,1.1,'#ffffff','#cc0000');b.position.y=3;b.rotation.y=Math.PI;g.add(b);}
 
-const REG=['বাংলাদেশের সমতল','সেতু','চট্টগ্রামের পাহাড়','পাহাড়ি টানেল','পাহাড়ের পাদদেশে ভায়াডাক্ট','সিলেটের চা-বাগান','খুলনা · সুন্দরবনের ধারে','কক্সবাজার উপকূল','রংপুর · উত্তরের সমতল','রাজশাহী · বরেন্দ্র','ঢাকা','কুষ্টিয়া · লালন ও রবীন্দ্রনাথের দেশ'];
+const REG=['বাংলাদেশের সমতল','সেতু','চট্টগ্রামের পাহাড়','পাহাড়ি টানেল','পাহাড়ের পাদদেশে ভায়াডাক্ট','সিলেটের চা-বাগান','খুলনা · সুন্দরবনের ধারে','কক্সবাজার উপকূল','রংপুর · উত্তরের সমতল','রাজশাহী · বরেন্দ্র','ঢাকা','কুষ্টিয়া · লালন ও রবীন্দ্রনাথের দেশ','সুন্দরবন · গহীন বনের রেলপথ'];
 const regName=p=>p.reg===1?RIV[(p.br||p.ap)-1].bn:REG[p.reg];
 /* junction points where the second line leaves or joins the main line: 50 km/h over the points */
 const JS=[];for(let i=0;i<NS;i++){const a=W2[(i+NS-1)%NS],b=W2[i];if((a<.02)!==(b<.02))JS.push({s:SP[i].s,i,div:b>=.02});}
 const LC=[];
-function limAt(s){{const x=((s%L)+L)%L;for(const j of JS){let d=Math.abs(x-j.s);d=Math.min(d,L-d);if(d<70)return 50/3.6;}}const x=((s%L)+L)%L;for(const t of ST){let d=Math.abs(x-t.s);d=Math.min(d,L-d);if(d<300)return 60/3.6;}const r=SP[Math.floor(x/L*NS)%NS].reg;return(r===1?100:r===4?80:r===3?90:120)/3.6;}
+function limAt(s){{const x=((s%L)+L)%L;for(const j of JS){let d=Math.abs(x-j.s);d=Math.min(d,L-d);if(d<70)return 50/3.6;}}const x=((s%L)+L)%L;for(const t of ST){let d=Math.abs(x-t.s);d=Math.min(d,L-d);if(d<300)return 60/3.6;}const r=SP[Math.floor(x/L*NS)%NS].reg;return(r===1?100:r===4?80:r===3?90:r===12?60:120)/3.6;}
 
 /* point gear at each junction: switch blades, point machine, ground lamp and a "points" board */
 {const pm=IMC(BOX1,lam(0xf2c230),1e9,10),bl=IMC(BOX1,lam(0xc9cdd1),1e9,10),fr=IMC(BOX1,lam(0x5b5f64),1e9,10),A=new T.Vector3(),B=new T.Vector3();
@@ -1534,7 +1541,8 @@ const MISSIONS=[{id:'m1',n:'প্রথম যাত্রা',d:'ঢাকা 
 {id:'m4',n:'চা-বাগানের রাত',d:'সিলেট থেকে ময়মনসিংহ, রাতের ট্রেন',k:4,stops:1,wx:0,night:1},
 {id:'m5',n:'ঝড়ের উত্তরবঙ্গ',d:'ময়মনসিংহ থেকে রংপুর আর দিনাজপুর, কালবৈশাখী ঝড়ে',k:5,stops:2,wx:4,sea:0},
 {id:'m6',n:'কুয়াশার ভোরে লালনের দেশে',d:'রাজশাহী থেকে কুষ্টিয়া, শীতের ঘন কুয়াশায়',k:8,stops:1,wx:5,sea:4},
-{id:'m7',n:'পদ্মা পাড়ি',d:'খুলনা থেকে ভাঙ্গা হয়ে পদ্মা সেতু পেরিয়ে ঢাকা',k:11,stops:2,wx:1,sea:1},
+{id:'m7',n:'পদ্মা পাড়ি',d:'করমজল থেকে ভাঙ্গা হয়ে পদ্মা সেতু পেরিয়ে ঢাকা',k:12,stops:2,wx:1,sea:1},
+{id:'m9',n:'সুন্দরবনের গভীরে',d:'খুলনা থেকে গহীন বনের ভেতর দিয়ে করমজল, বাঘ আর হরিণ খুঁজুন',k:11,stops:1,wx:1,sea:2},
 {id:'m8',n:'ঈদের যাত্রা',d:'ঢাকা থেকে চট্টগ্রাম, প্রতিটি স্টেশনে ঈদের ভিড়',k:0,stops:2,wx:0,eid:1}];
 const loadStars=()=>{try{return JSON.parse(localStorage.getItem('ttt_stars')||'{}');}catch(e){return{};}},saveStars=o=>{try{localStorage.setItem('ttt_stars',JSON.stringify(o));}catch(e){}};
 function startMission(m){$('eidc').checked=!!m.eid;$('fairc').checked=false;if(m.sea!==undefined)$('seas').value=m.sea;startAt(m.k);MIS={m,done:0};
