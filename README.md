@@ -41,4 +41,5 @@ Put MP3 files in a `sounds/` folder next to `index.html` and they replace the bu
 ## Map and data credits
 - Bangladesh border, coastline and regional land outline: [Natural Earth](https://www.naturalearthdata.com/) 1:10m (public domain), via the [world-atlas](https://github.com/topojson/world-atlas) package, simplified.
 - River courses and widths: traced from OpenStreetMap river polygons (© OpenStreetMap contributors, ODbL) via the [geo-maps earth-rivers-10m](https://github.com/simonepri/geo-maps) package; gaps filled from known river positions. Widths are scaled up uniformly so rivers read at the compressed map scale.
+- Rooppur Nuclear Power Plant: two VVER-1200 units with double-containment domes, four 175 m natural-draught cooling towers and ventilation stacks, per World Nuclear News, Wikipedia and Bangladeshi news reports.
 - Dhaka MRT Line-6 station names and design (elevated, standard gauge, ~180 m stations), Bhanga Junction (Padma Rail Link) and the six Bengali seasons are based on Wikipedia and Bangladeshi news reports.

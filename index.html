@@ -192,11 +192,18 @@ for(let i=0;i<LAKES.length;i++){const l=LAKES[i],r=Math.hypot(x-l[0],z-l[1]);if(
 const mg=mang(x,z);if(mg>0){const f=Math.sin(x*.012+Math.sin(z*.008)*2.2)*Math.cos(z*.009+Math.sin(x*.006)*2);h-=2.6*mg*(1-ss(0,.09,Math.abs(f)));}
 const t=ss(-260,60,sea);h=h*(1-t)+(-(2+38*ss(0,2400,Math.max(0,sea))))*t;
 {const ex=x-KT.C[0],ez=z-KT.C[1],u=ex*KT.n[0]+ez*KT.n[1],v=Math.abs(ex*KT.n[1]-ez*KT.n[0]);if(v<110&&((u<KT.B0+15&&u>-330)||(u>KT.B1-15&&u<760))){const m=(1-ss(48,105,v))*(u<0?ss(-330,-290,u)*(1-ss(KT.B0-5,KT.B0+15,u)):ss(KT.B1-15,KT.B1+5,u)*(1-ss(720,760,u)));if(m>0)h=Math.max(h,h*(1-m)+1.5*m);}}
-const fl=ty+(h-ty)*ss(55,150,d),r=fl*(1-nf)+h*nf;G.d=d;return r;}
+let fl=ty+(h-ty)*ss(55,150,d),r=fl*(1-nf)+h*nf;G.d=d;
+{const P_=window.__RNP;if(P_){const ex=x-P_.x,ez=z-P_.z,c=Math.cos(P_.ry),sn=Math.sin(P_.ry),lx=ex*c-ez*sn,lz=ex*sn+ez*c,m=(1-ss(262,300,Math.abs(lx)))*(1-ss(212,250,Math.abs(lz)));if(m>0)r=Math.max(r,r*(1-m)+2.4*m);}}return r;}
 /* flags */
 SP.forEach((p,i)=>{let b=0,a=0;RIV.forEach((r,k)=>{if(r.x)return;const d=rdist(r,p.x,p.z);if(d<r.w*1.7&&p.y>r.by*.6)b=k+1;else if(d<r.w*3.05&&p.y-flood(p.x,p.z)>2&&!a)a=k+1;});p.br=b;p.ap=b?0:a;p.vi=Math.abs(i-gI)<=11;p.tn=i>=TA&&i<=TB;});
 function regOf(p){const lo=p.lo,la=p.la;if(p.tn)return 3;if(p.br||p.ap)return 1;if(p.vi)return 4;if(Math.hypot(lo-90.41,la-23.79)<.3)return 10;if(Math.hypot(lo-89.0,la-23.6)<.1)return 11;if(la<21.9&&lo>91.8)return 7;if(lo>91.7&&la<23&&la>21.9)return 2;if(lo>91.4&&la>24.1&&la<25.2)return 5;if(la<23.2&&lo<90.2)return 6;if(la>25.3)return 8;if(lo<89.3&&la>24&&la<25.3)return 9;return 0;}
 SP.forEach(p=>{p.reg=regOf(p);});
+/* Rooppur Nuclear Power Plant site: east (Pabna) bank of the Ganges/Padma a little upstream of Hardinge Bridge */
+const RNP=(()=>{const bi1=[];SP.forEach((p,i)=>{if(p.br===1)bi1.push(i);});if(!bi1.length)return null;const r=RIV[0],mid=SP[bi1[bi1.length>>1]];let bi=0,bd=1e18;r.pts.forEach((p,i)=>{const d=(p.x-mid.x)**2+(p.z-mid.z)**2;if(d<bd){bd=d;bi=i;}});
+for(const up of[14,18,10,22,8,26]){const i=Math.max(1,bi-up),p=r.pts[i],q=r.pts[i+1],tx=q.x-p.x,tz=q.z-p.z,l=Math.hypot(tx,tz);for(const sd of[1,-1]){const nx=-tz/l*sd,nz=tx/l*sd,off=r.ws[i]*1.9+260,cx=p.x+nx*off,cz=p.z+nz*off;
+if(Math.atan2(nx,nz)<-2.2||Math.atan2(nx,nz)>2.2)continue;let ok=true;for(let a=0;a<6.28&&ok;a+=.5)for(const rr of[0,120,240]){const x=cx+Math.cos(a)*rr,z=cz+Math.sin(a)*rr;if(hgt(x,z)<1.2||G.d<90){ok=false;break;}}
+if(ok)return window.__RNP={x:cx,z:cz,ry:Math.atan2(tx,tz),rx:p.x+nx*r.ws[i]*.8,rz:p.z+nz*r.ws[i]*.8};}}return null;})();
+
 /* second (down) line: double track on the open route, single line over bridges, approach viaducts, the gorge viaduct and through the hill tunnel.
    W2[i] = 0..1 blends the second line out to OFF2 metres on the -n side; the blends act as junction points. */
 const OFF2=-4.6,W2=new Float32Array(NS);{const blk=new Uint8Array(NS),wr=d=>Math.min(Math.abs(d),NS-Math.abs(d));SP.forEach((p,i)=>{if(p.br||p.ap||p.vi||p.tn||wr(i-TA)<48||wr(i-TB)<48)blk[i]=1;});
@@ -548,7 +555,7 @@ const nextI0=0;
    Majampur, Haripur Road and Haripur Bridge over the Gorai, Chourhash roundabout, Choy Rastar Mor, Thanapara lanes, R710) ===== */
 const NOGO=[],noGo=(x,z)=>{for(const c of NOGO)if((x-c[0])**2+(z-c[1])**2<c[2]*c[2])return true;return false;},KU={st:ST.find(t=>t.name==='Kushtia')};
 if(KU.st){const p=SP[KU.st.i];KU.p=p;KU.W=(lx,lz)=>[p.x+p.nx*lx+p.tx*lz,p.z+p.nz*lx+p.tz*lz];KU.ry=Math.atan2(p.tx,p.tz);
-const c0=KU.W(190,90);NOGO.push([c0[0],c0[1],440]);{const c1=KU.W(-250,20);NOGO.push([c1[0],c1[1],330]);}const GO=RIV[8];
+const c0=KU.W(190,90);NOGO.push([c0[0],c0[1],440]);if(RNP)NOGO.push([RNP.x,RNP.z,320]);{const c1=KU.W(-250,20);NOGO.push([c1[0],c1[1],330]);}const GO=RIV[8];
 const kpath=(pts,bridge)=>{const Q=[];for(let k=0;k<pts.length-1;k++){const a=pts[k],b=pts[k+1],n=Math.max(1,Math.round(Math.hypot(b[0]-a[0],b[1]-a[1])/8));for(let j=0;j<n;j++){const f=j/n;Q.push([a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f]);}}Q.push(pts[pts.length-1]);
 return Q.map(q=>{const w=KU.W(q[0],q[1]),g=hgt(w[0],w[1]),td=G.d;let y=Math.max(g,1)+.6;if(bridge){const rd=rdistF(GO,w[0],w[1]);y=Math.max(y,1.6+6.4*(1-ss(GO.w*.95,GO.w*2.5,rd)));}return{x:w[0],y,z:w[1],g,td,deck:false};});};
 const TL=[[2.2,1,0],[-2.2,-1,1]];
@@ -764,6 +771,39 @@ if(T_.dwell>0){T_.dwell-=dt;T_.v=0;if(T_.dwell<=0){if((T_.dir>0&&T_.u>=end1-1)||
 else{let tgt=null;for(const s of stops){if((s-T_.u)*T_.dir>.5){if(tgt===null||Math.abs(s-T_.u)<Math.abs(tgt-T_.u))tgt=s;}}if(tgt===null)tgt=T_.dir>0?end1:end0;const dist=Math.abs(tgt-T_.u),vmax=Math.min(22,Math.sqrt(2*1*Math.max(0,dist-.3)));
 T_.v=Math.min(vmax,T_.v+1*dt);T_.u+=T_.v*dt*T_.dir;if(Math.abs(tgt-T_.u)<.4){T_.u=tgt;T_.v=0;T_.dwell=20;}}
 T_.cars.forEach((c,i)=>{const u=T_.u-T_.dir*i*19.6,a=MRT.at(u),b=MRT.at(u+T_.dir*2),o=T_.side*1.9;c.position.set(a.x+a.nx*o,a.y+.35,a.z+a.nz*o);c.lookAt(b.x+b.nx*o,b.y+.35,b.z+b.nz*o);});});}
+
+/* ===== Rooppur Nuclear Power Plant (Rosatom VVER-1200, 2 x 1200 MW): two reactor buildings with double containment and domes, turbine halls,
+   a ventilation stack per unit, four natural-draught cooling towers (175 m) with steam plumes, switchyard, admin block, river water intake ===== */
+const RNPL={plumes:[]};if(RNP){const _r0=scene.children.length,g=new T.Group(),y0=2.25;g.position.set(RNP.x,y0,RNP.z);g.rotation.y=RNP.ry;scene.add(g);RNPL.g=g;
+const CON=0xd9d6ce,WHT=0xf1f0ec,BLU=0x2f6fb5,cm=lam(CON);
+mk(g,520,.3,420,0xa9a69c,0,.15,0);/* site pad */
+/* cooling towers: hyperboloid shells by lathe, ring of support columns at the base */
+const prof=[];for(let k=0;k<=24;k++){const t=k/24,y=t*175,r=36+26*Math.pow(Math.abs(t-.78)/.78,1.6)*(t<.78?1:.45);prof.push(new T.Vector2(r,y));}
+const twG=new T.LatheGeometry(prof,40),twM=new T.MeshLambertMaterial({color:0xe4e2dc,side:T.DoubleSide}),stripeM=lam(0xb5b2aa);
+[[-150,-120],[-150,-20],[150,-120],[150,-20]].forEach(a=>{const t=new T.Mesh(twG,twM);t.position.set(a[0],6,a[1]);g.add(t);const rim=new T.Mesh(new T.TorusGeometry(prof[24].x,.8,6,40),stripeM);rim.rotation.x=Math.PI/2;rim.position.set(a[0],181,a[1]);g.add(rim);
+for(let k=0;k<20;k++){const an=k/20*6.283,c=mk(g,1.2,7,1.2,0xbdbab2,a[0]+Math.cos(an)*60,3,a[1]+Math.sin(an)*60);}const pond=new T.Mesh(new T.CircleGeometry(58,32).rotateX(-Math.PI/2),new T.MeshPhongMaterial({color:0x5c8a9a,shininess:60}));pond.position.set(a[0],.4,a[1]);g.add(pond);
+RNPL.plumes.push({x:a[0],z:a[1],top:182,s:[]});});
+/* two units: reactor building (cylinder + dome), auxiliary blocks, turbine hall, ventilation stack */
+[-55,55].forEach((ux,u)=>{const rb=new T.Mesh(new T.CylinderGeometry(25,25,46,40),lam(WHT));rb.position.set(ux,23,60);g.add(rb);const band=new T.Mesh(new T.CylinderGeometry(25.3,25.3,3,40),lam(BLU));band.position.set(ux,38,60);g.add(band);
+const dome=new T.Mesh(new T.SphereGeometry(25,40,16,0,6.283,0,Math.PI/2),lam(0xeceae4));dome.scale.y=.62;dome.position.set(ux,46,60);g.add(dome);const top=new T.Mesh(new T.CylinderGeometry(4,4,2,16),lam(0xc9c6be));top.position.set(ux,62.5,60);g.add(top);
+mk(g,62,22,40,CON,ux,11,104);mk(g,40,30,30,0xe6e3dc,ux+(u?28:-28),15,48);mk(g,64,.8,42,0x9aa0a6,ux,22.4,104);
+const th=mk(g,46,38,120,0xe9e7e1,ux,19,175);mk(g,47,1.5,121,BLU,ux,30,175);mk(g,47,1.5,121,BLU,ux,8,175);const roof=new T.Mesh(prism(25,6,122),lam(0x8a96a0));roof.position.set(ux,38,175);g.add(roof);
+for(let z=125;z<=225;z+=10)[-1,1].forEach(s=>mk(g,.3,22,4,0x6f8ea6,ux+s*23.1,20,z));
+const st=new T.Mesh(new T.CylinderGeometry(2.6,3.4,100,16),lam(0xdedbd3));st.position.set(ux+(u?34:-34),50,82);g.add(st);[30,60,90].forEach(h=>{const b=new T.Mesh(new T.CylinderGeometry(3.6,3.6,1.6,16),lam(0x9aa0a6));b.position.set(ux+(u?34:-34),h,82);g.add(b);});
+const sg=spr('ইউনিট-'+(u?'২':'১'),10,2.2,'#2f6fb5','#ffffff');sg.position.set(ux,30,34.6);sg.rotation.y=Math.PI;g.add(sg);});
+/* admin block, name board, switchyard with gantries, fence, intake channel to the river */
+mk(g,70,18,26,0xf3f1ec,0,9,-175);const gl=new T.Mesh(new T.BoxGeometry(68,10,.2),new T.MeshPhongMaterial({color:0x6fa8bf,transparent:true,opacity:.6}));gl.position.set(0,10,-188.2);g.add(gl);
+const nm=spr('রূপপুর পারমাণবিক বিদ্যুৎ কেন্দ্র',60,7,'#2f6fb5','#ffffff');nm.position.set(0,24,-188.4);nm.rotation.y=Math.PI;g.add(nm);
+for(let i=0;i<5;i++)for(let j=0;j<3;j++){const x=-200+i*22,z=150+j*26;const p=mk(g,1,22,1,0x8a8f94,x-6,11,z);mk(g,1,22,1,0x8a8f94,x+6,11,z);mk(g,13,1,1,0x8a8f94,x,21.5,z);mk(g,3,4,3,0x5d6166,x,2,z+10);}
+[[0,-208,520,1],[0,208,520,1],[-258,0,1,416],[258,0,1,416]].forEach(a=>mk(g,a[2]===1?1:a[2],3,a[3]===1?1:a[3],0x9aa0a6,a[0],1.5,a[1]));
+{const ix=RNP.rx-RNP.x,iz=RNP.rz-RNP.z,ln=Math.hypot(ix,iz),ang=Math.atan2(ix,iz)-RNP.ry,ch=new T.Mesh(new T.BoxGeometry(12,.4,ln),new T.MeshPhongMaterial({color:0x4f8aa0,shininess:70}));ch.position.set(Math.sin(ang)*ln/2,.5,Math.cos(ang)*ln/2);ch.rotation.y=ang;g.add(ch);
+const ph=mk(g,26,10,18,0xd9d6ce,Math.sin(ang)*(ln-8),5,Math.cos(ang)*(ln-8));ph.rotation.y=ang;}
+cullGroup(_r0);
+/* steam plume sprites rising and drifting from the tower tops */
+RNPL.tex=(()=>{const c=document.createElement('canvas');c.width=c.height=64;const x=c.getContext('2d'),gr=x.createRadialGradient(32,32,0,32,32,32);gr.addColorStop(0,'rgba(255,255,255,.95)');gr.addColorStop(.6,'rgba(245,247,250,.55)');gr.addColorStop(1,'rgba(240,242,245,0)');x.fillStyle=gr;x.fillRect(0,0,64,64);return new T.CanvasTexture(c);})();
+RNPL.plumes.forEach(P=>{for(let k=0;k<9;k++){const m=new T.Sprite(new T.SpriteMaterial({map:RNPL.tex,transparent:true,depthWrite:false,fog:true}));g.add(m);P.s.push({m,t:k/9});}});}
+function rnppTick(dt){if(!RNPL.g)return;const near=RNPL.g.position.distanceTo(cam.position)<fogFar+900;RNPL.plumes.forEach(P=>P.s.forEach(q=>{q.m.visible=near;if(!near)return;q.t+=dt*.06;if(q.t>1)q.t-=1;const t=q.t,w=ENV.wind;
+q.m.position.set(P.x+t*(40+80*w),P.top+t*120,P.z+t*20);const sz=50+t*130;q.m.scale.set(sz,sz*.8,1);q.m.material.opacity=Math.min(1,t*6)*(1-t)*.85;}));}
 
 /* river boats and ships */
 const NBt=110,bH=IM(new T.BoxGeometry(2,.8,8.5).translate(0,.4,0),lam(0xffffff),NBt),bC=IM(new T.BoxGeometry(1.8,1.3,3).translate(0,1.4,0),lam(0xd9c9a3),NBt),bS=IM(new T.PlaneGeometry(3.4,5).translate(0,4.3,.5),lam2(0xffffff),NBt),BT=[];
@@ -1473,7 +1513,7 @@ BTNS.light.classList.toggle('on',hl);BTNS.doors.classList.toggle('on',doors);BTN
 $('sc').textContent=bnum(Math.round(score));$('dn').textContent=bnum(done);$('nx').textContent=hudN+' \u00b7 '+hudD+(nsg&&nsd<1600&&dir>0?'  \u00b7  সিগন্যাল '+['সবুজ','হলুদ','লাল'][nsg.asp]+' '+bnum(Math.round(nsd))+' মি':'');$('rm').style.left=ssv/L*100+'%';
 if((frameN&1)===0)drawMap(st);frameN++;
 ST.forEach(t=>{t.g.visible=t.g.position.distanceTo(cam.position)<fogFar+180;});{const lim=fogFar+150;for(let i=0;i<DCULL.length;i++){const d=DCULL[i],dd=d.sp.center.distanceTo(cam.position)-d.sp.radius;d.o.visible=dd<(d.near?Math.min(d.near,lim):lim);}
-ST.forEach(t=>{if(t.pg)t.pg.visible=t.g.visible&&t.g.position.distanceTo(cam.position)<(t===ST[nextI%ST.length]?650:380);});}kWalkTick(rdt);farmTick(rdt);lcTick(rdt);perfTick(rdt);touchTick();vehiclesTick(rdt);wreckTick(dt);otTick(dt);cowTick(dt);festTick(rdt);metroTick(rdt);KT.fs.visible=cam.position.y>1;envTick(rdt,now/1000);if(dk>.3||ktIn())rainM.visible=false;else if(rainM.visible)shelterTick();wipersTick(rdt);cullChunks();R.render(scene,cam);}
+ST.forEach(t=>{if(t.pg)t.pg.visible=t.g.visible&&t.g.position.distanceTo(cam.position)<(t===ST[nextI%ST.length]?650:380);});}kWalkTick(rdt);farmTick(rdt);lcTick(rdt);perfTick(rdt);touchTick();vehiclesTick(rdt);wreckTick(dt);otTick(dt);cowTick(dt);festTick(rdt);metroTick(rdt);rnppTick(rdt);KT.fs.visible=cam.position.y>1;envTick(rdt,now/1000);if(dk>.3||ktIn())rainM.visible=false;else if(rainM.visible)shelterTick();wipersTick(rdt);cullChunks();R.render(scene,cam);}
 $('mm').onclick=toggleBig;$('bigmap').onclick=toggleBig;setTime(false);setMode(1);$('go').style.display='';$('ld').style.display='none';requestAnimationFrame(frame);
 
 }
